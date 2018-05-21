@@ -1,0 +1,49 @@
+/*
+button redesign from Bootstrap 3.3.7
+with Bootstrap 4.0 styles.
+ */
+
+button.btn, button.btn:hover, button.btn:active, button.btn:focus, button.btn:target, button.btn:active:focus
+{
+    box-shadow: none;
+    background-color: transparent;
+	border: 1px #6c757d solid;
+	transition: ease-in-out .15s;
+}
+.btn-default
+{
+	color: #6c757d;
+}
+.btn-default:hover, .btn-default:active, .btn-default:focus, .btn-default:active:focus
+{
+	color: #fff;
+	background-color: #6c757d !important;
+
+}
+.btn-danger
+{
+    border-color: #dc3545 !important;
+    color: #dc3545;
+}
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus, .btn-danger:active:focus
+{
+    background-color: #dc3545 !important;
+}
+.btn-success
+{
+	border-color: #28a745 !important;
+	color: #28a745;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus, .btn-success:active:focus
+{
+	background-color: #28a745 !important;
+}
+.btn-primary
+{
+	border-color: #007bff !important;
+	color: #007bff;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus
+{
+	background-color: #007bff !important;
+}

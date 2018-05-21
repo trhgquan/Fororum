@@ -1,0 +1,79 @@
+/*
+Bootstrap CSS customization
+NO SHADOW, WE DON'T NEED SHADOW ANYWAY.
+*/
+
+@import "buttons.css";
+
+body
+{
+	padding-top: 75px;
+	padding-bottom: 75px;
+}
+.navbar-fixed-top
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: inherit;
+}
+.navbar-fixed-top>.container-fluid
+{
+	margin: 0 98 0 98;
+}
+.dropdown
+{
+	position: relative;
+}
+a:link, a:visited
+{
+	text-decoration: none;
+	color: #007bff;
+}
+a:hover, a:active
+{
+	text-decoration: none;
+	color: #0056b3;
+}
+input.form-control:focus,
+textarea.form-control:focus,
+.has-error>.form-control:focus,
+.dropdown-menu
+{
+	box-shadow: none;
+	transition: none;
+}
+input.form-control:focus,
+textarea.form-control:focus
+{
+	border-color: #007bff;
+}
+.breadcrumb
+{
+	background-color: transparent;
+	padding: 0 0px;
+}
+.breadcrumb>li+li::before
+{
+	content: '\5C';
+}
+.pagination>.page-item.active>span
+{
+	background-color: #007bff;
+}
+.pagination>.page-item>a
+{
+	color: #007bff;
+}
+/* CSS cho forum */
+.media-content /* a.k.a nội dung của thread, post được căn đều */
+{
+	text-align: justify;
+}
+.pull-right /* làm cho element chạy sang phải */
+{
+	float: right;
+}
+.page-title>small
+{
+	font-style: italic;
+}
