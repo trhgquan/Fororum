@@ -73,7 +73,6 @@ class ForumController extends Controller
 				$post   = ForumPosts::create([
 					'parent_id' => $parent->post_id,
 					'user_id'   => Auth::id(),
-					'title'     => 're: ' . $parent->title,
 					'content'   => $Request->get('content')
 				]);
 				return redirect()->route('post', [$post->id]); // ở đây id là primary key của table.

@@ -1,4 +1,4 @@
-@extends('templates.forum-template')
+@extends('templates.forum.forum-template')
 @section('title', $category_name)
 
 @section('forum-content')
@@ -9,11 +9,7 @@
 	@endsection
 	@if ($category_threads->total() > 0)
 		@foreach ($category_threads as $post)
-			@component('templates.media-template', [
-				'url' => route('thread', ['thread_id' => $post->post_id]),
-				'display_url' => $post->title,
-				'display_small' => 'tạo bởi ' . App\User::username($post->user_id) . ' vào lúc ' . date_format($post->created_at, 'H:m:s A, d-m-Y')
-			])
+			@component('templates.forum.thread-template', ['thread' => $post])
 			@endcomponent
 		@endforeach
 		{{ $category_threads->links() }}

@@ -1,4 +1,4 @@
-@extends('templates.forum-template')
+@extends('templates.forum.forum-template')
 
 @section('forum-content')
 	@section('breadcrumb_content')
@@ -7,10 +7,9 @@
 	@endsection
 	<legend>sảnh chính</legend>
 	@foreach( $records as $categories )
-		@component('templates.media-template', [
-			'url' => route('category', [$categories->keyword]),
-			'display_url' =>  $categories->title,
-			'display_content' => $categories->description])
+		@component('templates.forum.category-template', [
+			'media' => $categories
+		])
 		@endcomponent
 	@endforeach
 @endsection
