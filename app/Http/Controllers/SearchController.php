@@ -15,11 +15,6 @@ class SearchController extends Controller
 		$this->middleware('alive');
 	}
 
-	public function index()
-	{
-		return view('search');
-	}
-
 	public function searchForUser ($keyword)
 	{
 		$validator = Validator::make([

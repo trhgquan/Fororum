@@ -14,11 +14,6 @@ class NotifyController extends Controller
         $this->middleware('alive');
     }
 
-    public function home()
-    {
-        return view('notify');
-    }
-
     public function notify ($notify_id)
     {
         $custom_notify = UserNotification::custom_notify($notify_id);
