@@ -80,7 +80,7 @@ Route::prefix('/forum')->group(function(){
 });
 
 Route::get('/register', function(){
-	view('register');
+	return view('register');
 })->middleware('guest')->name('register');
 
 Route::get('/login', function(){
