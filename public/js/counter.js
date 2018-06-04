@@ -1,0 +1,1 @@
+function counter(number,object,delay){var i=0;var interval=setInterval(function(){if(i<=number){document.getElementById(object).innerText=i;i+=1;}else{clearInterval(interval);}},delay);}

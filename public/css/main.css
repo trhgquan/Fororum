@@ -1,0 +1,37 @@
+/*
+Bootstrap CSS customization
+NO SHADOW, WE DON'T NEED SHADOW ANYWAY.
+*/
+
+@import "buttons.css";
+
+body{padding-top:80px;padding-bottom:75px}.navbar-fixed-top{padding-top:10px;padding-bottom:10px}.navbar-fixed-top>.container-fluid{margin:0 98}.dropdown{position:relative}a:link,a:visited{text-decoration:none;color:#007bff}a:active,a:hover{text-decoration:none;color:#0056b3}.dropdown-menu,.has-error>.form-control:focus,input.form-control:focus,textarea.form-control:focus{box-shadow:none;transition:none}.has-error .checkbox,.has-error .checkbox-inline,.has-error .control-label,.has-error .help-block,.has-error .radio,.has-error .radio-inline,.has-error.checkbox label,.has-error.checkbox-inline label,.has-error.radio label,.has-error.radio-inline label{color:#d9534f!important}.has-error .form-control{border-color:#d9534f!important}.form-control:focus{border-color:#007bff}.breadcrumb{background-color:transparent;padding:0;margin-top:20px}.breadcrumb>li+li::before{content:'\5C'}.pagination>.page-item.active>span{background-color:#007bff}.pagination>.page-item>a{color:#007bff}
+
+/* CSS cho forum */
+.media-content /* a.k.a nội dung của thread, post được căn đều */
+{
+	text-align: justify;
+}
+.pull-right /* làm cho element chạy sang phải */
+{
+	float: right;
+}
+.page-title>small, .media-body>small
+{
+	font-style: italic;
+}
+.media-box
+{
+	border: 0.5px solid #ccc;
+	border-radius: 6.25px;
+	margin-bottom: 10px;
+}
+.media-box:hover
+{
+	border-width: 0.75px;
+	border-color: #6c757d;
+}
+.media-box > .media
+{
+	padding: 20 20 20 20;
+}
