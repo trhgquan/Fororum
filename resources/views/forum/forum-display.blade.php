@@ -7,13 +7,14 @@
 			<li><a href="{{ route('category', ['category' => App\ForumCategories::Category($content['thread']->category_id)->keyword ]) }}">{{ App\ForumCategories::Category($content['thread']->category_id)->title }}</a></li>
 			<li>{{ $content['thread']->title }}</li>
 		@endsection
+		<legend>chủ đề: {{ $content['thread']->title }}</legend>
 		@component('templates.forum.post-template',[
 			'post' => $content['thread'],
 			'single' => false
 		])
 		@endcomponent
-		<legend>{{ App\ForumPosts::totalPosts($content['thread']->post_id) }} bài viết trả lời:</legend>
-		@if ($content['posts']->count() > 0)
+		@if (App\ForumPosts::totalPosts($content['thread']->post_id) > 0)
+			<legend>{{ App\ForumPosts::totalPosts($content['thread']->post_id) }} bài viết trả lời:</legend>
 			@foreach ($content['posts'] as $post)
 				@component('templates.forum.post-template', [
 					'post'   => $post,

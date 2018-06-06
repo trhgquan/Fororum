@@ -15,47 +15,67 @@ class SearchController extends Controller
 		$this->middleware('alive');
 	}
 
-	public function searchForUser ($keyword)
+	public function search ($action, $keyword)
 	{
 		$validator = Validator::make([
 			'keyword' => $keyword
 		], [
-			'keyword' => ['required','regex:/^[A-Za-z0-9._]+$/','min:3']
+			'keyword' => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:3']
 		], [
-			'keyword.required' => 'từ khoá không được bỏ trống',
-			'keyword.min'         => 'từ khoá phải dài ít nhất 3 ký tự',
-			'keyword.regex'      => 'từ khoá không hợp lệ'
+			'keyword.required' => 'từ khóa không được bỏ trống',
+			'keyword.min'      => 'từ khóa phải ít nhất 3 ký tự',
+			'keyword.regex'    => 'từ khóa không hợp lệ'
 		]);
+
 		if (!$validator->fails())
 		{
-			$users = User::search($keyword);
-			if ($users->currentPage() <= $users->lastPage())
+			$user_results = User::search($keyword);
+			$post_results = ForumPosts::search($keyword);
+			$results = [
+				'user' => $user_results,
+				'post' => $post_results
+			];
+			$fillable = ['user', 'post'];
+
+			if (in_array($action, $fillable))
 			{
-				return view('search', ['users' => $users,'keyword' => $keyword]);
+				if ($results[$action]->currentPage() <= $results[$action]->lastPage())
+				{
+					return view('search', [
+						'keyword'      => $keyword,
+						'have_results' => true,
+						'results'      => $results,
+						'action'       => $action
+					]);
+				}
+				return redirect()->route('search', [
+					'keyword' => $keyword, 'action' => $action
+				]);
 			}
-			return redirect()->route('searchForUser', [$keyword]);
+			return abort(404);
 		}
-		return view('search',['keyword' => $keyword,'users' => 0])->withErrors($validator);
+	 	return redirect()->route('searchIndex')->withErrors($validator);
 	}
 
-	public function searchForPost ($keyword)
+	public function searchWithKeyword (Request $Request)
 	{
-		$validator = Validator::make(['keyword' => $keyword], [
-			'keyword' => ['required','min:3','regex:/^[A-Za-z0-9]+$/']
+		$validator = Validator::make($Request->all(), [
+			'keyword' => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:3'],
+			'action'  => ['required']
 		], [
-			'keyword.min' => 'từ khoá phải dài ít nhất 3 ký tự',
-			'keyword.required' => 'bạn phải nhập từ khoá tìm kiếm',
-			'keyword.regex' => 'từ khoá không hợp lệ'
+			'keyword.required' => 'từ khóa không được bỏ trống',
+			'keyword.min'      => 'từ khóa phải ít nhất 3 ký tự',
+			'keyword.regex'    => 'từ khóa không hợp lệ',
+			'action.required'  => 'một lỗi không mong muốn vừa xảy ra. xin hãy thử lại'
 		]);
+
 		if (!$validator->fails())
 		{
-			$posts = ForumPosts::search($keyword);
-			if ($posts->currentPage() <= $posts->lastPage())
-			{
-				return view('search',['posts' => ForumPosts::search($keyword),'keyword' => $keyword]);
-			}
-			return redirect()->route('searchPostWithKeyword', [$keyword]);
+			return redirect()->route('search', [
+				'keyword' => $Request->get('keyword'),
+				'action'  => $Request->get('action')
+			]);
 		}
-		return view('search', ['keyword' => $keyword,'posts' => 0])->withErrors($validator);
+		return redirect()->route('searchIndex')->withErrors($validator);
 	}
 }

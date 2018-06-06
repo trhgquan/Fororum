@@ -39,10 +39,10 @@ class UserInformation extends Model
 				return 'tài khoản hệ thống';
 				break;
 			case $permissions['banned']:
-				return 'tài khoản đã bị khóa';
+				return 'tài khoản bị khóa';
 				break;
 			case $permissions['confirmed']:
-				return 'tài khoản chính thức';
+				return 'tài khoản đã xác nhận';
 				break;
 			default:
 				return '';

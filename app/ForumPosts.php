@@ -48,7 +48,7 @@ class ForumPosts extends Model
      */
     public static function search ($keyword)
     {
-        return self::where('title', 'like', '%'.$keyword.'%')->orWhere('content', 'like', '%'.$keyword.'%')->paginate(self::max_display);
+        return self::where('title', 'like', '%'.$keyword.'%')->orWhere('content', 'like', '%'.$keyword.'%')->orderBy('created_at', 'DESC')->paginate(self::max_display);
     }
 
     /**

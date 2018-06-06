@@ -10,7 +10,7 @@
 
 @section('navbar_item')
 	@if (!$edit)
-		@include('forms.search-profile-form')
+		@include('forms.search-navbar-form', ['action' => 'user'])
 	@endif
 	@include('items.navbar-items')
 @endsection
@@ -20,9 +20,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<legend>
-						<h1>{{ $content['user_content']->username }}
-							<small>{{ App\UserInformation::userBrandLevels($content['user_content']->id) }}</small>
-						</h1>
+					<h1>{{ $content['user_content']->username }}
+						<small>{{ App\UserInformation::userBrandLevels($content['user_content']->id) }}</small>
+					</h1>
 				</legend>
 			</div>
 			<!-- 3 cột, cột đầu là forum statistics, cột sau là user information, cột cuối cùng là user action -->

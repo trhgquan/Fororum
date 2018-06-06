@@ -8,7 +8,7 @@
 
 @section('navbar_item')
 	@if (Auth::check())
-		@include('forms.search-forum-form')
+		@include('forms.search-navbar-form', ['action' => 'post'])
 		@include('items.navbar-items')
 	@else
 		<li><a href="{{ route('login') }}">Đăng nhập</a></li>
