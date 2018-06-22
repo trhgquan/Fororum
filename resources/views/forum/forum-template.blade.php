@@ -2,7 +2,7 @@
 
 @section('title', 'Diễn đàn')
 
-@section('navbar-brand')
+@section('navbar_brand')
 	<a href="{{ route('forum') }}" class="navbar-brand">{{ config('app.name') }} <small>forum</small></a>
 @endsection
 

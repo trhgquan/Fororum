@@ -1,4 +1,4 @@
-@extends('templates.forum.forum-template')
+@extends('forum.forum-template')
 @section('forum-content')
 	@if (isset($thread) && $thread)
 		@section('title', 'chủ đề: ' . $content['thread']->title)
@@ -7,8 +7,8 @@
 			<li><a href="{{ route('category', ['category' => App\ForumCategories::Category($content['thread']->category_id)->keyword ]) }}">{{ App\ForumCategories::Category($content['thread']->category_id)->title }}</a></li>
 			<li>{{ $content['thread']->title }}</li>
 		@endsection
-		<legend>chủ đề: {{ $content['thread']->title }}</legend>
-		@component('templates.forum.post-template',[
+		<legend>Chủ đề: {{ $content['thread']->title }}</legend>
+		@component('forum.elements.post-template',[
 			'post' => $content['thread'],
 			'single' => false
 		])
@@ -16,7 +16,7 @@
 		@if (App\ForumPosts::totalPosts($content['thread']->post_id) > 0)
 			<legend>{{ App\ForumPosts::totalPosts($content['thread']->post_id) }} bài viết trả lời:</legend>
 			@foreach ($content['posts'] as $post)
-				@component('templates.forum.post-template', [
+				@component('forum.elements.post-template', [
 					'post'   => $post,
 					'parent' => $content['thread'],
 					'single' => false
@@ -25,7 +25,7 @@
 			@endforeach
 			{{ $content['posts']->links() }}
 		@else
-			trở thành người đầu tiên bình luận về {{ $content['thread']->title }}.
+			Trở thành người đầu tiên bình luận về {{ $content['thread']->title }}.
 		@endif
 		@section('create-post')
 			@if (Auth::check())
@@ -34,7 +34,7 @@
 					'thread' => false
 				])
 			@else
-				đăng nhập để bình luận về chủ đề "{{ $content['thread']->title }}".
+				Đăng nhập để bình luận về chủ đề "{{ $content['thread']->title }}".
 			@endif
 		@endsection
 	@else
@@ -45,8 +45,8 @@
 			<li><a href="{{ route('thread', ['thread_id' => !empty($content->parent_id) ? $content->parent_id : $content->post_id]) }}">{{ (!empty($content->parent_id)) ? App\ForumPosts::postTitle($content->parent_id) : App\ForumPosts::postTitle($content->post_id) }}</a></li>
 			<li class="active">{{ App\ForumPosts::postTitle($content->post_id) }}</li>
 		@endsection
-		<legend>bài viết:</legend>
-		@component('templates.forum.post-template', [
+		<legend>Bài viết:</legend>
+		@component('forum.elements.post-template', [
 			'post'   => $content,
 			'parent' => (!empty(App\ForumPosts::post($content->post_id)->parent_id)) ? App\ForumPosts::thread(App\ForumPosts::post($content->post_id)->parent_id)['thread'] : App\ForumPosts::post($content->post_id),
 			'single' => true

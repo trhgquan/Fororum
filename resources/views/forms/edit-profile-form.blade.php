@@ -4,7 +4,7 @@
 			Chỉnh sửa mật khẩu
 		</div>
 		<div class="panel-body">
-			<form action="{{ route('edit') }}" method="POST" role="form">
+			<form action="{{ route('user.edit') }}" method="POST" role="form">
 				@if ($errors->has('content'))
 					@component('templates.alert-template', ['alert_class'=>$errors->first('class'),'alert_title' => $errors->first('title'), 'alert_content'=>$errors->first('content')])
 					@endcomponent

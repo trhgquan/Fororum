@@ -14,11 +14,6 @@ class LoginController extends Controller
 		$this->middleware('guest')->except('logout');
 	}
 
-	public function home()
-	{
-		return view('login');
-	}
-
 	public function login(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
@@ -37,8 +32,13 @@ class LoginController extends Controller
 		{
 			if (Auth::attempt(['username' => $Request->get('username'), 'password' => $Request->get('password')], $Request->get('remember_me')))
 			{
-				if (!UserInformation::userPermissions(Auth::id())['banned'])
+				$permissions = UserInformation::userPermissions(Auth::id());
+				if (!$permissions['banned'])
 				{
+					if ($permissions['admin'])
+					{
+						return redirect()->route('admin.index');
+					}
 					return redirect()->intended('/');
 				}
 				else
@@ -49,7 +49,7 @@ class LoginController extends Controller
 			}
 			else
 			{
-				return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tên tài khoản hoặc mật khẩu không chính xác!', 'class' => 'danger'])->withInput();
+				return redirect()->back()->withErrors(['username' => 'Tài khoản không chính xác', 'password' => 'Mật khẩu không chính xác'])->withInput();
 			}
 		}
 	}

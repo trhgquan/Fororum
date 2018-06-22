@@ -2,7 +2,7 @@
 
 @section('title', (isset($keyword)) ? 'Kết quả tìm kiếm cho ' . $keyword : 'Tìm kiếm')
 
-@section('navbar-brand')
+@section('navbar_brand')
 	<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }} <small>search</small></a>
 @endsection
 
@@ -13,11 +13,11 @@
 @section('content')
     <div class="row">
         @if ($have_results)
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @include('items.search-sidebar-items')
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-10">
                 @if ($results[$action]->total() > 0)
 					@component('templates.alert-template', [
 						'alert_class' => 'info',
@@ -27,10 +27,16 @@
 					@endcomponent
 
                     @foreach ($results[$action] as $result)
-                        @if ($action == 'user')
-                            <h3><a href="{{ route('profile', [$result->username]) }}">{{ $result->username }}</a> <small style="font-style: italic;">{{ App\UserInformation::userBrandLevels($result->id) }}</small></h3>
+                        @if ($action == 'profile')
+                            <h3>
+								<a href="{{ route('user.profile.username', [$result->username]) }}">{{ $result->username }}</a>
+								<small>
+									@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($result->id)])
+									@endcomponent
+								</small>
+							</h3>
                         @else
-            				@component('templates.forum.post-template', ['post' => $result, 'single' => false])
+            				@component('forum.elements.post-template', ['post' => $result, 'single' => false])
                 			@endcomponent
                         @endif
                     @endforeach

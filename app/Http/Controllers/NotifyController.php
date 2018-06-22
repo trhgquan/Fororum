@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class NotifyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('alive');
-    }
-
     public function notify ($notify_id)
     {
         $custom_notify = UserNotification::custom_notify($notify_id);

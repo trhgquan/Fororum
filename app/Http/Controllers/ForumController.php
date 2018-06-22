@@ -21,7 +21,7 @@ class ForumController extends Controller
 
 	public function home ()
 	{
-		return view('forum.forum-home', ['records' => ForumCategories::ForumCategories()]);
+		return view('forum.pages.forum-home', ['records' => ForumCategories::ForumCategories()]);
 	}
 
 	public function category ($category)
@@ -32,7 +32,7 @@ class ForumController extends Controller
 			$category_threads = ForumPosts::threads($categoryObj->id);
 			if ($category_threads->currentPage() <= $category_threads->lastPage())
 			{
-				return view('forum.forum-category', [
+				return view('forum.pages.forum-category', [
 					'category_name'    => $categoryObj->title,
 					'category_id'      => $categoryObj->id,
 					'category_threads' => $category_threads
@@ -49,14 +49,14 @@ class ForumController extends Controller
 		// kiểm tra trang đã được paginated có tồn tại hay không.
 		if ($thread['posts']->currentPage() <= $thread['posts']->lastPage())
 		{
-			return view('forum.forum-display', ['thread' => true,'content' => $thread]);
+			return view('forum.pages.forum-display', ['thread' => true,'content' => $thread]);
 		}
 		return redirect()->route('thread', ['thread_id' => $thread_id,'page' => $thread['posts']->lastPage()]);
 	}
 
 	public function post ($post_id)
 	{
-		return view('forum.forum-display', ['thread' => false,'content' => ForumPosts::post($post_id)]);
+		return view('forum.pages.forum-display', ['thread' => false,'content' => ForumPosts::post($post_id)]);
 	}
 
 	public function createPost (Request $Request)

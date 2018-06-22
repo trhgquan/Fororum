@@ -14,7 +14,7 @@ class UserFollowers extends Model
      * static method is_followed
      * @param  int  $uid
      * @param  int  $pid
-     * @return boolean true nếu uid đã follow pid, false là ngược lại.
+     * @return bool
      */
     public static function is_followed ($uid, $pid)
     {
@@ -24,7 +24,7 @@ class UserFollowers extends Model
     /**
      * static method followers
      * @param  int $uid
-     * @return int số người follow của uid.
+     * @return int
      */
     public static function followers ($uid)
     {
@@ -34,7 +34,7 @@ class UserFollowers extends Model
     /**
      * static method followers_list
      * @param  int $uid
-     * @return object list of user's followers
+     * @return object
      */
     public static function followers_list ($uid)
     {
@@ -44,7 +44,7 @@ class UserFollowers extends Model
     /**
      * static method following
      * @param  int $uid
-     * @return int số người mà uid follow.
+     * @return int
      */
     public static function following ($uid)
     {
@@ -55,7 +55,6 @@ class UserFollowers extends Model
      * static method follow
      * @param  int $uid
      * @param  int $pid
-     * @return null (Action method)
      */
     public static function follow ($uid, $pid)
     {

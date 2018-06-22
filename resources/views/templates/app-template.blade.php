@@ -14,7 +14,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					@section('navbar-brand')
+					@section('navbar_brand')
 						<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }}</a>
 					@show
 				</div>
