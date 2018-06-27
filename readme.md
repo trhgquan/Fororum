@@ -5,11 +5,7 @@ The Customizable Laravel Forum
 Composer, of course.
 
 ### Installing
-Install via Composer:
-
-```
-composer require --dev "trhgquan/Laravel-MyApp"
-```
+Install via Composer.
 
 After the installation and .env configuration are completed, browse to the project's directory and run php artisan
 ```
