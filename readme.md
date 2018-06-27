@@ -20,5 +20,5 @@ php artisan migrate
 * **Quan, Tran Hoang** - *One-man army* - [trhgquan](https://github.com/trhgquan)
 
 ## Built with
-* [Laravel 5.6] (https://laravel.com) Laravel - The PHP Framework for web artisans by Taylor Otwell
-* [Bootstrap 3] (https://getbootstrap.com) Bootstrap 3.3.7
+* [Laravel] (https://laravel.com) Laravel 5.6 - The newest PHP Framework for web artisans by Taylor Otwell
+* [Bootstrap] (https://getbootstrap.com) Bootstrap 3.3.7
