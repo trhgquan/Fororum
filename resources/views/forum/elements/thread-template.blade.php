@@ -9,7 +9,7 @@
 				@if (App\ForumPosts::totalPosts($thread->post_id))
 					, {{ App\ForumPosts::totalPosts($thread->post_id) }} bài đăng trả lời
 				@endif
-				, vào lúc {{ date_format($thread->created_at, 'd/m/Y h:i:s A') }}
+				, vào lúc {{ date_format($thread->created_at, 'h:i:s A T, d-m-Y') }}
 			</small>
 		</div>
 	</div>
