@@ -21,16 +21,12 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 
 	Route::group(['prefix' => '/root', 'as' => 'root.'], function(){
 		Route::get('/user', function(){
-			return route('admin.root.user');
+			return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
 		})->name('user');
 
 		Route::get('/post', function(){
-			return route('admin.root.post');
+			return view('admin.admin-template', ['action' => 'management', 'role' => 'post']);
 		})->name('post');
-
-		Route::get('/staff', function(){
-			return view('admin.admin-template', ['action' => 'staff']);
-		})->name('staff');
 	});
 
 	Route::get('/report', function(){

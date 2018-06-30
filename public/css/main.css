@@ -54,6 +54,11 @@ a:hover {
     transition: none;
 }
 
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover
+{
+    background-color: #007bff;
+}
+
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label,
@@ -116,7 +121,7 @@ a:hover {
 {
 	float: right;
 }
-.page-title>small, .media-body>small
+.page-title>small, .media-body>small, .media-box>small
 {
 	font-style: italic;
 }

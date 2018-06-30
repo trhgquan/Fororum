@@ -10,6 +10,8 @@ class UserReport extends Model
 {
     const max_display = 1; // pagination
 
+    protected $table = 'users_reports';
+
     protected $fillable = ['id','user_id','participant_id','type','reason','reviewed'];
 
     /**

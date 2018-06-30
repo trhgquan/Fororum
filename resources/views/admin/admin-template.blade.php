@@ -13,10 +13,10 @@
 
 @section('content')
 	@include('admin.elements.admin-navbar')
-	<div class="row">
 		@switch ($action)
-			@case('dashboard')
-				@break;
+			@case('management')
+				@include('admin.elements.admin-management', ['role' => $role])
+				@break
 
 			@case('report')
 				@include('admin.elements.admin-report', ['reports' => App\UserReport::getAll()])
@@ -30,5 +30,4 @@
 				@include('admin.elements.admin-quick')
 				@break
 		@endswitch
-	</div>
 @endsection
