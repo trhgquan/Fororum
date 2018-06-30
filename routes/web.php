@@ -18,12 +18,25 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 	Route::get('/', function(){
 		return view('admin.admin-template', ['action' => 'home']);
 	})->name('index');
+
+	Route::group(['prefix' => '/root', 'as' => 'root.'], function(){
+		Route::get('/user', function(){
+			return route('admin.root.user');
+		})->name('user');
+
+		Route::get('/post', function(){
+			return route('admin.root.post');
+		})->name('post');
+
+		Route::get('/staff', function(){
+			return view('admin.admin-template', ['action' => 'staff']);
+		})->name('staff');
+	});
+
 	Route::get('/report', function(){
 		return view('admin.admin-template', ['action' => 'report']);
 	})->name('report');
-	Route::get('/staff', function(){
-		return view('admin.admin-template', ['action' => 'staff']);
-	})->name('staff');
+
 	Route::post('/censor', 'AdminController@action')->name('censor');
 });
 

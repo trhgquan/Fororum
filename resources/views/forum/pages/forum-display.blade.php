@@ -5,7 +5,7 @@
 		@section('breadcrumb_content')
 			<li><a href="{{ route('forum') }}">forum</a></li>
 			<li><a href="{{ route('category', ['category' => App\ForumCategories::Category($content['thread']->category_id)->keyword ]) }}">{{ App\ForumCategories::Category($content['thread']->category_id)->title }}</a></li>
-			<li>{{ $content['thread']->title }}</li>
+			<li class="active">{{ $content['thread']->title }}</li>
 		@endsection
 		<legend>Chủ đề: {{ $content['thread']->title }}</legend>
 		@component('forum.elements.post-template',[
@@ -42,7 +42,7 @@
 		@section('breadcrumb_content')
 			<li><a href="{{ route('forum') }}">forum</a></li>
 			<li><a href="{{ route('category', ['category' => App\ForumCategories::Category(App\ForumPosts::thread(!empty($content->parent_id) ? $content->parent_id : $content->post_id)['thread']->category_id)->keyword])}}">{{ App\ForumCategories::Category(App\ForumPosts::thread(!empty($content->parent_id) ? $content->parent_id : $content->post_id)['thread']->category_id)->title }}</a></li>
-			<li><a href="{{ route('thread', ['thread_id' => !empty($content->parent_id) ? $content->parent_id : $content->post_id]) }}">{{ (!empty($content->parent_id)) ? App\ForumPosts::postTitle($content->parent_id) : App\ForumPosts::postTitle($content->post_id) }}</a></li>
+			<li><a href="{{ route('thread', ['thread_id' => !empty($content->parent_id) ? $content->parent_id : $content->post_id]) }}">...</a></li>
 			<li class="active">{{ App\ForumPosts::postTitle($content->post_id) }}</li>
 		@endsection
 		<legend>Bài viết:</legend>

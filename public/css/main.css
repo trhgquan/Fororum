@@ -6,15 +6,105 @@ NO SHADOW, WE DON'T NEED SHADOW ANYWAY.
 @import "buttons.css";
 @import "labels.css";
 
-body{padding-top:95px;padding-bottom:75px}.container-fluid{margin:0 98}.nav>li>a,.navbar-brand{padding-top:0;padding-bottom:0;height:80px;line-height:80px}.navbar-form{margin-top:23px}.nav>li:active,.nav>li:hover{border-bottom:.5px solid #007bff!important}.dropdown{position:relative}a:link,a:visited{text-decoration:none;color:#007bff}a:active,a:hover{text-decoration:none;color:#0056b3}.dropdown-menu,.has-error>.form-control:focus,input.form-control:focus,textarea.form-control:focus{box-shadow:none;transition:none}.has-error .checkbox,.has-error .checkbox-inline,.has-error .control-label,.has-error .help-block,.has-error .radio,.has-error .radio-inline,.has-error.checkbox label,.has-error.checkbox-inline label,.has-error.radio label,.has-error.radio-inline label{color:#d9534f!important}.has-error .form-control{border-color:#d9534f!important}.form-control:focus{border-color:#007bff}.breadcrumb{background-color:transparent;padding:0}.breadcrumb>li+li::before{content:'\5C'}.pagination>.page-item.active>span{background-color:#007bff}.pagination>.page-item>a{color:#007bff}
-.list-group-item.active,.list-group-item.active:hover
-{
-	background-color: #007bff;
-	border-color: #007bff;
+body {
+    padding-top: 95px;
+    padding-bottom: 75px
 }
-.list-group-item.active>.badge
+
+.container-fluid {
+    margin: 0 98
+}
+
+.navbar-nav>li>a,
+.navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 80px;
+    line-height: 80px
+}
+
+.navbar-nav>li:active,
+.navbar-nav>li:hover {
+    border-bottom: .5px solid #007bff!important
+}
+
+.navbar-form {
+    margin-top: 23px
+}
+
+.dropdown {
+    position: relative
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: #007bff
+}
+
+a:active,
+a:hover {
+    text-decoration: none;
+    color: #0056b3
+}
+
+.dropdown-menu,
+.form-control:focus {
+    box-shadow: none !important;
+    transition: none;
+}
+
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.checkbox-inline label,
+.has-error.radio label,
+.has-error.radio-inline label {
+    color: #d9534f!important
+}
+
+.has-error .form-control {
+    border-color: #d9534f!important
+}
+
+.form-control:focus {
+    border-color: #007bff
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0
+}
+
+.breadcrumb>li+li::before {
+    content: '\5C'
+}
+
+.pagination>.page-item.active>span {
+    background-color: #007bff
+}
+
+.pagination>.page-item>a {
+    color: #007bff
+}
+
+.list-group-item.active,
+.list-group-item.active:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.list-group-item.active>.badge {
+    color: #007bff;
+}
+
+.nav .open>a,.nav .open>a:focus,.nav .open>a:hover
 {
-	color: #007bff;
+    border-color: #007bff;
 }
 
 /* CSS cho forum */
@@ -50,4 +140,8 @@ body{padding-top:95px;padding-bottom:75px}.container-fluid{margin:0 98}.nav>li>a
 blockquote>footer
 {
 	font-style: italic;
+}
+.nav-tabs
+{
+	margin-bottom: 10px;
 }
