@@ -86,7 +86,7 @@ a:hover {
 }
 
 .breadcrumb>li+li::before {
-    content: '\5C'
+    content: '\3E'
 }
 
 .pagination>.page-item.active>span {

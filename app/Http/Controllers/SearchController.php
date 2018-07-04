@@ -19,11 +19,10 @@ class SearchController extends Controller
 		$validator = Validator::make([
 			'keyword' => $keyword
 		], [
-			'keyword' => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:3']
+			'keyword' => ['required', 'min:3']
 		], [
 			'keyword.required' => 'Từ khóa không được bỏ trống',
 			'keyword.min'      => 'Từ khóa phải ít nhất 3 ký tự',
-			'keyword.regex'    => 'Từ khóa không hợp lệ'
 		]);
 
 		if (!$validator->fails())
@@ -59,12 +58,11 @@ class SearchController extends Controller
 	public function searchWithKeyword (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
-			'keyword' => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:3'],
+			'keyword' => ['required', 'min:3'], // keyword for post to, so get rid of the fakkin regex.
 			'action'  => ['required', 'regex:/^[A-Za-z]+$/']
 		], [
 			'keyword.required' => 'Từ khóa không được bỏ trống.',
 			'keyword.min'      => 'Từ khóa phải ít nhất 3 ký tự.',
-			'keyword.regex'    => 'Từ khóa không hợp lệ.',
 			'action.regex'	   => 'Một lỗi không mong muốn vừa xảy ra.'
 		]);
 
