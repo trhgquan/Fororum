@@ -1,6 +1,6 @@
 @extends('templates.app-template')
 
-@section('title', 'Trang quản trị viên')
+@section('title', 'Quản trị')
 
 @section('navbar_brand')
 	<a href="{{ route('admin.index') }}" class="navbar-brand">{{ config('app.name') }} <small>for Supreme Leader</small></a>
@@ -13,21 +13,17 @@
 
 @section('content')
 	@include('admin.elements.admin-navbar')
-		@switch ($action)
-			@case('management')
-				@include('admin.elements.admin-management', ['role' => $role])
-				@break
+	@switch ($action)
+		@case('management')
+			@include('admin.elements.admin-management', ['role' => $role])
+			@break
 
-			@case('report')
-				@include('admin.elements.admin-report', ['reports' => App\UserReport::getAll()])
-				@break
+		@case('staff')
+			chưa build.
+			@break
 
-			@case('staff')
-				chưa build.
-				@break
-
-			@default
-				@include('admin.elements.admin-quick')
-				@break
-		@endswitch
+		@default
+			@include('admin.elements.admin-quick')
+			@break
+	@endswitch
 @endsection

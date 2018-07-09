@@ -13,7 +13,7 @@ class ReportController extends Controller
 {
     public function profile ($username)
     {
-        if (User::exist($username) && $username !== Auth::user()->username)
+        if (User::exist($username) && $username !== Auth::user()->username && UserReport::reportable(Auth::id(), User::profile($username)->id, 'profile'))
         {
             if (!UserReport::is_reported(Auth::id(), User::profile($username)->id, 'profile'))
             {
@@ -23,11 +23,9 @@ class ReportController extends Controller
                     'ppid' => User::profile($username)->id
                 ]);
             }
-            return view('report', [
-                'type' => 'after'
-            ]);
+            return view('report', ['type' => 'after']);
         }
-        return abort(403, 'User không tồn tại / Bạn không thể report chính mình.');
+        return view('report', ['type' => 'error']);
     }
 
     public function post ($post_id)
@@ -43,11 +41,9 @@ class ReportController extends Controller
                     'ppid' => $post_id
                 ]);
             }
-            return view('report', [
-                'type' => 'after'
-            ]);
+            return view('report', ['type' => 'after']);
         }
-        return abort(403, 'Post không tồn tại / Bạn không thể report post của mình đăng.');
+        return view('report', ['type' => 'error']);
     }
 
     public function handle (Request $Request)
@@ -80,7 +76,6 @@ class ReportController extends Controller
                         'user_id' => Auth::id(),
                         'type'    => $Request->get('section'),
                         'reason'  => $reason,
-                        'reviewed' => 0
                     ]);
                     return redirect()->back()->withErrors(['reason' => 'Đã báo cáo tài khoản thành công']);
                 }

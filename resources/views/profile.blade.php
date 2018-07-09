@@ -60,6 +60,10 @@
 						counter({{ App\UserFollowers::following($content['user_content']->id) }}, '2ndrealtime', 75)
 					</script>
 				@endsection
+			@else
+				<div class="col-md-12">
+					<p>Tài khoản này đã bị khóa do vi phạm. Tìm hiểu thêm.</p>
+				</div>
 			@endif
 		</div>
 	@else

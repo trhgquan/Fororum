@@ -19,7 +19,7 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 		return view('admin.admin-template', ['action' => 'home']);
 	})->name('index');
 
-	Route::group(['prefix' => '/root', 'as' => 'root.'], function(){
+	Route::group(['prefix' => '/report', 'as' => 'root.'], function(){
 		Route::get('/user', function(){
 			return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
 		})->name('user');

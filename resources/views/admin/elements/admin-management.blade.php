@@ -1,5 +1,13 @@
 @if ($role === 'post')
-    Quản trị bài đăng
+    Quản lý bài đăng.
 @else
-    Quản lý người dùng
+    @if ($errors->has('class'))
+        @component('templates.alert-template', [
+            'alert_title' => 'Thông báo',
+            'alert_class' => $errors->first('class'),
+            'alert_content' => $errors->first('content')
+        ])
+        @endcomponent
+    @endif
+    @include('admin.elements.manage.manage-user', ['reports' => App\UserReport::getUsersOnly()])
 @endif

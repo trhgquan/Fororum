@@ -4,11 +4,13 @@ namespace App;
 
 use App\User;
 use App\ForumPosts;
+use App\UserInformations;
+use App\UserNotification;
 use Illuminate\Database\Eloquent\Model;
 
 class UserReport extends Model
 {
-    const max_display = 1; // pagination
+    const max_display = 5; // pagination
 
     protected $table = 'users_reports';
 
@@ -21,12 +23,56 @@ class UserReport extends Model
     protected static $reportable = ['profile', 'post'];
 
     /**
+     * procedure review
+     * this action will loop through the Database
+     * looking for users reporting same account
+     * and notify them what happened.
+     * @param  int $report_id
+     * @param  string $action
+     * @return null
+     */
+    public static function review ($report_id, $action)
+    {
+        $report = self::report_information($report_id);
+
+        $all_reports = self::where([
+            ['participant_id', '=', $report->participant_id],
+            ['type', '=', $report->type],
+            ['reviewed', '=', 0]
+        ])->get();
+
+        foreach ($all_reports as $one_report)
+        {
+            $report = self::report_information($one_report->id);
+            $report->reviewed = 1;
+            $report->save();
+
+            UserNotification::create([
+                'user_id' => $report->user_id,
+                'participant_id' => $report->participant_id,
+                'route' => $report->type,
+                'content' => 'Hệ thống đã xem xét và đã ' . $action . ' báo cáo của bạn về ' . (($report->type === 'profile') ? 'tài khoản ' : 'bài viết ') . UserReport::participant_title($report->participant_id, $report->type)
+            ]);
+        }
+    }
+
+    /**
      * method not_reviewed
-     * @return int
+     * @return array
      */
     public static function not_reviewed ()
     {
-        return self::where('reviewed', 0)->count();
+        return [
+            'total' => self::where('reviewed', 0)->count(),
+            'profile' => self::where([
+                ['reviewed', '=', 0],
+                ['type', '=', 'profile']
+            ])->count(),
+            'post' => self::where([
+                ['reviewed', '=', 0],
+                ['type', '=', 'post']
+            ])->count()
+        ];
     }
 
     /**
@@ -69,8 +115,10 @@ class UserReport extends Model
         {
             if (self::is_profile($type))
             {
-                $creator = User::username($participant);
-                return (User::profile($creator)->id !== $user) ? true : false;
+                $participant_profile = User::username($participant);
+                $participant_id = User::profile($participant_profile)->id;
+                $permissions = UserInformation::userPermissions($participant_id);
+                return ($participant_id !== $user && !$permissions['admin'] && !$permissions['banned']) ? true : false;
             }
             $creator = ForumPosts::post($participant)->user_id;
             return ($creator !== $user) ? true : false;
@@ -94,12 +142,15 @@ class UserReport extends Model
     }
 
     /**
-     * method getAll
+     * method getUsersOnly
      * @return object
      */
-    public static function getAll ()
+    public static function getUsersOnly ()
     {
-        return self::where('reviewed', 0)->simplePaginate(self::max_display);
+        return self::where([
+            ['reviewed', '=', 0],
+            ['type', '=', 'profile']
+        ])->orderBy('id', 'DESC')->paginate(self::max_display);
     }
 
     /**
