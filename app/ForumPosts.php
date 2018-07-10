@@ -7,8 +7,7 @@ use Carbon\Carbon;
 
 class ForumPosts extends Model
 {
-    const max_display = 5; // phân trang cho result
-    const timezone = 'Asia/Damascus'; // múi giờ, dùng cho Carbon datetime (xx days ago)
+    const max_display = 5; // result pagination
 
     protected $table = 'forum_posts';
 
@@ -21,7 +20,7 @@ class ForumPosts extends Model
      */
     public static function ago ($date)
     {
-        $now = Carbon::now(self::timezone);
+        $now = Carbon::now();
         return (new Carbon($date))->diffInDays($now);
     }
 

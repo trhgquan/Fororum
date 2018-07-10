@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\User;
+use App\UserBlacklists;
 use App\UserInformation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -43,8 +46,14 @@ class LoginController extends Controller
 				}
 				else
 				{
-					Auth::logout();
-					return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị ban khỏi hệ thống!', 'class' => 'warning']);
+					if (!UserBlacklists::checkIfExpired(Auth::id()))
+					{
+						$reason = UserBlacklists::reason(Auth::id());
+						Auth::logout();
+						return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'warning']);
+					}
+					UserBlacklists::unban(Auth::id());
+					return redirect()->intended('/');
 				}
 			}
 			else
