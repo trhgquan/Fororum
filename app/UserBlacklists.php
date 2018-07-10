@@ -14,6 +14,11 @@ class UserBlacklists extends Model
 
     protected $fillable = ['user_id', 'admin_id', 'expire'];
 
+    /**
+     * ban procedure
+     * @param  int $credential User id
+     * @param  datetime $until expired
+     */
     public static function ban ($credential, $until)
     {
         if (!UserInformation::userPermissions($credential)['banned'])
@@ -30,6 +35,10 @@ class UserBlacklists extends Model
         }
     }
 
+    /**
+     * unban procedure
+     * @param  int $credential user id
+     */
     public static function unban ($credential)
     {
         self::where('user_id', $credential)->delete();
@@ -39,6 +48,11 @@ class UserBlacklists extends Model
         $user->save();
     }
 
+    /**
+     * method reason
+     * @param  int $credential user id
+     * @return object
+     */
     public static function reason ($credential)
     {
         return self::where('user_id', $credential)->first();
@@ -48,8 +62,8 @@ class UserBlacklists extends Model
      * method checkIfExpired
      * check if user ban has expire.
      * @param  int $credential
-     * @return false if user not banned.
-     * @return true if user banned and
+     * @return false if user ban has not expired.
+     * @return true if user ban has expired
      */
     public static function checkIfExpired ($credential)
     {
@@ -57,6 +71,12 @@ class UserBlacklists extends Model
         return (Carbon::now() > self::until($expire->first()->expire));
     }
 
+    /**
+     * private method until
+     * return expire date
+     * @param  Carbon datetime $expire
+     * @return Carbon\Carbon date
+     */
     private static function until ($expire)
     {
         return (new Carbon($expire));
