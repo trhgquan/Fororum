@@ -6,6 +6,9 @@ Composer, of course.
 
 ### Installing
 Install via Composer.
+```
+composer require "trhgquan/Laravel-MyApp"
+```
 
 After the installation and .env configuration are completed, browse to the project's directory and run php artisan
 ```
