@@ -14,6 +14,7 @@ php artisan migrate
 
 ## Authors
 * **Quan, Tran Hoang** - *One-man army* - [trhgquan](https://github.com/trhgquan)
+* **me_a_doge** - *unknown from dogeland* - [meadoge](https://github.com/meadoge)
 
 ## Built with
 * [Laravel](https://laravel.com) Laravel 5.6 - The newest PHP Framework for web artisans by Taylor Otwell
