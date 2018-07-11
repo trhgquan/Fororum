@@ -32,6 +32,10 @@ class AdminController extends Controller
             }
             return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'Đã có một lỗi xảy ra. Mã lỗi: ' . $validator->errors()->first()]);
         }
+        else
+        {
+            return 'delete subforum';
+        }
     }
 
     public function censorUser (Request $Request)
