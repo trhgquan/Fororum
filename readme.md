@@ -5,9 +5,15 @@ The Customizable Laravel Forum
 Composer, of course.
 
 ### Installing
-Install via Composer.
+Install via Git.
 ```
-composer require "trhgquan/Laravel-MyApp"
+git clone https://github.com/trhgquan/Laravel-MyApp.git
+```
+
+After that, run Composer install to install packages
+
+```
+composer install
 ```
 
 After the installation and .env configuration are completed, browse to the project's directory and run php artisan
