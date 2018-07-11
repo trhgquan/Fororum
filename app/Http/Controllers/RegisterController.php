@@ -16,11 +16,6 @@ class RegisterController extends Controller
 		$this->middleware('guest');
 	}
 
-	public function home()
-	{
-		return view('register');
-	}
-
 	public function register(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [

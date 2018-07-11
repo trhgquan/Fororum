@@ -7,8 +7,7 @@ use Carbon\Carbon;
 
 class ForumPosts extends Model
 {
-    const max_display = 5; // phân trang cho result
-    const timezone = 'Asia/Damascus'; // múi giờ, dùng cho Carbon datetime (xx days ago)
+    const max_display = 5; // result pagination
 
     protected $table = 'forum_posts';
 
@@ -17,18 +16,28 @@ class ForumPosts extends Model
     /**
      * method ago
      * @param datetime $date
-     * @return string hiện tại cách $date bao nhiêu ngày
+     * @return string
      */
     public static function ago ($date)
     {
-        $now = Carbon::now(self::timezone);
+        $now = Carbon::now();
         return (new Carbon($date))->diffInDays($now);
+    }
+
+    /**
+     * static function exists
+     * @param  int $post_id
+     * @return bool
+     */
+    public static function exist ($post_id)
+    {
+        return self::where('post_id', $post_id)->exists();
     }
 
     /**
      * static method postTitle
      * @param  int $post_id
-     * @return string title của post $post_id
+     * @return string
      */
     public static function postTitle ($post_id)
     {
@@ -44,17 +53,17 @@ class ForumPosts extends Model
     /**
      * public method search
      * @param  string $keyword
-     * @return object (paginated) post
+     * @return object
      */
     public static function search ($keyword)
     {
-        return self::where('title', 'like', '%'.$keyword.'%')->orWhere('content', 'like', '%'.$keyword.'%')->paginate(self::max_display);
+        return self::where('title', 'like', '%'.$keyword.'%')->orWhere('content', 'like', '%'.$keyword.'%')->orderBy('created_at', 'DESC')->paginate(self::max_display);
     }
 
     /**
      * method threads
      * @param int $category_id
-     * @return object tổng số thread trong 1 category.
+     * @return object
      */
     public static function threads ($category_id)
     {
@@ -67,7 +76,7 @@ class ForumPosts extends Model
     /**
      * method thread
      * @param int $thread_id
-     * @return object content của 1 thread, bao gồm tất cả các post.
+     * @return object
      */
     public static function thread ($thread_id) // this return all in a thread: main thread and posts
     {
@@ -82,6 +91,11 @@ class ForumPosts extends Model
     	];
     }
 
+    /**
+     * static function totalPosts
+     * @param  int $thread_id
+     * @return int
+     */
     public static function totalPosts ($thread_id)
     {
         return self::where('parent_id', $thread_id)->count();
@@ -90,7 +104,7 @@ class ForumPosts extends Model
     /**
      * method post
      * @param int $post_id
-     * @return object content của 1 post.
+     * @return object
      */
     public static function post ($post_id)
     {
@@ -100,7 +114,7 @@ class ForumPosts extends Model
     /**
      * private method posts
      * @param int $parent
-     * @return object content của tất cả các post trong $parent thread.
+     * @return object.
      */
     private static function posts ($parent)
     {

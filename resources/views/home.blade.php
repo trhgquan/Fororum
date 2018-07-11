@@ -18,7 +18,11 @@
 		@if (Auth::check())
 			<h1>Chào {{ Auth::user()->username }}!</h1>
 			<p>Cổng thông tin chính thức và diễn đàn của {{ config('app.name') }}</p>
-			<a href="{{ route('forum') }}">vào diễn đàn</a>
+			<a href="{{ route('forum') }}">forum</a>
+			<a href="{{ route('search.home') }}">search</a>
+			@if (App\UserInformation::userPermissions(Auth::id())['admin'])
+				<a href="{{ route('admin.index') }}">admin</a>
+			@endif
 		@else
 			<h1 class="page-title">{{ config('app.name') }}</h1>
 			<p>Cổng thông tin chính thức, diễn đàn open-source của {{ config('app.name') }}</p>

@@ -15,7 +15,7 @@ class UserNotification extends Model
     protected $hidden = [];
 
     /**
-     * $primaryKey, dùng để thực hiện các method update (trong controller).
+     * $primaryKey, for update method (controller).
      * @var string
      */
     protected $primaryKey = 'notify_id';
@@ -23,24 +23,26 @@ class UserNotification extends Model
     /**
      * static method route_check
      * @param  object $notify
-     * @return array route của $notify và parameter.
+     * @return array
      */
     public static function route_check ($notify)
     {
         switch ($notify->route)
         {
             case 'profile':
+                $Route = 'user.profile.username';
                 $RouteParam = User::username($notify->participant_id);
                 break;
 
             // more goes here
 
             default:
+                $Route = 'post';
                 $RouteParam = $notify->participant_id;
                 break;
         }
         return [
-            'route' => $notify->route,
+            'route' => $Route,
             'param' => $RouteParam
         ];
     }
@@ -48,7 +50,7 @@ class UserNotification extends Model
     /**
      * static method count
      * @param  int $user_id
-     * @return int số thông báo mà user chưa đọc.
+     * @return int
      */
     public static function count ($user_id)
     {
@@ -61,7 +63,7 @@ class UserNotification extends Model
     /**
      * static method notify
      * @param  int $user_id
-     * @return object notify của user (tất cả các notify).
+     * @return object
      */
     public static function notify ($user_id)
     {
@@ -74,7 +76,7 @@ class UserNotification extends Model
     /**
      * static method custom_notify
      * @param  int $notify_id
-     * @return object notify (1 notify)
+     * @return object
      */
     public static function custom_notify ($notify_id)
     {

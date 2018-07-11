@@ -14,7 +14,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					@section('navbar-brand')
+					@section('navbar_brand')
 						<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }}</a>
 					@show
 				</div>
@@ -32,7 +32,6 @@
 
 		<script src="{{ url('js/jquery.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
-		{{-- <script src="{{ url('js/action.js') }}"></script> --}}
 		@yield('extrajs')
 	</body>
 

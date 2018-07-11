@@ -15,45 +15,22 @@ class UserInformation extends Model
 	/**
 	 * method userPermissions
 	 * @param int $id
-	 * @return array boolean banned, admin, confirmed
+	 * @return array
 	 */
 	public static function userPermissions($id)
 	{
 		return [
 			'banned' => self::userBanned($id),
 			'admin' => self::userAdmin($id),
+			'mod'   => self::userMod($id),
 			'confirmed' => self::userConfirmed($id)
 		];
 	}
 
 	/**
-	 * method userBrandLevels
-	 * @param int $id
-	 * @return string brand level của user
-	 */
-	public static function userBrandLevels($id)
-	{
-		$permissions = self::userPermissions($id);
-		switch ($permissions) {
-			case $permissions['admin']:
-				return 'tài khoản hệ thống';
-				break;
-			case $permissions['banned']:
-				return 'tài khoản đã bị khóa';
-				break;
-			case $permissions['confirmed']:
-				return 'tài khoản chính thức';
-				break;
-			default:
-				return '';
-				break;
-		}
-	}
-
-	/**
 	 * protected method userBanned
 	 * @param int $id
-	 * @return boolean true nếu user bị ban
+	 * @return bool
 	 */
 	protected static function userBanned($id)
 	{
@@ -63,7 +40,7 @@ class UserInformation extends Model
 	/**
 	 * protected method userAdmin
 	 * @param int $id
-	 * @return boolean true nếu user là admin
+	 * @return bool
 	 */
 	protected static function userAdmin($id)
 	{
@@ -71,9 +48,19 @@ class UserInformation extends Model
 	}
 
 	/**
+	 * protected method userMod
+	 * @param  int $id
+	 * @return bool
+	 */
+	protected static function userMod($id)
+	{
+		return (self::find($id)->permissions == 3) ? true : false;
+	}
+
+	/**
 	 * protected method userConfirmed
 	 * @param int $id
-	 * @return boolean true nếu user đã xác nhận tài khoản
+	 * @return bool
 	 */
 	protected static function userConfirmed($id)
 	{

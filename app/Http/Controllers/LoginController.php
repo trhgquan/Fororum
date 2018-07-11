@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\User;
+use App\UserBlacklists;
 use App\UserInformation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -12,11 +15,6 @@ class LoginController extends Controller
 	public function __construct()
 	{
 		$this->middleware('guest')->except('logout');
-	}
-
-	public function home()
-	{
-		return view('login');
 	}
 
 	public function login(Request $Request)
@@ -37,19 +35,30 @@ class LoginController extends Controller
 		{
 			if (Auth::attempt(['username' => $Request->get('username'), 'password' => $Request->get('password')], $Request->get('remember_me')))
 			{
-				if (!UserInformation::userPermissions(Auth::id())['banned'])
+				$permissions = UserInformation::userPermissions(Auth::id());
+				if (!$permissions['banned'])
 				{
+					if ($permissions['admin'])
+					{
+						return redirect()->route('admin.index');
+					}
 					return redirect()->intended('/');
 				}
 				else
 				{
-					Auth::logout();
-					return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị ban khỏi hệ thống!', 'class' => 'warning']);
+					if (!UserBlacklists::checkIfExpired(Auth::id()))
+					{
+						$reason = UserBlacklists::reason(Auth::id());
+						Auth::logout();
+						return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'warning']);
+					}
+					UserBlacklists::unban(Auth::id());
+					return redirect()->intended('/');
 				}
 			}
 			else
 			{
-				return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tên tài khoản hoặc mật khẩu không chính xác!', 'class' => 'danger'])->withInput();
+				return redirect()->back()->withErrors(['username' => 'Tài khoản không chính xác', 'password' => 'Mật khẩu không chính xác'])->withInput();
 			}
 		}
 	}

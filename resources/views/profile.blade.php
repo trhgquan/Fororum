@@ -2,15 +2,12 @@
 
 @if (!$edit)
 	@section('title', $content['user_content']->username)
-	@section('extracss')
-		legend>h1>small { font-style: italic; font-size: 50%; }
-	@endsection
 @else @section('title', 'Chỉnh sửa người dùng')
 @endif
 
 @section('navbar_item')
 	@if (!$edit)
-		@include('forms.search-profile-form')
+		@include('forms.search-navbar-form', ['action' => 'profile'])
 	@endif
 	@include('items.navbar-items')
 @endsection
@@ -20,9 +17,13 @@
 		<div class="row">
 			<div class="col-md-12">
 				<legend>
-						<h1>{{ $content['user_content']->username }}
-							<small>{{ App\UserInformation::userBrandLevels($content['user_content']->id) }}</small>
-						</h1>
+					<h1>
+						{{ $content['user_content']->username }}
+						<small>
+							@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($content['user_content']->id)])
+							@endcomponent
+						</small>
+					</h1>
 				</legend>
 			</div>
 			<!-- 3 cột, cột đầu là forum statistics, cột sau là user information, cột cuối cùng là user action -->
@@ -30,14 +31,19 @@
 				<div class="col-md-4">
 					<p>Tổng số chủ đề đã tạo: <b>{{ $content['history']['threads']->count() }}</b></p>
 					<p>Tổng số bài đăng trên diễn đàn: <b>{{ $content['history']['posts']->count() }}</b></p>
-					<a href="#">tìm tất cả các chủ đề, bài đăng của {{ $content['user_content']->username }}</a>
 				</div>
 
 				<div class="col-md-4">
 					<p>Email liên hệ: <b>{{ $content['user_content']->email }}</b></p>
 					<p>Tham gia vào ngày <b>{{ date_format($content['user_content']->created_at, 'd-m-Y') }}</b>, <b>{{ App\ForumPosts::ago($content['user_content']->created_at) }}</b> ngày trước.</p>
 					@if ($this_profile)
-						<a href="{{ route('edit') }}">đến trang chỉnh sửa hồ sơ</a>
+						<a href="{{ route('user.edit') }}">đến trang chỉnh sửa hồ sơ</a>
+					@else
+						@if (!App\UserReport::is_reported(Auth::id(), $content['user_content']->id, 'profile'))
+							<a href="{{ route('report.profile', [$content['user_content']->username]) }}">báo cáo {{ $content['user_content']->username }}</a>
+						@else
+							<div class="label label-danger">đã báo cáo</div>
+						@endif
 					@endif
 				</div>
 
@@ -54,6 +60,10 @@
 						counter({{ App\UserFollowers::following($content['user_content']->id) }}, '2ndrealtime', 75)
 					</script>
 				@endsection
+			@else
+				<div class="col-md-12">
+					<p>Tài khoản này đã bị khóa do vi phạm. Tìm hiểu thêm.</p>
+				</div>
 			@endif
 		</div>
 	@else

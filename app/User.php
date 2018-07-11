@@ -33,7 +33,7 @@ class User extends Authenticatable
     /**
      * static method exist
      * @param  int or string $credentials (uid hoặc username đều được)
-     * @return bool true nếu user tồn tại, false nếu không
+     * @return bool
      */
     public static function exist ($credentials)
     {
@@ -41,29 +41,29 @@ class User extends Authenticatable
     }
 
     /**
-     * static method Profile
-     * @param  int or string $credentials (username hoặc userid)
-     * @return object profile của user
+     * method username
+     * @param int $id
+     * @return string
      */
-    public static function profile($credentials)
+    public static function username($id)
+    {
+        return self::where('id', $id)->firstOrFail()->username; // if the user is not found then 404
+    }
+
+    /**
+     * static method Profile
+     * @param  string
+     * @return object
+     */
+    public static function profile ($credentials)
     {
         return self::where('username', $credentials)->firstOrFail();
     }
 
     /**
-     * method username
-     * @param int $id
-     * @return string username của người dùng
-     */
-    public static function username($id)
-    {
-        return self::where('id', $id)->first()->username;
-    }
-
-    /**
      * method userPosts
      * @param int $id
-     * @return object threads và posts của người dùng. dùng count() để lấy tổng số thread và post.
+     * @return object
      */
     public static function userPosts ($id)
     {
@@ -82,7 +82,7 @@ class User extends Authenticatable
     /**
      * method User search
      * @param  string $keyword
-     * @return object thông tin của user, đã được paginated
+     * @return object
      */
     public static function search ($keyword)
     {

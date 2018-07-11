@@ -1,0 +1,5 @@
+/*
+label redesign from Bootstrap 3.3.7
+with Bootstrap 4.0 button styles.
+ */
+.label{font-style:italic;background-color:transparent;border:1px solid}.label-default{color:#6c757d!important;border-color:#6c757d!important}.label-success{color:#28a745!important;border-color:#28a745!important}.label-primary{color:#007bff!important;border-color:#007bff!important}.label-danger{color:#dc3545!important;border-color:#dc3545!important}
