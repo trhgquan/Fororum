@@ -1,12 +1,14 @@
-<form action="{{ route('admin.censor') }}" method="POST">
+<form action="{{ route('admin.censor.user') }}" method="POST">
     <div class="form-group">
         @csrf
         <input type="hidden" name="rpid" value="{{ $report->id }}">
         @if (!App\UserInformation::userPermissions($report->participant_id)['admin'])
             @if (!App\UserInformation::userPermissions($report->participant_id)['banned'])
-                <input type="radio" name="expire" value="1 month"> Khóa 1 tháng <br>
-                <input type="radio" name="expire" value="1 year"> Khóa 1 năm <br>
-                <input type="radio" name="expire" value="1000 year" checked> Khóa vĩnh viễn <br>
+                <select class="form-control" name="expire">
+                    <option value="1 month">Khóa 1 tháng</option>
+                    <option value="1 year">Khóa 1 năm</option>
+                    <option value="1000 year">Khóa vĩnh viễn</option>
+                </select>
              @endif
         @endif
     </div>

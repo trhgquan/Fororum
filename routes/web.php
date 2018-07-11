@@ -19,21 +19,28 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 		return view('admin.admin-template', ['action' => 'home']);
 	})->name('index');
 
-	Route::group(['prefix' => '/report', 'as' => 'root.'], function(){
-		Route::get('/user', function(){
+	Route::group(['prefix' => '/manage', 'as' => 'manage.'], function(){
+		Route::get('/', function(){
+			return redirect()->route('admin.index');
+		});
+		Route::group(['prefix' => '/subforum', 'as' => 'subforum'], function(){
+			Route::get('/', function(){
+				return view('admin.admin-template', ['action' => 'subforum', 'role' => 'subforum']);
+			});
+
+			Route::post('/edit', 'AdminController@editSubforum')->name('.edit');
+		});
+
+		Route::get('report/user', function(){
 			return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
 		})->name('user');
 
-		Route::get('/post', function(){
+		Route::get('report/post', function(){
 			return view('admin.admin-template', ['action' => 'management', 'role' => 'post']);
 		})->name('post');
 	});
 
-	Route::get('/report', function(){
-		return view('admin.admin-template', ['action' => 'report']);
-	})->name('report');
-
-	Route::post('/censor', 'AdminController@action')->name('censor');
+	Route::post('/censor/user', 'AdminController@censorUser')->name('censor.user');
 });
 
 /**

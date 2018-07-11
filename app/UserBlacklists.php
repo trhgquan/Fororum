@@ -29,7 +29,7 @@ class UserBlacklists extends Model
                 'admin_id' => self::admin_id,
                 'expire'   => $expire
             ]);
-            $user = UserInformation::where('id', $credential)->first();
+            $user = UserInformation::find($credential);
             $user->permissions = 0;
             $user->save();
         }

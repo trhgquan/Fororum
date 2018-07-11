@@ -13,13 +13,21 @@
 
 @section('content')
 	@include('admin.elements.admin-navbar')
+	@if ($errors->has('class'))
+        @component('templates.alert-template', [
+            'alert_title' => 'Thông báo',
+            'alert_class' => $errors->first('class'),
+            'alert_content' => $errors->first('content')
+        ])
+        @endcomponent
+    @endif
 	@switch ($action)
-		@case('management')
-			@include('admin.elements.admin-management', ['role' => $role])
+		@case('subforum')
+			@include('admin.elements.admin-subforum', ['subforums' => App\ForumCategories::paginatedForumCategories()])
 			@break
 
-		@case('staff')
-			chưa build.
+		@case('management')
+			@include('admin.elements.admin-management', ['role' => $role])
 			@break
 
 		@default

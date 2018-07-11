@@ -1,13 +1,8 @@
-@if ($role === 'post')
-    Quản lý bài đăng.
-@else
-    @if ($errors->has('class'))
-        @component('templates.alert-template', [
-            'alert_title' => 'Thông báo',
-            'alert_class' => $errors->first('class'),
-            'alert_content' => $errors->first('content')
-        ])
-        @endcomponent
-    @endif
+@if ($role === 'user')
     @include('admin.elements.manage.manage-user', ['reports' => App\UserReport::getUsersOnly()])
+@else
+    <div class="notify-title">
+        <h1>Tính năng đang được xây dựng</h1>
+        <p><a href="https://github.com/trhgquan">github</a></p>
+    </div>
 @endif

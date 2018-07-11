@@ -13,7 +13,7 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">Tài khoản</li>
             <li class="{{ ($action === 'management' && $role === 'user') ? 'active' : '' }}">
-                <a href="{{ route('admin.root.user') }}">
+                <a href="{{ route('admin.manage.user') }}">
                     Báo cáo tài khoản
                     @if (App\UserReport::not_reviewed()['total'] > 0)
                         <span class="badge">{{ App\UserReport::not_reviewed()['profile'] }}</span>
@@ -28,15 +28,15 @@
             <li class="divider" role="seperator"></li>
             <li class="dropdown-header">Diễn đàn</li>
             <li class="{{ ($action === 'management' && $role === 'post') ? 'active' : '' }}">
-                <a href="{{ route('admin.root.post') }}">
+                <a href="{{ route('admin.manage.post') }}">
                     Báo cáo bài đăng
                     @if (App\UserReport::not_reviewed()['total'] > 0)
                         <span class="badge">{{ App\UserReport::not_reviewed()['post'] }}</span>
                     @endif
                 </a>
             </li>
-            <li>
-                <a href="#">
+            <li class="{{ ($action === 'subforum') ? 'active' : '' }}">
+                <a href="{{ route('admin.manage.subforum') }}">
                     Diễn đàn con
                 </a>
             </li>
