@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumCategories extends Model
 {
-	const max_display = 1;
+	const max_display = 5;
 
 	protected $table = 'forum_categories';
 
@@ -25,6 +25,7 @@ class ForumCategories extends Model
 
 	/**
 	 * method paginatedForumCategories
+	 * for admin control
 	 * @return object
 	 */
 	public static function paginatedForumCategories ()

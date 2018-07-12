@@ -62,6 +62,7 @@ class ForumPosts extends Model
 
     /**
      * method threads
+     * for display only.
      * @param int $category_id
      * @return object
      */

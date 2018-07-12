@@ -46,7 +46,7 @@ class SearchController extends Controller
 						'action'       => $action
 					]);
 				}
-				return redirect()->route('search.home', [
+				return redirect()->route('search', [
 					'keyword' => $keyword, 'action' => $action
 				]);
 			}
