@@ -16,7 +16,7 @@ class CreateForumCategoriesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('keyword', 40);
-			$table->string('title', 40);
+			$table->text('title', 40);
 			$table->text('description', 65535);
 			$table->timestamps();
 		});

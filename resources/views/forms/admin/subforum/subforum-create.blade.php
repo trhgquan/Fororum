@@ -17,7 +17,7 @@
             </div>
             <input type="text" name="subforum_keyword" class="form-control" required>
             <div class="input-group-btn">
-                <button class="btn btn-primary" onclick="return false;">Ngẫu nhiên</button>
+                <button class="btn btn-primary" name="randomize" onclick="return false;">Ngẫu nhiên</button>
             </div>
         </div>
     </div>
@@ -28,7 +28,10 @@
             <b>Cảnh báo: Khi đã tạo subforum, bạn không thể thực hiện hành động ngược lại (xóa subforum).</b><br/>
             Một subforum chứa trong đó rất nhiều chủ đề (topic) và các bài viết bình luận. Việc xóa một subforum sẽ ảnh hưởng <b>rất lớn</b> tới các chủ đề này. Do vậy, chúng tôi tạm thời không hỗ trợ tính năng xóa subforum.
         </p>
-        <input type="checkbox" required> Tôi đã đọc kỹ và vẫn muốn tiếp tục
+        <input type="checkbox" name="confirm" required> Tôi đã đọc kỹ và vẫn muốn tiếp tục
     </div>
     <button class="btn btn-success">Tạo diễn đàn con</button>
 </form>
+@section('extrajs')
+    <script src="{{ url('js/generate.js') }}"></script>
+@endsection

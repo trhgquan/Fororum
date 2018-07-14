@@ -12,15 +12,6 @@
 */
 
 /**
- * test route
- */
-
-Route::get('/test/{participant}', function($participant){
-	$breadcrumb = App\ForumPosts::breadcrumbs($participant);
-	return view('items.breadcrumb-items', ['breadcrumb' => $breadcrumb]);
-});
-
-/**
  * Admin route
  */
 Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive'], 'as' => 'admin.'], function(){

@@ -1,8 +1,8 @@
 <ol class="breadcrumb">
-    <li><a href="{{ route('forum') }}">Forum</a></li>
+    <li><a href="{{ route('forum') }}">Sảnh chính</a></li>
     @foreach ($breadcrumb as $item => $route)
         @if (array_search($route, array_values($breadcrumb)) !== count($breadcrumb) - 1)
-            @if (count($breadcrumb) > 2 && strlen($route['title']) > 10)
+            @if (count($breadcrumb) > 2 && !empty(array_search($route, array_values($breadcrumb))))
                 {{-- if the title is too long, replace the title with 3 dots. --}}
                 <li><a href="{{ route($item, $route['id']) }}">...</a></li>
             @else

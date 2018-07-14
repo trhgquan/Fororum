@@ -62,7 +62,7 @@
 				@endsection
 			@else
 				<div class="col-md-12">
-					<p>Tài khoản này đã bị khóa do vi phạm. Tìm hiểu thêm.</p>
+					<p>Tài khoản này đã bị khóa do vi phạm. <a href="#">Tìm hiểu thêm.</a></p>
 				</div>
 			@endif
 		</div>
