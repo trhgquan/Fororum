@@ -66,4 +66,20 @@ class ForumCategories extends Model
 		$category->description = $new_data->description;
 		$category->save();
 	}
+
+	/**
+	 * method breadcrumb
+	 * for category.
+	 * @param  int $something_id
+	 * @return array
+	 */
+	public static function breadcrumbs ($something_id)
+	{
+		return [
+			[
+				'id' => (int) $something_id,
+				'title' => self::Category($something_id)->title
+			]
+		];
+	}
 }

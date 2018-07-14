@@ -2,11 +2,9 @@
 @section('title', $category_name)
 
 @section('forum-content')
+	@component('items.breadcrumb-items', ['breadcrumb' => App\ForumCategories::breadcrumbs($category_id)])
+	@endcomponent
 	<legend>Các chủ đề trong {{ $category_name }}</legend>
-	@section('breadcrumb_content')
-		<li><a href="{{ route('forum') }}">forum</a></li>
-		<li class="active">{{ $category_name }}</li>
-	@endsection
 	@if ($category_threads->total() > 0)
 		@foreach ($category_threads as $post)
 			@component('forum.elements.thread-template', ['thread' => $post])
