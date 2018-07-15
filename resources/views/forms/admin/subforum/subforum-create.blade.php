@@ -1,4 +1,4 @@
-<form action="#">
+<form action="{{ route('admin.manage.subforum.create') }}" method="POST">
     <div class="form-group">
         <label class="control-label">Tên diễn đàn con</label>
         <input type="text" name="subforum_title" class="form-control" required>
@@ -17,7 +17,7 @@
             </div>
             <input type="text" name="subforum_keyword" class="form-control" required>
             <div class="input-group-btn">
-                <button class="btn btn-primary" name="randomize" onclick="return false;">Ngẫu nhiên</button>
+                <button type="button" class="btn btn-primary" name="randomize">Ngẫu nhiên</button>
             </div>
         </div>
     </div>

@@ -12,6 +12,32 @@ use Validator;
 
 class AdminController extends Controller
 {
+    public function createSubforum (Request $Request)
+    {
+        $validator = Validator::make([
+            'title' => $Request->get('subforum_title'),
+            'description' => $Request->get('subforum_description'),
+            'keyword' => $Request->get('subforum_keyword'),
+            'confirm' => $Request->get('confirm')
+        ], [
+            'title'   => ['required', 'max:40'],
+            'description'   => ['required', 'min:40'],
+            'keyword' => ['required', 'unique:forum_categories,keyword', 'max:40', 'regex:/^[A-Za-z0-9-]+$/'],
+            'confirm' => ['accepted']
+        ]);
+        if (!$validator->fails())
+        {
+            $category = ForumCategories::create([
+                'title' => $Request->get('subforum_title'),
+                'description' => $Request->get('subforum_description'),
+                'keyword' => $Request->get('subforum_keyword')
+            ]);
+
+            return redirect()->route('category', [$category->keyword]);
+        }
+        return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'Đã có một lỗi xảy ra. Mã lỗi: ' . $validator->errors()->first()]);
+    }
+
     public function editSubforum (Request $Request)
     {
         $action = $Request->get('action');
@@ -26,7 +52,7 @@ class AdminController extends Controller
                 'description'   => ['required'],
                 'keyword' => ['required', 'max:40', 'regex:/^[A-Za-z0-9-]+$/'],
                 'title'   => ['required', 'max:40'],
-                'confirm' => ['confirmed']
+                'confirm' => ['accepted']
             ]);
             if (!$validator->fails())
             {
