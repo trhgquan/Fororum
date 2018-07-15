@@ -29,6 +29,7 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 			});
 
 			Route::post('/edit', 'AdminController@editSubforum')->name('.edit');
+			Route::post('/create', 'AdminController@createSubforum')->name('.create');
 		});
 
 		Route::get('report/user', function(){

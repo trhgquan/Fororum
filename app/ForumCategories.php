@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumCategories extends Model
 {
-	const max_display = 1;
+	const max_display = 5;
 
 	protected $table = 'forum_categories';
 
@@ -25,6 +25,7 @@ class ForumCategories extends Model
 
 	/**
 	 * method paginatedForumCategories
+	 * for admin control
 	 * @return object
 	 */
 	public static function paginatedForumCategories ()
@@ -61,8 +62,26 @@ class ForumCategories extends Model
 	{
 		$category = self::find($credential);
 		$category->title = $new_data->title;
-		$category->keyword = $new_data->keyword;
+		if ($new_data->keyword !== $category->keyword && !self::CategoryExist($new_data->keyword)):
+			$category->keyword = $new_data->keyword;
+		endif;
 		$category->description = $new_data->description;
 		$category->save();
+	}
+
+	/**
+	 * method breadcrumb
+	 * for category.
+	 * @param  int $something_id
+	 * @return array
+	 */
+	public static function breadcrumbs ($something_id)
+	{
+		return [
+			[
+				'id' => (int) $something_id,
+				'title' => self::Category($something_id)->title
+			]
+		];
 	}
 }

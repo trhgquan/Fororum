@@ -25,7 +25,6 @@
 		])
 		@endcomponent
 	@endif
-	@include('items.breadcrumb-items')
 	@yield('forum-content')
 	@yield('create-post')
 @endsection

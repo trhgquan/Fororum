@@ -2,9 +2,9 @@
     <thead>
         <th>#</th>
         <th>Tên diễn đàn con</th>
-        <th>Motto</th>
-        <th>Keyword</th>
-        <th>Actionale</th>
+        <th>Giới thiệu</th>
+        <th>Từ khóa</th>
+        <th>Hành động</th>
     </thead>
 
     <tbody>

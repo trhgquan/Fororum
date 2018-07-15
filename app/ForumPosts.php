@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\ForumCategories;
 
 class ForumPosts extends Model
 {
@@ -45,7 +46,7 @@ class ForumPosts extends Model
         if (empty($title))
         {
             $parent_post = self::where('post_id', $post_id)->first()->parent_id;
-            $title = 're: ' . self::postTitle($parent_post); // đệ quy
+            $title = 're: ' . self::postTitle($parent_post); // recursion yey!
         }
         return $title;
     }
@@ -62,6 +63,7 @@ class ForumPosts extends Model
 
     /**
      * method threads
+     * for display only.
      * @param int $category_id
      * @return object
      */
@@ -112,6 +114,46 @@ class ForumPosts extends Model
     }
 
     /**
+     * method breadcrumbs
+     * for thread and post.
+     * @param  int $something_id
+     * @return array
+     */
+    public static function breadcrumbs ($something_id)
+    {
+        if (!self::is_thread($something_id))
+        {
+            $parent = self::post($something_id)->parent_id;
+            $ancestors = ForumCategories::Category(self::thread($parent)['thread']->category_id);
+            return [
+                'category' => [
+                    'title' => $ancestors->title,
+                    'id' => $ancestors->keyword
+                ],
+                'thread' => [
+                    'title' => self::postTitle($parent),
+                    'id'    => $parent
+                ],
+                'post' => [
+                    'title' => self::postTitle($something_id),
+                    'id'    => (int) $something_id
+                ]
+            ];
+        }
+        $ancestors = ForumCategories::Category(self::thread($something_id)['thread']->category_id);
+        return [
+            'category' => [
+                'title' => $ancestors->title,
+                'id' => $ancestors->keyword
+            ],
+            'thread' => [
+                'title' => self::postTitle($something_id),
+                'id'    => (int) $something_id
+            ]
+        ];
+    }
+
+    /**
      * private method posts
      * @param int $parent
      * @return object.
@@ -124,5 +166,18 @@ class ForumPosts extends Model
     			['category_id', '=', 0]
     		]
     	)->paginate(self::max_display);
+    }
+
+    /**
+     * method is_thread
+     * @param  int  $participant
+     * @return boolean
+     */
+    private static function is_thread ($participant)
+    {
+        return self::where([
+            ['post_id', '=', $participant],
+            ['category_id', '<>', 0]
+        ])->exists();
     }
 }

@@ -20,7 +20,7 @@
         <div class="notify-title">
             <h1>Dừng lại!</h1>
             <b>Bạn không thể báo cáo bản thân mình hoặc một bài đăng mình đã đăng!</b>
-            <p>Ngoài ra bạn không thể báo cáo tài khoản hệ thống, hay những tài khoản đã bị khóa. Tìm hiểu thêm.</p>
+            <p>Ngoài ra bạn không thể báo cáo tài khoản hệ thống, những tài khoản không tồn tại hay những tài khoản đã bị khóa. <a href="#">Tìm hiểu thêm</a>.</p>
         </div>
     @else
         <div class="row">
