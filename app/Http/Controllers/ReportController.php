@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    // Always need some comments on this Controller
+    // Just because it is the biggest waste of my time.
+
+    /**
+     * return the VIEW to report a profile
+     * @param  string $username
+     * @return null
+     */
     public function profile ($username)
     {
         if (User::exist($username) && $username !== Auth::user()->username && UserReport::reportable(Auth::id(), User::profile($username)->id, 'profile'))
@@ -28,6 +36,12 @@ class ReportController extends Controller
         return view('report', ['type' => 'error']);
     }
 
+    /**
+     * return the VIEW to report a post
+     * you can also report a thread
+     * @param  int $post_id
+     * @return null
+     */
     public function post ($post_id)
     {
         if (ForumPosts::exist($post_id) && ForumPosts::post($post_id)->user_id !== Auth::id())
@@ -46,6 +60,11 @@ class ReportController extends Controller
         return view('report', ['type' => 'error']);
     }
 
+    /**
+     * now handle those POST requests in here!
+     * @param  Request $Request
+     * @return null
+     */
     public function handle (Request $Request)
     {
         $validator = Validator::make($Request->all(), [

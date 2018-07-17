@@ -98,7 +98,7 @@ Route::group(['prefix' => '/report' , 'middleware' => ['auth', 'alive'], 'as' =>
  */
 Route::prefix('/forum')->group(function(){
 	Route::get('/', 'ForumController@home')->name('forum');
-	Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9-]+$')->name('category');
+	Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
 	Route::get('/thread/{thread_id}', 'ForumController@thread')->where('thread_id','^[0-9]+$')->name('thread');
 	Route::get('/post/{post_id}', 'ForumController@post')->where('post_id','^[0-9]+$')->name('post');
 	Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'alive')->name('createPost');

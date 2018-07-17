@@ -12,11 +12,21 @@ use Validator;
 
 class LoginController extends Controller
 {
+	/**
+	 * __construct, in here we use the "guest" middleware
+	 * just for non-logged-in users. but in case uses
+	 * wanted to logout
+	 */
 	public function __construct()
 	{
 		$this->middleware('guest')->except('logout');
 	}
 
+	/**
+	 * Log user in
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function login(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
@@ -63,6 +73,10 @@ class LoginController extends Controller
 		}
 	}
 
+	/**
+	 * Log user out of session
+	 * @return null
+	 */
 	public function logout()
 	{
 		if (Auth::check())

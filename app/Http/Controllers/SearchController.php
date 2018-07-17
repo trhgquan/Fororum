@@ -9,11 +9,22 @@ use Validator;
 
 class SearchController extends Controller
 {
+	/**
+	 * user must logged in, and not a zombie.
+	 */
 	public function __construct()
 	{
 		$this->middleware(['auth', 'alive']);
 	}
 
+	/**
+	 * GET version, searching something.
+	 * there is a POST version bellow. But every search things
+	 * come back here.
+	 * @param  string $action  search for a post or a profile
+	 * @param  string $keyword
+	 * @return null
+	 */
 	public function search ($action, $keyword)
 	{
 		$validator = Validator::make([
@@ -55,6 +66,11 @@ class SearchController extends Controller
 	 	return redirect()->route('search.home')->withErrors($validator);
 	}
 
+	/**
+	 * POST version for searching something
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function searchWithKeyword (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [

@@ -14,16 +14,29 @@ use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
+	/**
+	 * users is not dead, duh
+	 * @return null
+	 */
 	public function __construct()
 	{
 		$this->middleware('alive');
 	}
 
+	/**
+	 * return the home view.
+	 * @return null
+	 */
 	public function home ()
 	{
 		return view('forum.pages.forum-home', ['records' => ForumCategories::ForumCategories()]);
 	}
 
+	/**
+	 * return the category
+	 * @param int|string $category
+	 * @return null
+	 */
 	public function category ($category)
 	{
 		if (ForumCategories::CategoryExist($category))
@@ -43,6 +56,11 @@ class ForumController extends Controller
 		return abort(404);
 	}
 
+	/**
+	 * return the thread's content
+	 * @param  int $thread_id
+	 * @return null
+	 */
 	public function thread ($thread_id)
 	{
 		$thread = ForumPosts::thread($thread_id);
@@ -54,11 +72,21 @@ class ForumController extends Controller
 		return redirect()->route('thread', ['thread_id' => $thread_id,'page' => $thread['posts']->lastPage()]);
 	}
 
+	/**
+	 * return the post's content
+	 * @param  int $post_id
+	 * @return null
+	 */
 	public function post ($post_id)
 	{
 		return view('forum.pages.forum-display', ['thread' => false,'content' => ForumPosts::post($post_id)]);
 	}
 
+	/**
+	 * create a post
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function createPost (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
@@ -91,6 +119,11 @@ class ForumController extends Controller
 		return redirect()->back()->withErrors($validator)->withInput();
 	}
 
+	/**
+	 * create a thread
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function createThread (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [

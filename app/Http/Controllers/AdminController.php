@@ -12,6 +12,11 @@ use Validator;
 
 class AdminController extends Controller
 {
+    /**
+     * create a subforum
+     * @param  Request $Request
+     * @return null
+     */
     public function createSubforum (Request $Request)
     {
         $validator = Validator::make([
@@ -38,6 +43,11 @@ class AdminController extends Controller
         return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'Đã có một lỗi xảy ra. Mã lỗi: ' . $validator->errors()->first()]);
     }
 
+    /**
+     * edit a subforum
+     * @param  Request $Request
+     * @return null
+     */
     public function editSubforum (Request $Request)
     {
         $action = $Request->get('action');
@@ -46,13 +56,11 @@ class AdminController extends Controller
             $validator = Validator::make([
                 'description' => $Request->get('description'),
                 'keyword' => $Request->get('keyword'),
-                'title'   => $Request->get('title'),
-                'confirm' => $Request->get('confirm')
+                'title'   => $Request->get('title')
             ], [
                 'description'   => ['required'],
-                'keyword' => ['required', 'max:40', 'regex:/^[A-Za-z0-9-]+$/'],
-                'title'   => ['required', 'max:40'],
-                'confirm' => ['accepted']
+                'keyword' => ['required', 'max:40', 'regex:/^[A-Za-z0-9](?!.*?[^\nA-Za-z0-9]{2}).*?[A-Za-z0-9]$/'],
+                'title'   => ['required', 'max:40']
             ]);
             if (!$validator->fails())
             {
@@ -63,6 +71,11 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * review user's report.
+     * @param  Request $Request
+     * @return null
+     */
     public function censorUser (Request $Request)
     {
         $id = $Request->get('rpid');
