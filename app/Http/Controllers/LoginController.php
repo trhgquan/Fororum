@@ -45,26 +45,9 @@ class LoginController extends Controller
 		{
 			if (Auth::attempt(['username' => $Request->get('username'), 'password' => $Request->get('password')], $Request->get('remember_me')))
 			{
-				$permissions = UserInformation::userPermissions(Auth::id());
-				if (!$permissions['banned'])
-				{
-					if ($permissions['admin'])
-					{
-						return redirect()->route('admin.index');
-					}
-					return redirect()->intended('/');
-				}
-				else
-				{
-					if (!UserBlacklists::checkIfExpired(Auth::id()))
-					{
-						$reason = UserBlacklists::reason(Auth::id());
-						Auth::logout();
-						return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'warning']);
-					}
-					UserBlacklists::unban(Auth::id());
-					return redirect()->intended('/');
-				}
+				// check for user permissions
+				// so admin goes to admin, and banned goes to banned
+				return $this->checkUserPermissions(Auth::id());
 			}
 			else
 			{
@@ -85,5 +68,49 @@ class LoginController extends Controller
 			return redirect()->route('login')->withErrors(['title' => 'Thông báo', 'content' => 'Đã đăng xuất khỏi hệ thống thành công!', 'class' => 'info']);
 		}
 		return redirect()->route('login');
+	}
+
+	/**
+	 * check if user get banned or user is an admin
+	 * @param  int $id
+	 * @return null
+	 */
+	protected function checkUserPermissions ($id)
+	{
+		$permissions = UserInformation::userPermissions($id);
+		if (!$permissions['banned'])
+		{
+			if ($permissions['admin'])
+			{
+				return redirect()->route('admin.index');
+			}
+			return redirect()->intended('/');
+		}
+		else
+		{
+			// if user is banned,
+			// log him out and tell him	why dafug he got banned.
+			return $this->ifUserBanExpired($id);
+		}
+	}
+
+	/**
+	 * if user banned, check if his ban expired
+	 * @param  int $id
+	 * @return null
+	 */
+	protected function ifUserBanExpired ($id)
+	{
+		if (!UserBlacklists::checkIfExpired($id))
+		{
+			// now this is the reason
+			$reason = UserBlacklists::reason($id);
+			// now we log him out
+			Auth::logout();
+			return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger']);
+		}
+		// his ban is expired. unban and redirect to home.
+		UserBlacklists::unban($id);
+		return redirect()->intended('/');
 	}
 }
