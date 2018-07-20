@@ -1,3 +1,4 @@
+{{-- $o = App\UserInformation::userPermissions(App\User->id) --}}
 @if ($o['banned'])
     <span class="label label-danger">lock</span>
 @elseif ($o['admin'])

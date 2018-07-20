@@ -29,7 +29,7 @@ class UserAlive
             // he get banned
             $reason = UserBlacklists::reason(Auth::id());
             Auth::logout();
-            return redirect()->route('login')->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger']);
+            return redirect()->route('login')->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'warning']);
         }
 
         return $response;

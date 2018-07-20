@@ -107,7 +107,7 @@ class LoginController extends Controller
 			$reason = UserBlacklists::reason($id);
 			// now we log him out
 			Auth::logout();
-			return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger']);
+			return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi ' . User::username($reason->admin_id) . ' và sẽ được mở khóa vào lúc ' . date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger'])->withInput();
 		}
 		// his ban is expired. unban and redirect to home.
 		UserBlacklists::unban($id);

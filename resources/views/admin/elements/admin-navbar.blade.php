@@ -20,9 +20,9 @@
                     @endif
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    Thêm đặc quyền cho tài khoản
+            <li class="{{ ($action === 'editUser') ? 'active' : '' }}">
+                <a href="{{ route('admin.edit.user') }}">
+                    Sửa thông tin tài khoản
                 </a>
             </li>
             <li class="divider" role="seperator"></li>
