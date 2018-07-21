@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class NotifyController extends Controller
 {
+    /**
+     * redirect user to the notify's object
+     * @param int $notify_id
+     * @return null|object
+     */
     public function notify ($notify_id)
     {
         $custom_notify = UserNotification::custom_notify($notify_id);

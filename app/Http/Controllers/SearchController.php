@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserInformation;
 use App\ForumPosts;
 use Illuminate\Http\Request;
 use Validator;
 
 class SearchController extends Controller
 {
+	/**
+	 * user must logged in, and not a zombie.
+	 */
 	public function __construct()
 	{
 		$this->middleware(['auth', 'alive']);
 	}
 
+	/**
+	 * GET version, searching something.
+	 * there is a POST version below. But every search things
+	 * come back here.
+	 * @param  string $action  search for a post or a profile
+	 * @param  string $keyword
+	 * @return null
+	 */
 	public function search ($action, $keyword)
 	{
 		$validator = Validator::make([
@@ -55,6 +67,11 @@ class SearchController extends Controller
 	 	return redirect()->route('search.home')->withErrors($validator);
 	}
 
+	/**
+	 * POST version for searching something
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function searchWithKeyword (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
@@ -74,5 +91,26 @@ class SearchController extends Controller
 			]);
 		}
 		return redirect()->route('search.home')->withErrors($validator);
+	}
+
+	/**
+	 * search engine for admin panel
+	 * by redirect to the get route.
+	 * @param  Request $Request
+	 * @return null
+	 */
+	public function adminSearchEngine (Request $Request)
+	{
+
+		$validator = Validator::make([
+			'keyword' => $Request->get('keyword')
+		], [
+			'keyword' => ['required']
+		]);
+		if (!$validator->fails())
+		{
+			return redirect()->route('admin.edit.user.search.result', ['keyword' => $Request->get('keyword')]);
+		}
+		return redirect()->back()->withErrors($validator);
 	}
 }

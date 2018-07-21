@@ -13,6 +13,11 @@ use Validator;
 
 class ProfileController extends Controller
 {
+	/**
+	 * when user click on the navbar's dropdown
+	 * and get to the first page, this is it.
+	 * @return null
+	 */
 	public function home()
 	{
 		$user = Auth::user();
@@ -29,6 +34,12 @@ class ProfileController extends Controller
 		);
 	}
 
+	/**
+	 * when user access another user's profile, here it is.
+	 * if user access his own profile, redirect back to home.
+	 * @param  string $username no id, because user can register with a digits-string
+	 * @return null
+	 */
 	public function profile ($username)
 	{
 		$user = User::profile($username);
@@ -49,11 +60,21 @@ class ProfileController extends Controller
 		);
 	}
 
+	/**
+	 * when user click on the navbar's dropdown
+	 * and get to the edit page, this is it.
+	 * @return null
+	 */
 	public function edit()
 	{
 		return view('profile', ['edit' => true]);
 	}
 
+	/**
+	 * EDIT USER'S PASSWORD
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function editPassword(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
@@ -90,6 +111,11 @@ class ProfileController extends Controller
 		}
 	}
 
+	/**
+	 * follow another profile
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function follow (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [

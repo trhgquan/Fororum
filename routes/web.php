@@ -19,10 +19,13 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 		return view('admin.admin-template', ['action' => 'home']);
 	})->name('index');
 
+	// Manage
 	Route::group(['prefix' => '/manage', 'as' => 'manage.'], function(){
 		Route::get('/', function(){
 			return redirect()->route('admin.index');
 		});
+
+		// subforums
 		Route::group(['prefix' => '/subforum', 'as' => 'subforum'], function(){
 			Route::get('/', function(){
 				return view('admin.admin-template', ['action' => 'subforum', 'role' => 'subforum']);
@@ -32,6 +35,7 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 			Route::post('/create', 'AdminController@createSubforum')->name('.create');
 		});
 
+		// reports
 		Route::get('report/user', function(){
 			return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
 		})->name('user');
@@ -41,7 +45,37 @@ Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive']
 		})->name('post');
 	});
 
-	Route::post('/censor/user', 'AdminController@censorUser')->name('censor.user');
+	// edit user information
+	Route::group(['prefix' => 'edit/user', 'as' => 'edit.user'], function(){
+		// this return all the active users.
+		Route::get('/', function(){
+			return view('admin.admin-template', [
+				'action' => 'editUser',
+				'users_raw' => App\UserInformation::getActiveUsers()
+			]);
+		});
+
+		// search engine
+		Route::group(['prefix' => '/search', 'as' => '.search'], function(){
+			Route::get('/', function(){
+				return redirect()->route('admin.edit.user');
+			});
+			Route::get('/{keyword}', function($keyword){
+				return view('admin.admin-template', [
+					'action' => 'editUser',
+					'keyword' => $keyword,
+					'users_raw' => App\User::search($keyword)
+				]);
+			})->name('.result');
+
+			Route::post('/', 'SearchController@adminSearchEngine');
+		});
+	});
+
+	// review user report.
+	Route::post('/censor/user', 'AdminController@reviewUserReport')->name('censor.user');
+	// edit user information
+	Route::post('/edit/user', 'AdminController@editUserInformation')->name('edit.user.save');
 });
 
 /**
@@ -98,7 +132,7 @@ Route::group(['prefix' => '/report' , 'middleware' => ['auth', 'alive'], 'as' =>
  */
 Route::prefix('/forum')->group(function(){
 	Route::get('/', 'ForumController@home')->name('forum');
-	Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9-]+$')->name('category');
+	Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
 	Route::get('/thread/{thread_id}', 'ForumController@thread')->where('thread_id','^[0-9]+$')->name('thread');
 	Route::get('/post/{post_id}', 'ForumController@post')->where('post_id','^[0-9]+$')->name('post');
 	Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'alive')->name('createPost');

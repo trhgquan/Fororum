@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         /**
-         * thêm mới 05142018: trả về trang 404 khi truy cập vào những route POST
+         * 05142018: HTTP status 404 if user access to POST route.
          */
         if ($exception instanceof MethodNotAllowedHttpException)
         {

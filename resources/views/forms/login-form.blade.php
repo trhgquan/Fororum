@@ -12,7 +12,7 @@
 
 				<div class="form-group {{ ($errors->has('username')) ? 'has-error' : '' }}">
 					<label class="control-label" for="username">Tên tài khoản</label>
-					<input type="text" class="form-control" id="username" name="username" placeholder="Tên tài khoản" required>
+					<input type="text" class="form-control" id="username" name="username" placeholder="Tên tài khoản" value="{{ old('username') }}" required>
 					@if ($errors->has('username'))
 						<span class="help-block">{{ $errors->first('username') }}</span>
 					@endif

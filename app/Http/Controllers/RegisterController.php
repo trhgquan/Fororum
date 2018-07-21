@@ -11,11 +11,20 @@ use Validator;
 
 class RegisterController extends Controller
 {
+	/**
+	 * you must be a guest.
+	 * so you shall not pass!
+	 */
 	public function __construct()
 	{
 		$this->middleware('guest');
 	}
 
+	/**
+	 * register a new account.
+	 * @param  Request $Request
+	 * @return null
+	 */
 	public function register(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [

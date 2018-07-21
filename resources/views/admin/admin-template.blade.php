@@ -30,6 +30,10 @@
 			@include('admin.elements.admin-management', ['role' => $role])
 			@break
 
+		@case('editUser')
+			@include('admin.elements.admin-management', ['role' => $action])
+			@break
+
 		@default
 			@include('admin.elements.admin-quick')
 			@break
