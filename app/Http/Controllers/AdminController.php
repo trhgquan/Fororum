@@ -29,7 +29,7 @@ class AdminController extends Controller
         ], [
             'title'   => ['required', 'max:40'],
             'description'   => ['required', 'min:40'],
-            'keyword' => ['required', 'unique:forum_categories,keyword', 'max:40', 'regex:/^[A-Za-z0-9-]+$/'],
+            'keyword' => ['required', 'unique:forum_categories,keyword', 'max:40', 'regex:/^[A-Za-z0-9](?!.*?[^\nA-Za-z0-9]{2}).*?[A-Za-z0-9]+$/'],
             'confirm' => ['accepted']
         ]);
         if (!$validator->fails())
