@@ -1,12 +1,12 @@
 <form action="{{ route('admin.manage.subforum.create') }}" method="POST">
     <div class="form-group">
         <label class="control-label">Tên diễn đàn con</label>
-        <input type="text" name="subforum_title" class="form-control" required>
+        <input type="text" name="subforum_title" class="form-control" placeholder="Annuntio vobis gaudium magnum" required>
     </div>
 
     <div class="form-group">
         <label class="control-label">Giới thiệu diễn đàn con</label>
-        <textarea name="subforum_description" class="form-control" required></textarea>
+        <textarea name="subforum_description" class="form-control" placeholder="Lorem ipsum dolor sit amet orci aliquam." required></textarea>
     </div>
 
     <div class="form-group">
@@ -15,9 +15,9 @@
             <div class="input-group-addon">
                 {{ route('forum') }}/
             </div>
-            <input type="text" name="subforum_keyword" class="form-control" required>
+            <input type="text" name="subforum_keyword" class="form-control" placeholder="annuntio-vobis-gaudium-magnum" required>
             <div class="input-group-btn">
-                <button type="button" class="btn btn-primary" name="randomize">Ngẫu nhiên</button>
+                <button type="button" class="btn btn-primary" name="randomize">Tạo</button>
             </div>
         </div>
     </div>
