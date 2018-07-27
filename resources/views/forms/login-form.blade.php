@@ -26,12 +26,6 @@
 					@endif
 				</div>
 
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="remember_me" name="remember_me">Ghi nhớ đăng nhập
-					</label>
-				</div>
-
 				@csrf
 
 				<button type="submit" class="btn btn-primary">Đăng nhập</button>

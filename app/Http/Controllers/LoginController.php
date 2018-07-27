@@ -24,17 +24,17 @@ class LoginController extends Controller
 
 	/**
 	 * Log user in
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function login(Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
 			'username' => 'required|string',
-			'password' => 'required|string'
+			'password' => 'required|string',
 		], [
 			'username.required' => 'Không được bỏ trống ô tên tài khoản!',
-			'password.required' => 'Không được bỏ trống ô mật khẩu!'
+			'password.required' => 'Không được bỏ trống ô mật khẩu!',
 		]);
 
 		if ($validator->fails())
@@ -43,16 +43,7 @@ class LoginController extends Controller
 		}
 		else
 		{
-			if (Auth::attempt(['username' => $Request->get('username'), 'password' => $Request->get('password')], $Request->get('remember_me')))
-			{
-				// check for user permissions
-				// so admin goes to admin, and banned goes to banned
-				return $this->checkUserPermissions(Auth::id());
-			}
-			else
-			{
-				return redirect()->back()->withErrors(['username' => 'Tài khoản không chính xác', 'password' => 'Mật khẩu không chính xác'])->withInput();
-			}
+			return $this->logUserIn($Request->all());
 		}
 	}
 
@@ -68,6 +59,37 @@ class LoginController extends Controller
 			return redirect()->route('login')->withErrors(['title' => 'Thông báo', 'content' => 'Đã đăng xuất khỏi hệ thống thành công!', 'class' => 'info']);
 		}
 		return redirect()->route('login');
+	}
+
+	/**
+	 * this method log user in
+	 * @param  Array  $credentials
+	 * @return object
+	 */
+	protected function logUserIn (Array $credentials)
+	{
+		if ($this->attemptToLogin($credentials))
+		{
+			// log user out of any devices
+			Auth::logoutOtherDevices($credentials['password']);
+			// check for user permissions
+			// so admin goes to admin, and banned goes to banned
+			return $this->checkUserPermissions(Auth::id());
+		}
+		else
+		{
+			return redirect()->back()->withErrors(['username' => 'Tài khoản không chính xác', 'password' => 'Mật khẩu không chính xác'])->withInput();
+		}
+	}
+
+	/**
+	 * a cut of login attempt
+	 * @param  Array  $credentials
+	 * @return object
+	 */
+	protected function attemptToLogin (Array $credentials)
+	{
+		return Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']]);
 	}
 
 	/**

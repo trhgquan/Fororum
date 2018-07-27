@@ -11,6 +11,11 @@
 |
 */
 
+// test route
+Route::get('/logoutOtherDevices', function(){
+	return auth()->logoutOtherDevices('autobot');
+});
+
 /**
  * Admin route
  */
@@ -143,6 +148,7 @@ Route::prefix('/forum')->group(function(){
 Route::get('/', 'HomeController@home');
 
 Route::get('/home', 'HomeController@home');
+
 
 // Register
 Route::get('/register', function(){
