@@ -14,7 +14,7 @@
 /**
  * Admin route
  */
-Route::group(['prefix' => '/supreme', 'middleware' => ['auth', 'admin', 'alive'], 'as' => 'admin.'], function(){
+Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive'], 'as' => 'admin.'], function(){
 	Route::get('/', function(){
 		return view('admin.admin-template', ['action' => 'home']);
 	})->name('index');
@@ -93,7 +93,7 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth', 'alive'] , 'as' => '
 		});
 	});
 	Route::get('/edit', 'ProfileController@edit')->name('edit');
-	Route::post('/edit', 'ProfileController@editPassword');
+	Route::post('/edit/password', 'ProfileController@editPassword')->name('edit.password');
 });
 
 /**
