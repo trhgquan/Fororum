@@ -11,11 +11,6 @@
 |
 */
 
-// test route
-Route::get('/logoutOtherDevices', function(){
-	return auth()->logoutOtherDevices('autobot');
-});
-
 /**
  * Admin route
  */

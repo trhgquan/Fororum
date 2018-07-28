@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\User;
 use App\UserBlacklists;
 use App\UserInformation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class LoginController extends Controller
@@ -49,13 +49,17 @@ class LoginController extends Controller
 
 	/**
 	 * Log user out of session
+	 * @param Illuminate\Http\Request $Request
 	 * @return null
 	 */
-	public function logout()
+	public function logout(Request $Request)
 	{
 		if (Auth::check())
 		{
 			Auth::logout();
+			// this line support Auth::logoutOtherDevices()
+			// prevent cannot login bug.
+			$Request->session()->flush();
 			return redirect()->route('login')->withErrors(['title' => 'Thông báo', 'content' => 'Đã đăng xuất khỏi hệ thống thành công!', 'class' => 'info']);
 		}
 		return redirect()->route('login');
