@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\ForumPosts;
 use App\User;
 use App\UserReport;
-use Auth;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {

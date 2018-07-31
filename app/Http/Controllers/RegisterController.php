@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\UserInformation;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 

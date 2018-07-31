@@ -58,7 +58,7 @@ class LoginController extends Controller
 		{
 			Auth::logout();
 			// this line support Auth::logoutOtherDevices()
-			// prevent cannot login bug.
+			// prevent the cannot-log-in bug.
 			$Request->session()->flush();
 			return redirect()->route('login')->withErrors(['title' => 'Thông báo', 'content' => 'Đã đăng xuất khỏi hệ thống thành công!', 'class' => 'info']);
 		}

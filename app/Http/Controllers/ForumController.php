@@ -7,9 +7,9 @@ use App\ForumPosts;
 use App\User;
 use App\UserFollowers;
 use App\UserNotification;
-use Auth;
-use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Validator;
 
 
 class ForumController extends Controller

@@ -6,8 +6,8 @@ use App\User;
 use App\UserFollowers;
 use App\UserNotification;
 use App\UserInformation;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 

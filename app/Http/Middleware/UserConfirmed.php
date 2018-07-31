@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\UserInformation;
-use Auth;
 use Closure;
-use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Auth;
 
 class UserConfirmed
 {
