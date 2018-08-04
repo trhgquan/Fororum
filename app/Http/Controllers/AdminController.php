@@ -16,7 +16,7 @@ class AdminController extends Controller
 {
     /**
      * create a subforum
-     * @param  Request $Request
+     * @param  Illuminate\Http\Request $Request
      * @return null
      */
     public function createSubforum (Request $Request)
@@ -47,7 +47,7 @@ class AdminController extends Controller
 
     /**
      * edit a subforum
-     * @param  Request $Request
+     * @param  Illuminate\Http\Request $Request
      * @return null
      */
     public function editSubforum (Request $Request)
@@ -75,6 +75,11 @@ class AdminController extends Controller
         // but we will not build it here.
     }
 
+    /**
+     * edit user information
+     * @param  Illuminate\Http\Request $Request
+     * @return null
+     */
     public function editUserInformation (Request $Request)
     {
         $validator = Validator::make([
@@ -95,24 +100,25 @@ class AdminController extends Controller
 
     /**
      * review user's report.
-     * @param  Request $Request
+     * @param  Illuminate\Http\Request $Request
      * @return null
      */
     public function reviewUserReport (Request $Request)
     {
-        $id = $Request->get('rpid');
-        $action = ($Request->get('action') === 'accept') ? 'phê chuẩn' : 'bác bỏ';
-        $xpire  = ($Request->get('action') === 'accept') ? $Request->get('expire') : '';
-
-        if ($Request->get('action') === 'accept')
+        $accepted = $Request->get('action');
+        if ($this->accepted($accepted))
         {
-            UserBlacklists::ban(UserReport::report_information($id)->participant_id, $xpire);
+            UserBlacklists::ban(UserReport::report_information($Request->get('rpid'))->participant_id, $Request->get('expire')); // ban the user
         }
-        UserReport::review($id, $action); // review the reports;
+
+        UserReport::review($Request->get('rpid'), $this->accepted($accepted, ['phê chuẩn', 'bác bỏ'])); // review the reports;
 
         return redirect()->back()->withErrors([
-            'class' => ($Request->get('action') === 'accept') ? 'danger' : 'info',
-            'content' => 'Đã ' . $action . ' báo cáo của người dùng thành công.'
+            'class' => $this->accepted($accepted, ['danger', 'info']),
+            'content' => $this->accepted($accepted, [
+                'Đã phê chuẩn báo cáo của người dùng thành công!',
+                'Đã bác bỏ báo cáo của người dùng thành công!'
+            ]),
         ]);
     }
 
@@ -156,9 +162,25 @@ class AdminController extends Controller
         }
         else
         {
-            $user->confirmed = (($permissions === 1) ? 0 : 1);
+            $user->confirmed = (($permissions) ? 0 : 1);
             $user->permissions = ((!$permissions) ?: 1);
         }
         $user->save();
+    }
+
+    /**
+     * this method checking the report
+     * has been approved or rejected
+     * @param  string $action
+     * @param  array  $options event if success / failure nullable
+     * @return boolean
+     */
+    protected function accepted ($action, Array $options = [])
+    {
+        if (!empty($options))
+        {
+            return ($action === 'accept') ? $options[0] : $options[1];
+        }
+        return ($action === 'accept');
     }
 }

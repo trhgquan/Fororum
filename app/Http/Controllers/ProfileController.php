@@ -18,7 +18,7 @@ class ProfileController extends Controller
 	 * and get to the first page, this is it.
 	 * @return null
 	 */
-	public function home()
+	public function home ()
 	{
 		$user = Auth::user();
 		$userInformation = UserInformation::userPermissions($user->id);
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 	{
 		$user = User::profile($username);
 		$userInformation = UserInformation::userPermissions($user->id);
-		if ($user->id == Auth::id())
+		if ($this->thisProfile($user->id))
 		{
 			return redirect()->route('user.profile.home');
 		}
@@ -65,17 +65,17 @@ class ProfileController extends Controller
 	 * and get to the edit page, this is it.
 	 * @return null
 	 */
-	public function edit()
+	public function edit ()
 	{
 		return view('profile', ['edit' => true]);
 	}
 
 	/**
 	 * EDIT USER'S PASSWORD
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
-	public function editPassword(Request $Request)
+	public function editPassword (Request $Request)
 	{
 		$validator = Validator::make($Request->all(), [
 			'password' => 'string|required',
@@ -113,7 +113,7 @@ class ProfileController extends Controller
 
 	/**
 	 * follow another profile
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function follow (Request $Request)
@@ -124,7 +124,7 @@ class ProfileController extends Controller
 		if (!$validator->fails())
 		{
 			$id = (int) $Request->get('uid');
-			if ($id !== Auth::id() && User::exist($id) && !UserInformation::userPermissions($id)['banned'])
+			if ($this->followable($id))
 			{
 				UserFollowers::follow(Auth::id(), $id);
 				// if 2 user are not followed before, send a notification
@@ -141,5 +141,27 @@ class ProfileController extends Controller
 			}
 		}
 		return redirect()->back();
+	}
+
+	/**
+	 * method thisProfile
+	 * return true if id = profile id
+	 * @param  int     $id
+	 * @return boolean
+	 */
+	protected function thisProfile (int $id)
+	{
+		return (Auth::id() === $id);
+	}
+
+	/**
+	 * method followable
+	 * return true if this profile is able to follow.
+	 * @param  int    $id
+	 * @return boolean
+	 */
+	protected function followable (int $id)
+	{
+		return ($id !== Auth::id() && User::exist($id) && !UserInformation::userPermissions($id)['banned']);
 	}
 }

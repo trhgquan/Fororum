@@ -62,7 +62,7 @@ class ReportController extends Controller
 
     /**
      * now handle those POST requests in here!
-     * @param  Request $Request
+     * @param  Illuminate\Http\Request $Request
      * @return null
      */
     public function handle (Request $Request)

@@ -9,6 +9,7 @@ use App\UserFollowers;
 use App\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator;
 
 
@@ -43,7 +44,7 @@ class ForumController extends Controller
 		{
 			$categoryObj = ForumCategories::Category($category);
 			$category_threads = ForumPosts::threads($categoryObj->id);
-			if ($category_threads->currentPage() <= $category_threads->lastPage())
+			if ($this->paginateCheck($category_threads))
 			{
 				return view('forum.pages.forum-category', [
 					'category_name'    => $categoryObj->title,
@@ -64,11 +65,12 @@ class ForumController extends Controller
 	public function thread ($thread_id)
 	{
 		$thread = ForumPosts::thread($thread_id);
-		// kiểm tra trang đã được paginated có tồn tại hay không.
-		if ($thread['posts']->currentPage() <= $thread['posts']->lastPage())
+		if ($this->paginateCheck($thread['posts']))
 		{
 			return view('forum.pages.forum-display', ['thread' => true,'content' => $thread]);
 		}
+		// this return to the last page, cause everything new on the forum
+		// is always in the last page.
 		return redirect()->route('thread', ['thread_id' => $thread_id,'page' => $thread['posts']->lastPage()]);
 	}
 
@@ -84,7 +86,7 @@ class ForumController extends Controller
 
 	/**
 	 * create a post
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function createPost (Request $Request)
@@ -121,7 +123,7 @@ class ForumController extends Controller
 
 	/**
 	 * create a thread
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function createThread (Request $Request)
@@ -158,5 +160,16 @@ class ForumController extends Controller
 			return redirect()->route('thread', [$thread->id]); // tương tự: id là primary key của table
 		}
 		return redirect()->back()->withErrors($validator)->withInput();
+	}
+
+	/**
+	 * method paginateCheck
+	 * check if this page is not the infinitive non-exist page
+	 * @param Illuminate\Pagination\LengthAwarePaginator $object
+	 * @return boolean
+	 */
+	protected function paginateCheck (Paginator $object)
+	{
+		return ($object->currentPage() <= $object->lastPage());
 	}
 }

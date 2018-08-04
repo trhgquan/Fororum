@@ -6,6 +6,7 @@ use App\User;
 use App\UserInformation;
 use App\ForumPosts;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator;
 
 class SearchController extends Controller
@@ -49,7 +50,7 @@ class SearchController extends Controller
 
 			if (in_array($action, $fillable))
 			{
-				if ($results[$action]->currentPage() <= $results[$action]->lastPage())
+				if ($this->paginateCheck($results[$action]))
 				{
 					return view('search', [
 						'keyword'      => $keyword,
@@ -69,7 +70,7 @@ class SearchController extends Controller
 
 	/**
 	 * POST version for searching something
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function searchWithKeyword (Request $Request)
@@ -96,12 +97,11 @@ class SearchController extends Controller
 	/**
 	 * search engine for admin panel
 	 * by redirect to the get route.
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function adminSearchEngine (Request $Request)
 	{
-
 		$validator = Validator::make([
 			'keyword' => $Request->get('keyword')
 		], [
@@ -112,5 +112,16 @@ class SearchController extends Controller
 			return redirect()->route('admin.edit.user.search.result', ['keyword' => $Request->get('keyword')]);
 		}
 		return redirect()->back()->withErrors($validator);
+	}
+
+	/**
+	 * method paginateCheck
+	 * check if this page is not the infinitive non-exist page.
+	 * @param  Illuminate\Pagination\LengthAwarePaginator $object
+	 * @return boolean
+	 */
+	protected function paginateCheck (Paginator $object)
+	{
+		return ($object->currentPage() <= $object->lastPage());
 	}
 }

@@ -22,7 +22,7 @@ class RegisterController extends Controller
 
 	/**
 	 * register a new account.
-	 * @param  Request $Request
+	 * @param  Illuminate\Http\Request $Request
 	 * @return null
 	 */
 	public function register(Request $Request)
