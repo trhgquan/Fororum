@@ -1,15 +1,18 @@
 <html>
 	<head>
 		<title>{{ config('app.name') }} - @yield('title')</title>
+		<!-- NOW IS THE META! -->
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="{{ url('/') }} - Cổng thông tin chính thức và diễn đàn của {{ config('app.name') }}">
+		<meta name="keyword" content="{{ config('app.name') }}">
+		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}">
-		<style type="text/css">
-			@yield('extracss')
-		</style>
 	</head>
 
 	<body>
+		<!-- NAVIGATION BAR FOR THE WEBSITE -->
 		@section('navbar')
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
@@ -26,15 +29,18 @@
 		</nav>
 		@show
 
+		<!-- WEBSITE CONTENT -->
 		<div class="container">
 			@yield('content')
 		</div>
 
+		<!-- PLACE THE JAVASCRIPT BEFORE ENDING THE BODY, WILL MAKE THE PAGE LOAD FASTER -->
 		<script src="{{ url('js/jquery.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		@yield('extrajs')
 	</body>
 
+	<!-- FOOTER CREDIT -->
 	<footer>
 		<div class="navbar navbar-default navbar-fixed-bottom">
 			<div class="container">

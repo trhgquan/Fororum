@@ -59,6 +59,7 @@ a:hover {
     background-color: #007bff;
 }
 
+.text-danger,
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label,

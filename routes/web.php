@@ -64,12 +64,16 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
 			Route::get('/', function(){
 				return redirect()->route('admin.edit.user');
 			});
-			Route::get('/{keyword}', function($keyword){
-				return view('admin.admin-template', [
-					'action' => 'editUser',
-					'keyword' => $keyword,
-					'users_raw' => App\User::search($keyword)
-				]);
+			Route::get('/{keyword}', function($keyword) {
+				if (!empty(App\User::search($keyword)->total() > 0))
+				{
+					return view('admin.admin-template', [
+						'action' => 'editUser',
+						'keyword' => $keyword,
+						'users_raw' => App\User::search($keyword)
+					]);
+				}
+				return redirect()->route('admin.edit.user')->withErrors(['class' => 'warning', 'content' => 'Không tìm thấy người dùng này!']);
 			})->name('.result');
 
 			Route::post('/', 'SearchController@adminSearchEngine');
