@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\UserInformation;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class UserBlacklists extends Model
 {
@@ -15,19 +14,19 @@ class UserBlacklists extends Model
     protected $fillable = ['user_id', 'admin_id', 'expire'];
 
     /**
-     * ban procedure
-     * @param  int $credential User id
-     * @param  datetime $until expired
+     * ban procedure.
+     *
+     * @param int      $credential User id
+     * @param datetime $until      expired
      */
-    public static function ban ($credential, $until)
+    public static function ban($credential, $until)
     {
-        if (!UserInformation::userPermissions($credential)['banned'])
-        {
+        if (!UserInformation::userPermissions($credential)['banned']) {
             $expire = self::until($until);
             self::create([
                 'user_id'  => $credential,
                 'admin_id' => self::admin_id,
-                'expire'   => $expire
+                'expire'   => $expire,
             ]);
             $user = UserInformation::find($credential);
             $user->permissions = 0;
@@ -36,10 +35,11 @@ class UserBlacklists extends Model
     }
 
     /**
-     * unban procedure
-     * @param  int $credential user id
+     * unban procedure.
+     *
+     * @param int $credential user id
      */
-    public static function unban ($credential)
+    public static function unban($credential)
     {
         self::where('user_id', $credential)->delete();
 
@@ -49,11 +49,13 @@ class UserBlacklists extends Model
     }
 
     /**
-     * method reason
-     * @param  int $credential user id
+     * method reason.
+     *
+     * @param int $credential user id
+     *
      * @return object
      */
-    public static function reason ($credential)
+    public static function reason($credential)
     {
         return self::where('user_id', $credential)->first();
     }
@@ -61,24 +63,29 @@ class UserBlacklists extends Model
     /**
      * method checkIfExpired
      * check if user ban has expire.
-     * @param  int $credential
+     *
+     * @param int $credential
+     *
      * @return false if user ban has not expired.
-     * @return true if user ban has expired
+     * @return true  if user ban has expired
      */
-    public static function checkIfExpired ($credential)
+    public static function checkIfExpired($credential)
     {
         $expire = self::where('user_id', $credential);
-        return (Carbon::now() > self::until($expire->first()->expire));
+
+        return Carbon::now() > self::until($expire->first()->expire);
     }
 
     /**
      * private method until
-     * return expire date
-     * @param  Carbon datetime $expire
+     * return expire date.
+     *
+     * @param Carbon datetime $expire
+     *
      * @return Carbon\Carbon date
      */
-    private static function until ($expire)
+    private static function until($expire)
     {
-        return (new Carbon($expire));
+        return new Carbon($expire);
     }
 }

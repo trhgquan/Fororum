@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\ForumPosts;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -18,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username'
+        'name', 'email', 'password', 'username',
     ];
 
     /**
@@ -31,18 +30,22 @@ class User extends Authenticatable
     ];
 
     /**
-     * static method exist
-     * @param  int or string $credentials (uid hoặc username đều được)
+     * static method exist.
+     *
+     * @param int or string $credentials (uid hoặc username đều được)
+     *
      * @return bool
      */
-    public static function exist ($credentials)
+    public static function exist($credentials)
     {
         return self::where('username', $credentials)->orWhere('id', $credentials)->exists();
     }
 
     /**
-     * method username
+     * method username.
+     *
      * @param int $id
+     *
      * @return string
      */
     public static function username($id)
@@ -51,40 +54,46 @@ class User extends Authenticatable
     }
 
     /**
-     * static method Profile
+     * static method Profile.
+     *
      * @param  string
+     *
      * @return object
      */
-    public static function profile ($credentials)
+    public static function profile($credentials)
     {
         return self::where('username', $credentials)->firstOrFail();
     }
 
     /**
-     * method userPosts
+     * method userPosts.
+     *
      * @param int $id
+     *
      * @return object
      */
-    public static function userPosts ($id)
+    public static function userPosts($id)
     {
         return [
             'threads' => ForumPosts::where([
                 ['user_id', '=', $id],
-                ['parent_id', '=', 0]
+                ['parent_id', '=', 0],
             ])->get(),
             'posts' => ForumPosts::where([
                 ['user_id', '=', $id],
-                ['category_id', '=', 0]
-            ])->get()
+                ['category_id', '=', 0],
+            ])->get(),
         ];
     }
 
     /**
-     * method User search
-     * @param  string $keyword
+     * method User search.
+     *
+     * @param string $keyword
+     *
      * @return object
      */
-    public static function search ($keyword)
+    public static function search($keyword)
     {
         return self::where('username', 'like', '%'.$keyword.'%')->paginate(self::max_display);
     }

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\ForumPosts;
+use Illuminate\Database\Seeder;
 
 class ForumPostsSeeder extends Seeder
 {
@@ -20,9 +20,9 @@ class ForumPostsSeeder extends Seeder
         // 	'content' => 'Humanitarian agencies also pleaded for peace before the Syrian military and its Russian and Iranian backers turn their firepower on the rebel-controlled Syrian city of Idlib, warning of civilian suffering on a greater scale than during the siege of Aleppo last year.'
         // ]);
         App\ForumCategories::create([
-            'title' => 'Hàn Quốc',
-            'keyword' => 'han-quoc',
-            'description' => 'lạnh vl'
+            'title'       => 'Hàn Quốc',
+            'keyword'     => 'han-quoc',
+            'description' => 'lạnh vl',
         ]);
     }
 }
