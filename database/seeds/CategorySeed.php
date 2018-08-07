@@ -12,9 +12,9 @@ class CategorySeed extends Seeder
     public function run()
     {
         App\ForumCategories::create([
-            'title' => 'OOPSIE WOOPSIE! We make a fucky wucky!!',
-            'keyword' => 'oopsie-woopsie',
-            'description' => 'OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!'
+            'title'       => 'OOPSIE WOOPSIE! We make a fucky wucky!!',
+            'keyword'     => 'oopsie-woopsie',
+            'description' => 'OOPSIE WOOPSIE!! Uwu We make a fucky wucky!! A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!',
         ]);
     }
 }
