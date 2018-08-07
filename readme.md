@@ -1,8 +1,8 @@
 # MyApp
-The Customizable Laravel Forum
+A Forum made with Laravel 5.6
 
 ### Prerequisites
-Composer, of course.
+Composer (for installing support packages).
 
 ### Installing
 Install via Git.

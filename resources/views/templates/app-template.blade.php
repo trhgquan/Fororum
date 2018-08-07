@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>{{ config('app.name') }} - @yield('title')</title>
@@ -5,7 +6,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="{{ url('/') }} - Cổng thông tin chính thức và diễn đàn của {{ config('app.name') }}">
-		<meta name="keyword" content="{{ config('app.name') }}">
+		<meta name="keyword" content="{{ config('app.name') }}, lorem, ipsum, dolor, sit, amet {{-- more keywords goes here --}}">
 		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}">

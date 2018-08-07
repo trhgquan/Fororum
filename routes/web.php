@@ -116,6 +116,8 @@ Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth',
 
 /**
  * Search route
+ * Search for profile: http://example.com/search/profile/loremipsum
+ * Search for post   : http://example.com/search/post/loremipsum
  */
 Route::group(['prefix' => '/search', 'middleware' => ['auth', 'alive'], 'as' => 'search'], function(){
 	Route::get('/', function(){
@@ -127,6 +129,8 @@ Route::group(['prefix' => '/search', 'middleware' => ['auth', 'alive'], 'as' => 
 
 /**
  * Report route
+ * Report a profile : http://example.com/report/profile/johndoe
+ * Report a post    : http://example.com/report/post/1
  */
 Route::group(['prefix' => '/report' , 'middleware' => ['auth', 'alive'], 'as' => 'report.'], function(){
 	Route::get('/profile/{username}', 'ReportController@profile')->where('username', '^[A-Za-z0-9._]+$')->name('profile');
@@ -136,13 +140,15 @@ Route::group(['prefix' => '/report' , 'middleware' => ['auth', 'alive'], 'as' =>
 
 /**
  * Forum route
- * DON'T CHANGE, IT'S RAVIOLLI ITSELF!
+ * basic cheatsheet for a forum url:
+ * a thread: http://example.com/forum/thread/1/lorem-ipsum-dolor-sit-amet.html
+ * a post  : http://example.com/forum/post/1/lorem-ipsum-dolor-sit-amet.html
  */
 Route::prefix('/forum')->group(function(){
 	Route::get('/', 'ForumController@home')->name('forum');
 	Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
-	Route::get('/thread/{thread_id}', 'ForumController@thread')->where('thread_id','^[0-9]+$')->name('thread');
-	Route::get('/post/{post_id}', 'ForumController@post')->where('post_id','^[0-9]+$')->name('post');
+	Route::get('/thread/{thread_id}/lorem-ipsum-dolor-sit-amet.html', 'ForumController@thread')->where('thread_id','^[0-9]+$')->name('thread');
+	Route::get('/post/{post_id}/lorem-ipsum-dolor-sit-amet.html', 'ForumController@post')->where('post_id','^[0-9]+$')->name('post');
 	Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'alive')->name('createPost');
 	Route::post('/create/thread', 'ForumController@createThread')->middleware('auth','alive', 'confirmed')->name('createThread');
 });
