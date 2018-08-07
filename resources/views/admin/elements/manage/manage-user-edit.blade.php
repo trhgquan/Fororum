@@ -5,17 +5,6 @@
 
     <div class="panel-body">
         @include('forms.admin.admin-search-form')
-        @if (empty($users_raw->total()))
-            @component('templates.alert-template', [
-                'alert_class' => 'warning',
-                'alert_title' => 'Lỗi',
-                'alert_content' => 'Không tìm thấy người dùng này, hãy thay đổi từ khóa và thử lại'
-            ])
-            @endcomponent
-            @php
-                $users_raw = App\UserInformation::getActiveUsers();
-            @endphp
-        @endif
         <table class="table table-bordered">
             <thead>
                 <th>ID</th>
@@ -24,11 +13,11 @@
                 <th>Hành động</th>
             </thead>
             <tbody>
-                @foreach ($users_raw as $users)
-                    @php
-                        $user = App\User::find($users->id);
-                    @endphp
-                    @include('forms.admin.account.account-edit')
+                @foreach ($users_raw as $user)
+                    @include('forms.admin.account.account-edit', [
+                        'user' => App\User::find($user->id),
+                        'permissions' => App\UserInformation::userPermissions($user->id)
+                    ])
                 @endforeach
             </tbody>
         </table>

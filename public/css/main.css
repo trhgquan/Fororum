@@ -12,7 +12,8 @@ body {
 }
 
 .container-fluid {
-    margin: 0 98
+    margin-left: 98px;
+    margin-right: 98px;
 }
 
 .navbar-nav>li>a,
@@ -59,6 +60,7 @@ a:hover {
     background-color: #007bff;
 }
 
+.text-danger,
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label,
@@ -130,7 +132,7 @@ a:hover {
 	border: 0.5px solid #ccc;
 	border-radius: 6.25px;
 	margin-bottom: 15px;
-	padding: 20 20 20 20;
+	padding: 20px 20px 20px 20px;
 }
 .media-box:hover
 {

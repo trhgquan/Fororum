@@ -12,9 +12,9 @@ class NotificationSeed extends Seeder
     public function run()
     {
         App\UserNotification::create([
-            'user_id' => 1,
+            'user_id'        => 1,
             'participant_id' => 7,
-            'content' => App\User::username(7) . ' đã tạo 1 chủ đề mới trong Triều Tiên.',
+            'content'        => App\User::username(7).' đã tạo 1 chủ đề mới trong Triều Tiên.',
         ]);
     }
 }
