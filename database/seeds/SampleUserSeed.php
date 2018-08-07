@@ -12,9 +12,9 @@ class SampleUserSeed extends Seeder
     public function run()
     {
         App\User::create([
-        	'username' => 'trhgquan',
-        	'password' => bcrypt('0753815536'),
-        	'email'    => 'tranhoangq@gmail.com'
+            'username' => 'trhgquan',
+            'password' => bcrypt('0753815536'),
+            'email'    => 'tranhoangq@gmail.com',
         ]);
     }
 }

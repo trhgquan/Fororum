@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUserBlacklists extends Migration
 {
@@ -13,7 +13,7 @@ class CreateUserBlacklists extends Migration
      */
     public function up()
     {
-        Schema::create('user_blacklists', function(Blueprint $table){
+        Schema::create('user_blacklists', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('admin_id');
             $table->datetime('expire'); // because maximum of datetime is 12/31/9999
