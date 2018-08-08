@@ -55,13 +55,13 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
         })->name('.home');
 
         // display all the reports
-        Route::get('/reports', function() {
+        Route::get('/reports', function () {
             return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
         })->name('.reports');
 
         // da search engine.
         // something like http://example.com/dashboard/profile/loremipsum
-        Route::get('/{keyword}', function ($keyword){
+        Route::get('/{keyword}', function ($keyword) {
             if (!empty(App\User::search($keyword)->total() > 0)) {
                 return view('admin.admin-template', [
                     'action'    => 'editUser',

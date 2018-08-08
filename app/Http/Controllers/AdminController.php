@@ -97,7 +97,7 @@ class AdminController extends Controller
         if (!$validator->fails()) {
             $this->adminUpdateUser($Request->all());
 
-            return redirect()->back()->withErrors(['content' => 'Đã cập nhật tài khoản #' . $Request->get('id') . ' thành công!', 'class' => 'success']);
+            return redirect()->back()->withErrors(['content' => 'Đã cập nhật tài khoản #'.$Request->get('id').' thành công!', 'class' => 'success']);
         }
 
         return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Có lỗi đã xảy ra. Mã lồi: '.$validator->errors()->first(), 'class' => 'danger']);
