@@ -46,6 +46,9 @@ Wait until Laravel Artisan install the forum database successfully, then we are 
 * **Quan, Tran Hoang** - *One-man army* - [trhgquan](https://github.com/trhgquan)
 * **me_a_doge** - *unknown from dogeland* - [meadoge](https://github.com/meadoge)
 
+# LICENSE
+__Fororum is licensed under the MIT License__. [view LICENSE](https://github.com/trhgquan/Fororum/blob/master/LICENSE).
+
 # Built with
 * [Laravel](https://laravel.com) Laravel 5.6 - The newest PHP Framework for web artisans by Taylor Otwell
 * [Bootstrap](https://getbootstrap.com) Bootstrap 3.3.7
