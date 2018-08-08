@@ -6,7 +6,7 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 # Why Fororum?
 - Easy to install (which is not correct when you do not know what is Composer).
 - SEO Friendly
-- (more fixtures will be added here soon)
+- Fully-support admin in managing users and forum posts.
 
 # Installing
 ## Prerequisites
