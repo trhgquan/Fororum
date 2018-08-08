@@ -42,7 +42,7 @@ class RegisterController extends Controller
             'email.unique'               => 'Email đã được dùng để đăng ký tài khoản.',
             'password.min'               => 'Mật khẩu không an toàn.',
             'password_confirmation.same' => 'Mật khẩu và mật khẩu nhập lại không khớp.',
-            'agrees.accepted'			 => 'Bạn phải đồng ý với điều khoản dịch vụ và chính sách người dùng.',
+            'agrees.accepted'			         => 'Bạn phải đồng ý với điều khoản dịch vụ và chính sách người dùng.',
         ]);
 
         if ($validator->fails()) {
