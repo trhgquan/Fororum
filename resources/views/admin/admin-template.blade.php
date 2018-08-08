@@ -3,7 +3,7 @@
 @section('title', 'Quản trị')
 
 @section('navbar_brand')
-	<a href="{{ route('admin.index') }}" class="navbar-brand">{{ config('app.name') }} <small>for Supreme Leader</small></a>
+	<a href="{{ route('admin.home') }}" class="navbar-brand">{{ config('app.name') }} <small>for Supreme Leader</small></a>
 @endsection
 
 @section('navbar_item')
@@ -27,11 +27,18 @@
 			@break
 
 		@case('management')
-			@include('admin.elements.admin-management', ['role' => $role])
+			@if ($role === 'user')
+				@include('admin.elements.manage.manage-user-reports', ['reports' => App\UserReport::getUsersOnly()])
+			@else
+				<div class="notify-title">
+					<h1>Tính năng đang xây dựng</h1>
+					<a href="https://github.com/trhgquan">THEO DÕI GITHUB</a>
+				</div>
+			@endif
 			@break
 
 		@case('editUser')
-			@include('admin.elements.admin-management', ['role' => $action])
+			@include('admin.elements.manage.manage-user-profiles')
 			@break
 
 		@default

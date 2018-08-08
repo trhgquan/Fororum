@@ -3,10 +3,7 @@
 	<head>
 		<title>{{ config('app.name') }} - @yield('title')</title>
 		<!-- NOW IS THE META! -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="{{ url('/') }} - Cổng thông tin chính thức và diễn đàn của {{ config('app.name') }}">
-		<meta name="keyword" content="{{ config('app.name') }}, lorem, ipsum, dolor, sit, amet {{-- more keywords goes here --}}">
+		@include('templates.meta-template')
 		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}">

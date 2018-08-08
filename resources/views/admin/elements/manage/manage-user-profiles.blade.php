@@ -9,13 +9,13 @@
             <thead>
                 <th>ID</th>
                 <th>Tài khoản</th>
-                <th>Đặc quyền</th>
+                <th>Thẩm quyền</th>
                 <th>Hành động</th>
             </thead>
             <tbody>
                 @foreach ($users_raw as $user)
                     @include('forms.admin.account.account-edit', [
-                        'user' => App\User::find($user->id),
+                        'user'        => App\User::find($user->id),
                         'permissions' => App\UserInformation::userPermissions($user->id)
                     ])
                 @endforeach

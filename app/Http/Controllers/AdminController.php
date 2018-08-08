@@ -62,7 +62,7 @@ class AdminController extends Controller
                 'title'       => $Request->get('title'),
             ], [
                 'description'   => ['required'],
-                'keyword'       => ['required', 'max:40', 'regex:/^[A-Za-z0-9](?!.*?[^\nA-Za-z0-9]{2}).*?[A-Za-z0-9]$/'],
+                'keyword'       => ['required', 'max:40', 'regex:/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/'],
                 'title'         => ['required', 'max:40'],
             ]);
             if (!$validator->fails()) {
@@ -97,7 +97,7 @@ class AdminController extends Controller
         if (!$validator->fails()) {
             $this->adminUpdateUser($Request->all());
 
-            return redirect()->back()->withErrors(['content' => 'Đã cập nhật thành công!', 'class' => 'success']);
+            return redirect()->back()->withErrors(['content' => 'Đã cập nhật tài khoản #' . $Request->get('id') . ' thành công!', 'class' => 'success']);
         }
 
         return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Có lỗi đã xảy ra. Mã lồi: '.$validator->errors()->first(), 'class' => 'danger']);
@@ -169,10 +169,10 @@ class AdminController extends Controller
         $user = UserInformation::find($data['id']);
         $permissions = (int) $data['permissions'];
         if ($permissions > 2) {
-            $user->permissions = $permissions;
+            $user->permissions = 3; // 3 is the moderator
         } else {
-            $user->confirmed = (($permissions) ? 0 : 1);
-            $user->permissions = ((!$permissions) ?: 1);
+            $user->confirmed = (($permissions === 2) ? 1 : 0);
+            $user->permissions = (($permissions === 2) ?: 1);
         }
         $user->save();
     }
@@ -184,7 +184,7 @@ class AdminController extends Controller
      * @param string $action
      * @param array  $options event if success / failure nullable
      *
-     * @return bool
+     * @return mixed
      */
     protected function accepted($action, array $options = [])
     {

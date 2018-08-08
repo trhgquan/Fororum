@@ -1,4 +1,4 @@
-<form action="{{ route('admin.edit.user.save') }}" method="POST">
+<form action="{{ route('admin.profiles-manager.edit') }}" method="POST">
     <tr>
         <td>
             <a href="{{ route('user.profile.username', [$user->username]) }}">{{ $user->id }}</a>
@@ -17,8 +17,8 @@
             @if (!$permissions['admin'] && !$permissions['banned'])
                 <select name="permissions" class="form-control">
                     <option value="1">Người dùng</option>
-                    <option value="2">Tài khoản chính thức</option>
-                    <option value="3">Người kiểm duyệt</option>
+                    <option value="2" {{ (!$permissions['confirmed']) ?: 'selected' }}>Tài khoản chính thức</option>
+                    <option value="3" {{ (!$permissions['mod']) ?: 'selected' }}>Người kiểm duyệt</option>
                 </select>
             @else
                 <p class="text-danger">không thể chỉnh đặc quyền</p>
@@ -26,7 +26,9 @@
         </td>
         <td>
             @csrf
-            <button type="submit" class="btn btn-primary">Lưu lại</button>
+            @if (!$permissions['admin'] && !$permissions['banned'])
+                <button type="submit" class="btn btn-primary">Lưu lại</button>
+            @endif
         </td>
     </tr>
 </form>

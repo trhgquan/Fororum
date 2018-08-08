@@ -113,7 +113,7 @@ class SearchController extends Controller
             'keyword' => ['required'],
         ]);
         if (!$validator->fails()) {
-            return redirect()->route('admin.edit.user.search.result', ['keyword' => $Request->get('keyword')]);
+            return redirect()->route('admin.profiles-manager.search.result', ['keyword' => $Request->get('keyword')]);
         }
 
         return redirect()->back()->withErrors($validator);

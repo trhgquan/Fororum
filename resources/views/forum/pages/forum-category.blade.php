@@ -1,4 +1,7 @@
-@extends('forum.forum-template')
+@extends('forum.forum-template', ['meta' => [
+	'description' => config('app.name') . ' - ' . $category_name,
+	'keyword'     => [config('app.name'),$category_keyword]
+]])
 @section('title', $category_name)
 
 @section('forum-content')

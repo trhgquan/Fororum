@@ -49,6 +49,7 @@ class ForumController extends Controller
             if ($this->paginateCheck($category_threads)) {
                 return view('forum.pages.forum-category', [
                     'category_name'    => $categoryObj->title,
+                    'category_keyword' => $categoryObj->keyword,
                     'category_id'      => $categoryObj->id,
                     'category_threads' => $category_threads,
                 ]);

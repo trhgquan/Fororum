@@ -1,4 +1,4 @@
-<form action="{{ route('admin.censor.user') }}" method="POST">
+<form action="{{ route('admin.profiles-manager.takedown') }}" method="POST">
     <div class="form-group">
         @csrf
         <input type="hidden" name="rpid" value="{{ $report->id }}">

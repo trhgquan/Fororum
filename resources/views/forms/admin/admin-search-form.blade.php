@@ -1,4 +1,4 @@
-<form class="form-inline" action="{{ route('admin.edit.user.search') }}" method="POST">
+<form class="form-inline" action="{{ route('admin.profiles-manager.search') }}" method="POST">
     <div class="form-group">
         <label for="keyword">Tìm một người dùng:</label>
         <div class="input-group">

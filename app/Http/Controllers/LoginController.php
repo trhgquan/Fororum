@@ -111,7 +111,7 @@ class LoginController extends Controller
         $permissions = UserInformation::userPermissions($id);
         if (!$permissions['banned']) {
             if ($permissions['admin']) {
-                return redirect()->route('admin.index');
+                return redirect()->route('admin.home');
             }
 
             return redirect()->intended('/');
