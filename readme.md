@@ -24,11 +24,11 @@ Now you need to configure your .env file, so these code can works!
 
 In .env file, change
 ```
-DB_HOST=127.0.0.1 // to your database host
+DB_HOST=127.0.0.1   // to your database host
 ...
-DB_DATABASE=myapp // to your database name
-DB_USERNAME=root  // to your database username
-DB_PASSWORD=root  // to your databse password
+DB_DATABASE=fororum // to your database name
+DB_USERNAME=root    // to your database username
+DB_PASSWORD=root    // to your databse password
 ```
 Also on .env file, if you want to change the _Fororum_ name into your forum's name:
 ```
