@@ -1,4 +1,8 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['meta' => [
+	'keyword' => [config('app.name'),'register', 'dang-ky'],
+	'description' => 'Đăng ký một tài khoản ' . config('app.name'),
+	'og:description' => 'Đăng ký một tài khoản ' . config('app.name')
+]])
 
 @section('title', 'Đăng ký')
 

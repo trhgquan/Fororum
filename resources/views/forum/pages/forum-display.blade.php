@@ -1,4 +1,6 @@
-@extends('forum.forum-template')
+@extends('forum.forum-template', ['meta' => [
+	'description' => (isset($thread) && $thread) ? $content['thread']->title : App\ForumPosts::postTitle($content->post_id)
+]])
 @section('forum-content')
 	{{-- Display the thread with posts --}}
 	@if (isset($thread) && $thread)
@@ -42,7 +44,7 @@
 			@endif
 		@endsection
 	@else
-		@section('title', 'bài viết: ' . App\ForumPosts::postTitle($content->post_id))
+@section('title', 'bài viết: ' . App\ForumPosts::postTitle($content->post_id))
 
 		@component('items.breadcrumb-items', ['breadcrumb' => App\ForumPosts::breadcrumbs($content->post_id)])
 		@endcomponent

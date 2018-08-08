@@ -29,7 +29,7 @@ class RegisterController extends Controller
     public function register(Request $Request)
     {
         $validator = Validator::make($Request->all(), [
-            'username'              => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:6', 'max:20', 'unique:users'], // Laravel tolds me to do this so...
+            'username'              => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:10', 'max:20', 'unique:users'], // Laravel tolds me to do this so...
             'email'                 => 'required|string|email|unique:users',
             'password'              => 'required|string|min:6',
             'password_confirmation' => 'required|string|same:password',
@@ -42,7 +42,7 @@ class RegisterController extends Controller
             'email.unique'               => 'Email đã được dùng để đăng ký tài khoản.',
             'password.min'               => 'Mật khẩu không an toàn.',
             'password_confirmation.same' => 'Mật khẩu và mật khẩu nhập lại không khớp.',
-            'agrees.accepted'			         => 'Bạn phải đồng ý với điều khoản dịch vụ và chính sách người dùng.',
+            'agrees.accepted'			 => 'Bạn phải đồng ý với điều khoản dịch vụ và chính sách người dùng.',
         ]);
 
         if ($validator->fails()) {

@@ -21,12 +21,12 @@
 Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive'], 'as' => 'admin.'], function () {
     Route::get('/', function () {
         return view('admin.admin-template', ['action' => 'home']);
-    })->name('index');
+    })->name('home');
 
     // Manage
     Route::group(['prefix' => '/manage', 'as' => 'manage.'], function () {
         Route::get('/', function () {
-            return redirect()->route('admin.index');
+            return redirect()->route('admin.home');
         });
 
         // subforums
@@ -39,51 +39,49 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
             Route::post('/create', 'AdminController@createSubforum')->name('.create');
         });
 
-        // reports
-        Route::get('report/user', function () {
-            return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
-        })->name('user');
-
         Route::get('report/post', function () {
             return view('admin.admin-template', ['action' => 'management', 'role' => 'post']);
         })->name('post');
     });
 
-    // edit user information
-    Route::group(['prefix' => 'edit/user', 'as' => 'edit.user'], function () {
+    // profiles management
+    Route::group(['prefix' => '/profiles', 'as' => 'profiles-manager'], function () {
         // this return all the active users.
         Route::get('/', function () {
             return view('admin.admin-template', [
                 'action'    => 'editUser',
                 'users_raw' => App\UserInformation::getActiveUsers(),
             ]);
-        });
+        })->name('.home');
 
-        // search engine
-        Route::group(['prefix' => '/search', 'as' => '.search'], function () {
-            Route::get('/', function () {
-                return redirect()->route('admin.edit.user');
-            });
-            Route::get('/{keyword}', function ($keyword) {
-                if (!empty(App\User::search($keyword)->total() > 0)) {
-                    return view('admin.admin-template', [
-                        'action'    => 'editUser',
-                        'keyword'   => $keyword,
-                        'users_raw' => App\User::search($keyword),
-                    ]);
-                }
+        // display all the reports
+        Route::get('/reports', function() {
+            return view('admin.admin-template', ['action' => 'management', 'role' => 'user']);
+        })->name('.reports');
 
-                return redirect()->route('admin.edit.user')->withErrors(['class' => 'warning', 'content' => 'Không tìm thấy người dùng này!']);
-            })->name('.result');
+        // da search engine.
+        // something like http://example.com/dashboard/profile/loremipsum
+        Route::get('/{keyword}', function ($keyword){
+            if (!empty(App\User::search($keyword)->total() > 0)) {
+                return view('admin.admin-template', [
+                    'action'    => 'editUser',
+                    'keyword'   => $keyword,
+                    'users_raw' => App\User::search($keyword),
+                ]);
+            }
 
-            Route::post('/', 'SearchController@adminSearchEngine');
-        });
+            return redirect()->route('admin.profiles-manager.home')->withErrors(['class' => 'warning', 'content' => 'Không tìm thấy người dùng này!']);
+        })->name('.search.result');
+
+        // search for a specific user.
+        Route::post('/search', 'SearchController@adminSearchEngine')->name('.search');
+
+        // edit user information
+        Route::post('/edit', 'AdminController@editUserInformation')->name('.edit');
+
+        // review user reports.
+        Route::post('/takedown', 'AdminController@reviewUserReport')->name('.takedown');
     });
-
-    // review user report.
-    Route::post('/censor/user', 'AdminController@reviewUserReport')->name('censor.user');
-    // edit user information
-    Route::post('/edit/user', 'AdminController@editUserInformation')->name('edit.user.save');
 });
 
 /*
@@ -141,14 +139,18 @@ Route::group(['prefix' => '/report', 'middleware' => ['auth', 'alive'], 'as' => 
 /*
  * Forum route
  * basic cheatsheet for a forum url:
- * a thread: http://example.com/forum/thread/1/lorem-ipsum-dolor-sit-amet.html
- * a post  : http://example.com/forum/post/1/lorem-ipsum-dolor-sit-amet.html
+ * a category : http://example.com/forum/1 | http://example.com/forum/lorem-ipsum
+ * a thread: http://example.com/forum/thread/thread-1.html
+ * a post  : http://example.com/forum/post/post-1.html
+ *
+ * cannot use the group middleware here, because the forum is free-to-use.
+ * customize to private registered-only, add the group middleware.
  */
 Route::prefix('/forum')->group(function () {
     Route::get('/', 'ForumController@home')->name('forum');
     Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
-    Route::get('/thread/{thread_id}/lorem-ipsum-dolor-sit-amet.html', 'ForumController@thread')->where('thread_id', '^[0-9]+$')->name('thread');
-    Route::get('/post/{post_id}/lorem-ipsum-dolor-sit-amet.html', 'ForumController@post')->where('post_id', '^[0-9]+$')->name('post');
+    Route::get('/thread/thread-{thread_id}.html', 'ForumController@thread')->where('thread_id', '^[0-9]+$')->name('thread');
+    Route::get('/post/post-{post_id}.html', 'ForumController@post')->where('post_id', '^[0-9]+$')->name('post');
     Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'alive')->name('createPost');
     Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'alive', 'confirmed')->name('createThread');
 });

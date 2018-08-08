@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
     <li role="presentation" class="{{ ($action === 'home') ? 'active' : '' }}">
-        <a href="{{ route('admin.index') }}">Hệ thống</a>
+        <a href="{{ route('admin.home') }}">Hệ thống</a>
     </li>
     <li role="presentation">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -13,7 +13,7 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">Tài khoản</li>
             <li class="{{ ($action === 'management' && $role === 'user') ? 'active' : '' }}">
-                <a href="{{ route('admin.manage.user') }}">
+                <a href="{{ route('admin.profiles-manager.reports') }}">
                     Báo cáo tài khoản
                     @if (App\UserReport::not_reviewed()['total'] > 0)
                         <span class="badge">{{ App\UserReport::not_reviewed()['profile'] }}</span>
@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="{{ ($action === 'editUser') ? 'active' : '' }}">
-                <a href="{{ route('admin.edit.user') }}">
+                <a href="{{ route('admin.profiles-manager.home') }}">
                     Sửa thông tin tài khoản
                 </a>
             </li>

@@ -1,4 +1,7 @@
-@extends('forum.forum-template')
+@extends('forum.forum-template', ['meta' => [
+	'description'    => 'Dien dan ' . config('app.name'),
+	'og:description' => 'Dien dan ' . config('app.name')
+]])
 
 @section('forum-content')
 	<legend>Sảnh chính</legend>

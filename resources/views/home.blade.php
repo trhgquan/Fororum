@@ -1,4 +1,7 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['meta' => [
+	'description' => config('app.name').' - Trang chủ',
+	'keyword'     => config('app.name')
+]])
 
 @section('title', 'Trang chủ')
 
@@ -21,7 +24,7 @@
 			<a href="{{ route('forum') }}">forum</a>
 			<a href="{{ route('search.home') }}">search</a>
 			@if (App\UserInformation::userPermissions(Auth::id())['admin'])
-				<a href="{{ route('admin.index') }}">admin</a>
+				<a href="{{ route('admin.home') }}">admin</a>
 			@endif
 		@else
 			<h1 class="page-title">{{ config('app.name') }}</h1>
