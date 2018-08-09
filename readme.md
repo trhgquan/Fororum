@@ -2,8 +2,9 @@
 <p align="center">
   <i>Forum creavit cum Laravel</i>
 </p>
-<p align="center">  
-  <a href="https://github.styleci.io/repos/134251696"><img src="https://github.styleci.io/repos/134251696/shield?style=square"></a>
+<p align="center">
+  <a href="https://github.styleci.io/repos/134251696"><img src="https://github.styleci.io/repos/134251696/shield?style=square" alt="StyleCI"></a>
+  <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license"></a>
 </p>
 
 # What is Fororum, anyway?
