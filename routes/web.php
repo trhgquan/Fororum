@@ -92,7 +92,9 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth', 'alive'], 'as' => 'u
         return redirect()->route('user.edit');
     });
     Route::group(['prefix' => '/profile', 'as' => 'profile.'], function () {
-        Route::get('/', 'ProfileController@home')->name('home');
+        Route::get('/', function () {
+            return redirect()->route('user.profile.username', [Auth::user()->username]);
+        })->name('home');
         Route::group(['prefix' => '/{username}', 'where' => ['username' => '^[A-Za-z0-9._]+$'], 'as' => 'username'], function () {
             Route::get('/', 'ProfileController@profile');
             Route::post('/follow', 'ProfileController@follow')->name('.follow');
