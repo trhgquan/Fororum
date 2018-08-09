@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(SampleUserSeed::class);
-        $this->call(banUserSeeder::class);
+        $this->call(Fororum::class);
     }
 }

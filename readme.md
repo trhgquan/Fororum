@@ -49,7 +49,12 @@ Type this and press Enter. Laravel Artisan will do everythings left.
 ```
 php artisan migrate
 ```
-Wait until Laravel Artisan install the forum database successfully, then we are ready to on-line!
+Wait until Laravel Artisan install the forum database successfully. Next, we need to set up the admin account. In console, type
+
+```
+php artisan db:seed
+```
+After that, open your forum and login with your default credentials: admin / admin. From now on, Fororum is online!
 
 # Authors
 * **Quan, Tran Hoang** - *One-man army* - [trhgquan](https://github.com/trhgquan)
