@@ -14,29 +14,6 @@ use Validator;
 class ProfileController extends Controller
 {
     /**
-     * when user click on the navbar's dropdown
-     * and get to the first page, this is it.
-     *
-     * @return null
-     */
-    public function home()
-    {
-        $user = Auth::user();
-        $userInformation = UserInformation::userPermissions($user->id);
-
-        return view('profile',
-            [
-                'edit'         => false,
-                'this_profile' => true,
-                'content'      => [
-                    'user_content' => $user,
-                    'history'      => User::userPosts($user->id),
-                ],
-            ]
-        );
-    }
-
-    /**
      * when user access another user's profile, here it is.
      * if user access his own profile, redirect back to home.
      *
@@ -48,14 +25,11 @@ class ProfileController extends Controller
     {
         $user = User::profile($username);
         $userInformation = UserInformation::userPermissions($user->id);
-        if ($this->thisProfile($user->id)) {
-            return redirect()->route('user.profile.home');
-        }
 
         return view('profile',
             [
                 'edit'         => false,
-                'this_profile' => false,
+                'this_profile' => $this->thisProfile($user->id),
                 'content'      => [
                     'user_content' => $user,
                     'history'      => User::userPosts($user->id),
