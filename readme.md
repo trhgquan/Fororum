@@ -1,3 +1,11 @@
+<h1 align="center">Fororum</h1>
+<p align="center">
+  <i>A Forum made from Laravel</i>
+</p>
+<p align="center">  
+  <a href="https://github.styleci.io/repos/134251696"><img src="https://github.styleci.io/repos/134251696/shield?style=square"></a>
+</p>
+
 # What is Fororum, anyway?
 A Forum made with Laravel 5.6. _Fororum_ in Latin means _Forum_.
 
