@@ -1,6 +1,5 @@
 <?php
 
-use App\ForumCategories;
 use Illuminate\Database\Seeder;
 
 class Fororum extends Seeder
@@ -22,7 +21,7 @@ class Fororum extends Seeder
 
         // the code above just created an account.
         // now we make that account admin.
-        App\ForumInformation::create([
+        App\UserInformation::create([
             'id'          => $user->id,
             'confirmed'   => 1,
             'permissions' => 2

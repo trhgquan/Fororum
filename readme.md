@@ -45,6 +45,11 @@ APP_NAME=Fororum // to your Forum name.
 ```
 Now we install the forum's database tables. Open Command Prompt in the install folder (In Windows: Ctrl + Right -> Open with CMD)
 
+Install the application's security key first:
+```
+php artisan key:generate
+```
+
 Type this and press Enter. Laravel Artisan will do everythings left.
 ```
 php artisan migrate
