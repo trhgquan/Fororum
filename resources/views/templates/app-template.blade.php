@@ -6,13 +6,13 @@
 		@include('templates.meta-template')
 		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url('css/Fororum.css') }}">
 	</head>
 
 	<body>
 		<!-- NAVIGATION BAR FOR THE WEBSITE -->
 		@section('navbar')
-		<nav class="navbar navbar-default navbar-fixed-top">
+		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					@section('navbar_brand')
@@ -36,16 +36,24 @@
 		<script src="{{ url('js/jquery.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		@yield('extrajs')
-	</body>
 
-	<!-- FOOTER CREDIT -->
-	<footer>
-		<div class="navbar navbar-default navbar-fixed-bottom">
-			<div class="container">
-				<div class="navbar">
-					<p class="navbar-text">Bản quyền bởi <strong>{{ config('app.name') }}</strong> &copy; @php echo date('Y') @endphp. Mọi quyền được bảo lưu.</p>
+		<!-- FOOTER -->
+		<footer class="footer">
+			<div class="navbar navbar-default">
+				<div class="container">
+					@section ('footer')
+						@isset($footer)
+							@foreach ($footer as $footer_item)
+								<p class="navbar-text">{!! $footer_item !!}</p>
+							@endforeach
+						@endisset
+					@show
+					<p class="navbar-text">
+						{{ config('app.name') }} is powered by <b><a href="https://github.com/trhgquan/Fororum">Fororum</a></b>.
+						Copyright &copy; 2018 <a href="https://github.com/trhgquan">Quan, Tran Hoang</a> under <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE">the MIT License</a>.
+					</p>
 				</div>
 			</div>
-		</div>
-	</footer>
+		</footer>
+	</body>
 </html>
