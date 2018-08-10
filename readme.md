@@ -41,42 +41,44 @@ Now you need to configure your .env file, so these code can works!
 
 - Then, in the .env.example file, make some changes on these lines:
 
-```
-DB_HOST=127.0.0.1   // to your database host
-...
-DB_DATABASE=fororum // to your database name
-DB_USERNAME=root    // to your database username
-DB_PASSWORD=root    // to your database password
-```
+    ```
+    DB_HOST=127.0.0.1   // to your database host
+    ...
+    DB_DATABASE=fororum // to your database name
+    DB_USERNAME=root    // to your database username
+    DB_PASSWORD=root    // to your database password
+    ```
 
-Also on .env.example file, if you want to change the _Fororum_ name into your forum's name:
+    Also on .env.example file, if you want to change the _Fororum_ name into your forum's name:
 
-```
-APP_NAME=Fororum // to your Forum name.
-```
-and then save it as `.env`
+    ```
+    APP_NAME=Fororum // to your Forum name.
+    ```
+    and then save it as `.env`
 
 - Install the application's security key first:
 
-```
-php artisan key:generate
-```
+    ```
+    php artisan key:generate
+    ```
 
-- Then, we install the forum's database tables. Open the console in Fororum's folder, type this command and press Enter. Laravel Artisan will do everythings left for you.
+- Then, we install the forum's database tables.
 
-```
-php artisan migrate
-```
+    Open the console in Fororum's folder, type this command and press Enter. Laravel Artisan will do everythings left for you.
 
-Wait until Laravel Artisan install the forum database successfully.
+    ```
+    php artisan migrate
+    ```
+
+    Wait until Laravel Artisan install the forum database successfully.
 
 - Next, we need to set up the admin account. In console, type
 
-```
-php artisan db:seed
-```
+    ```
+    php artisan db:seed
+    ```
 
-After that, open your forum and login with your default credentials: admin / admin. From now on, Fororum is online!
+- After that, open your forum and login with your default credentials: admin / admin. From now on, Fororum is online!
 
 # Authors
 * **Quan, Tran Hoang** - *One-man army* - [trhgquan](https://github.com/trhgquan)
