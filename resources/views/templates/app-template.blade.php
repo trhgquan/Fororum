@@ -6,7 +6,7 @@
 		@include('templates.meta-template')
 		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url('css/Fororum.css') }}">
 	</head>
 
 	<body>
@@ -48,7 +48,10 @@
 							@endforeach
 						@endisset
 					@show
-					<p class="navbar-text">{{ config('app.name') }} is powered by <b><a href="https://github.com/trhgquan/Fororum">Fororum</a></b>. Copyright &copy; 2018 <a href="https://github.com/trhgquan">Quan, Tran Hoang</a> under <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE">the MIT License</a>.</p>
+					<p class="navbar-text">
+						{{ config('app.name') }} is powered by <b><a href="https://github.com/trhgquan/Fororum">Fororum</a></b>.
+						Copyright &copy; 2018 <a href="https://github.com/trhgquan">Quan, Tran Hoang</a> under <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE">the MIT License</a>.
+					</p>
 				</div>
 			</div>
 		</footer>
