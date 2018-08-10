@@ -37,7 +37,9 @@ composer install
 
 Now you need to configure your .env file, so these code can works!
 
-First of all, create a new database. Then, in the .env.example file, make some changes on these lines:
+- First of all, create a new database.
+
+- Then, in the .env.example file, make some changes on these lines:
 
 ```
 DB_HOST=127.0.0.1   // to your database host
@@ -52,20 +54,23 @@ Also on .env.example file, if you want to change the _Fororum_ name into your fo
 ```
 APP_NAME=Fororum // to your Forum name.
 ```
-and then save it as __*.env*__
+and then save it as `.env`
 
-Install the application's security key first:
+- Install the application's security key first:
+
 ```
 php artisan key:generate
 ```
 
-Then, we install the forum's database tables. Open the console in Fororum's folder, type this command and press Enter. Laravel Artisan will do everythings left for you.
+- Then, we install the forum's database tables. Open the console in Fororum's folder, type this command and press Enter. Laravel Artisan will do everythings left for you.
 
 ```
 php artisan migrate
 ```
 
-Wait until Laravel Artisan install the forum database successfully. Next, we need to set up the admin account. In console, type
+Wait until Laravel Artisan install the forum database successfully.
+
+- Next, we need to set up the admin account. In console, type
 
 ```
 php artisan db:seed
