@@ -24,7 +24,7 @@ class Fororum extends Seeder
         App\UserInformation::create([
             'id'          => $user->id,
             'confirmed'   => 1,
-            'permissions' => 2
+            'permissions' => 2,
         ]);
 
         // create the first category in the forum.
