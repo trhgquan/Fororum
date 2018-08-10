@@ -18,11 +18,11 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 - Fully-support admin in managing users and forum posts.
 
 # Launching Fororum
-1. Requirements:
+## 1. Requirements:
 - PHP >= 7.0
 - Composer (for installing support packages).
 
-2. Download
+## 2. Download
 __Install via Git__.
 ```
 git clone https://github.com/trhgquan/Fororum.git
@@ -33,7 +33,8 @@ Open the console (In Windows: Ctrl + Right click on the Fororum's folder -> Open
 composer install
 ```
 
-3. Setting up
+## 3. Setting up
+
 Now you need to configure your .env file, so these code can works!
 
 First of all, create a new database. Then, in the .env.example file, make some changes on these lines:
