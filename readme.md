@@ -17,48 +17,59 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 - SEO Friendly
 - Fully-support admin in managing users and forum posts.
 
-# Installing
-## Prerequisites
-Composer (for installing support packages).
+# Launching Fororum
+1. Requirements:
+- PHP >= 7.0
+- Composer (for installing support packages).
 
+2. Download
 __Install via Git__.
 ```
 git clone https://github.com/trhgquan/Fororum.git
 ```
-After that, run Composer install to install support packages
+
+Open the console (In Windows: Ctrl + Right click on the Fororum's folder -> Open Command Prompt here) and type the command below to install support packages.
 ```
 composer install
 ```
+
+3. Setting up
 Now you need to configure your .env file, so these code can works!
 
-In .env file, change
+First of all, create a new database. Then, in the .env.example file, make some changes on these lines:
+
 ```
 DB_HOST=127.0.0.1   // to your database host
 ...
 DB_DATABASE=fororum // to your database name
 DB_USERNAME=root    // to your database username
-DB_PASSWORD=root    // to your databse password
+DB_PASSWORD=root    // to your database password
 ```
-Also on .env file, if you want to change the _Fororum_ name into your forum's name:
+
+Also on .env.example file, if you want to change the _Fororum_ name into your forum's name:
+
 ```
 APP_NAME=Fororum // to your Forum name.
 ```
-Now we install the forum's database tables. Open Command Prompt in the install folder (In Windows: Ctrl + Right -> Open with CMD)
+and then save it as __*.env*__
 
 Install the application's security key first:
 ```
 php artisan key:generate
 ```
 
-Type this and press Enter. Laravel Artisan will do everythings left.
+Then, we install the forum's database tables. Open the console in Fororum's folder, type this command and press Enter. Laravel Artisan will do everythings left for you.
+
 ```
 php artisan migrate
 ```
+
 Wait until Laravel Artisan install the forum database successfully. Next, we need to set up the admin account. In console, type
 
 ```
 php artisan db:seed
 ```
+
 After that, open your forum and login with your default credentials: admin / admin. From now on, Fororum is online!
 
 # Authors
