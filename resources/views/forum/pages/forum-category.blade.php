@@ -7,7 +7,7 @@
 @section('forum-content')
 	@component('items.breadcrumb-items', ['breadcrumb' => App\ForumCategories::breadcrumbs($category_id)])
 	@endcomponent
-	<legend>Các chủ đề trong {{ $category_name }}</legend>
+	<legend>{{ $category_name }}</legend>
 	@if ($category_threads->total() > 0)
 		@foreach ($category_threads as $post)
 			@component('forum.elements.thread-template', ['thread' => $post])
@@ -15,7 +15,7 @@
 		@endforeach
 		{{ $category_threads->links() }}
 	@else
-		Trở thành người đầu tiên tạo 1 chủ đề trong {{ $category_name }}
+		Be the first to post in "{{ $category_name }}"
 	@endif
 @endsection
 
@@ -26,6 +26,6 @@
 			'thread' => true
 		])
 	@else
-		Đăng nhập để tạo 1 chủ đề mới trong {{ $category_name }}
+		Log in to create a new thread in "{{ $category_name }}"
 	@endif
 @endsection

@@ -1,13 +1,13 @@
 @extends('templates.app-template', ['meta' => [
-	'keyword' => [config('app.name'),'register', 'dang-ky'],
-	'description' => 'Đăng ký một tài khoản ' . config('app.name'),
-	'og:description' => 'Đăng ký một tài khoản ' . config('app.name')
+	'keyword' => [config('app.name'),'register', 'sign-up'],
+	'description' => 'Register an ' . config('app.name') . ' account',
+	'og:description' => 'Register an ' . config('app.name') . ' account'
 ]])
 
-@section('title', 'Đăng ký')
+@section('title', 'Register a new account')
 
 @section('navbar_item')
-	<li><a href="{{ route('login') }}">Đăng nhập</a></li>
+	<li><a href="{{ route('login') }}">Login</a></li>
 @endsection
 
 @section('content')

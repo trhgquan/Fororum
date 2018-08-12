@@ -19,7 +19,7 @@ class UserConfirmed
     public function handle($request, Closure $next)
     {
         if (Auth::check() && !UserInformation::userPermissions(Auth::id())['confirmed']) {
-            return redirect()->back()->withErrors(['errors' => 'bạn phải xác nhận tài khoản trước khi đăng chủ để mới!']);
+            return redirect()->back()->withErrors(['errors' => 'Your account must be verified to create new threads!']);
         }
 
         return $next($request);

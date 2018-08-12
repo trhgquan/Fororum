@@ -1,10 +1,10 @@
 <table class="table table-bordered">
     <thead>
         <th>#</th>
-        <th>Tên diễn đàn con</th>
-        <th>Giới thiệu</th>
-        <th>Từ khóa</th>
-        <th>Hành động</th>
+        <th>Subforum</th>
+        <th>Intro</th>
+        <th>Slug</th>
+        <th>Action</th>
     </thead>
 
     <tbody>

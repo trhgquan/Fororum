@@ -6,7 +6,7 @@
         <td><input type="text" class="form-control" name="keyword" value="{{ $forum->keyword }}" required></td>
         <td>
             @csrf
-            <button type="submit" name="action" value="edit" class="btn btn-primary">Sửa</button>
+            <button type="submit" name="action" value="edit" class="btn btn-primary">Save</button>
         </td>
     </tr>
 </form>

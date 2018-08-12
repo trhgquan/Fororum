@@ -2,10 +2,10 @@
     <table class="table table-bordered">
         <thead>
             <th>ID</th>
-            <th>Tài khoản</th>
-            <th>Báo cáo / Người báo cáo</th>
-            <th>Lúc</th>
-            <th>Hành động</th>
+            <th>Account</th>
+            <th>Report / Reporter</th>
+            <th>At</th>
+            <th>Action</th>
         </thead>
         <tbody>
             @foreach($reports as $report)
@@ -37,7 +37,7 @@
     {{ $reports->links() }}
 @else
     <div class="notify-title">
-        <h1>Không có thông tin!</h1>
-        <p>Những tài khoản bị báo cáo sẽ xuất hiện tại đây</p>
+        <h1>No reports could be found.</h1>
+        <p>If there are any reports, it will appears here.</p>
     </div>
 @endif

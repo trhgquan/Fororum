@@ -7,7 +7,7 @@
 @endsection
 
 @section('navbar_item')
-	<li><a href="{{ url('/') }}">Trang chủ</a></li>
+	<li><a href="{{ url('/') }}">Home</a></li>
     @include('items.navbar-items')
 @endsection
 
@@ -15,7 +15,7 @@
 	@include('admin.elements.admin-navbar')
 	@if ($errors->has('class'))
         @component('templates.alert-template', [
-            'alert_title' => 'Thông báo',
+            'alert_title' => 'Notice',
             'alert_class' => $errors->first('class'),
             'alert_content' => $errors->first('content')
         ])
@@ -31,8 +31,8 @@
 				@include('admin.elements.manage.manage-user-reports', ['reports' => App\UserReport::getUsersOnly()])
 			@else
 				<div class="notify-title">
-					<h1>Tính năng đang xây dựng</h1>
-					<a href="https://github.com/trhgquan">THEO DÕI GITHUB</a>
+					<h1>Building in progress.</h1>
+					<a href="https://github.com/trhgquan">DEVELOPER'S GITHUB</a>
 				</div>
 			@endif
 			@break

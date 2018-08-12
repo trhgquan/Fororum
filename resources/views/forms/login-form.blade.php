@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Đăng nhập
+			Log into your account
 		</div>
 		<div class="panel-body">
 			<form action="{{ route('login') }}" method="POST" role="form">
@@ -11,16 +11,16 @@
 				@endif
 
 				<div class="form-group {{ ($errors->has('username')) ? 'has-error' : '' }}">
-					<label class="control-label" for="username">Tên tài khoản</label>
-					<input type="text" class="form-control" id="username" name="username" placeholder="Tên tài khoản" value="{{ old('username') }}" required>
+					<label class="control-label" for="username">Username:</label>
+					<input type="text" class="form-control" id="username" name="username" placeholder="Your username" value="{{ old('username') }}" required>
 					@if ($errors->has('username'))
 						<span class="help-block">{{ $errors->first('username') }}</span>
 					@endif
 				</div>
 
 				<div class="form-group {{ ($errors->has('password')) ? 'has-error' : '' }} ">
-					<label class="control-label" for="password">Mật khẩu</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
+					<label class="control-label" for="password">Password:</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Your password" required>
 					@if ($errors->has('password'))
 						<span class="help-block">{{ $errors->first('password') }}</span>
 					@endif
@@ -28,9 +28,11 @@
 
 				@csrf
 
-				<button type="submit" class="btn btn-primary">Đăng nhập</button>
-				<hr/>
-				<a href="{{ route('register') }}">Chưa có tài khoản? Đăng ký ngay!</a>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-centered">Login</button>
+					<hr>
+					<a href="{{ route('register') }}">Don't have an account yet? Get one now!</a>
+				</div>
 			</form>
 		</div>
 	</div>

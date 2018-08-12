@@ -1,14 +1,14 @@
 @extends('templates.app-template', ['meta' => [
-	'description' => config('app.name').' - Trang chủ',
+	'description' => config('app.name').' - Home',
 	'keyword'     => config('app.name')
 ]])
 
-@section('title', 'Trang chủ')
+@section('title', 'Home')
 
 @if (!Auth::check())
 	@section('navbar_item')
-		<li><a href="{{ route('login') }}">Đăng nhập</a></li>
-		<li><a href="{{ route('register') }}">Đăng ký</a></li>
+		<li><a href="{{ route('login') }}">Login</a></li>
+		<li><a href="{{ route('register') }}">Sign up</a></li>
 	@endsection
 @else
 	@section('navbar_item')
@@ -19,8 +19,8 @@
 @section('content')
 	<div class="jumbotron">
 		@if (Auth::check())
-			<h1>Chào {{ Auth::user()->username }}!</h1>
-			<p>Cổng thông tin chính thức và diễn đàn của {{ config('app.name') }}</p>
+			<h1>Howdy, {{ Auth::user()->username }}.</h1>
+			<p>Welcome back to {{ config('app.name') }}!</p>
 			<a href="{{ route('forum') }}">forum</a>
 			<a href="{{ route('search.home') }}">search</a>
 			@if (App\UserInformation::userPermissions(Auth::id())['admin'])
@@ -28,8 +28,8 @@
 			@endif
 		@else
 			<h1 class="page-title">{{ config('app.name') }}</h1>
-			<p>Cổng thông tin chính thức, diễn đàn open-source của {{ config('app.name') }}</p>
-			<p>Đã có <span id="realtime">0</span> người tham gia! <a href="{{ route('register') }}">Tham gia ngay!</a></p>
+			<p>Forum creavit cum Laravel.</p>
+			<p><span id="realtime">0</span> user joined! <a href="{{ route('register') }}">Join us for free now.</a></p>
 		@endif
 	</div>
 @endsection

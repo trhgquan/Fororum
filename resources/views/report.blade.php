@@ -1,6 +1,6 @@
 @extends('templates.app-template')
 
-@section('title', 'báo cáo'))
+@section('title', 'Justice')
 
 @section('navbar_brand')
     <a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }} <small>justice</small></a>
@@ -13,14 +13,17 @@
 @section('content')
     @if ($type === 'after')
         <div class="notify-title">
-            <h1>Bạn đã làm việc có ích cho cộng đồng!</h1>
-            <p>Hệ thống đang xem xét báo cáo của bạn và đưa ra quyết định.</p>
+            <h1>Well done!</h1>
+            <p>
+                We appreciate you reporting this issue to us. The webmaster will look over this issue and decide if it violated our <a href="#">TERMS OF SERVICES</a>.<br/>
+                Now, keep calm and <a href="{{ route('forum') }}">head me to the forum!</a>
+            </p>
         </div>
     @elseif ($type === 'error')
         <div class="notify-title">
-            <h1>Dừng lại!</h1>
-            <b>Bạn không thể báo cáo bản thân mình hoặc một bài đăng mình đã đăng!</b>
-            <p>Ngoài ra bạn không thể báo cáo tài khoản hệ thống, những tài khoản không tồn tại hay những tài khoản đã bị khóa. <a href="#">Tìm hiểu thêm</a>.</p>
+            <h1>You cannot take this action!</h1>
+            <b>You cannot report yourself, or a post you have posted.</b>
+            <p>You also cannot report system, non-exist or banned accounts. <a href="#">Find out more</a></p>
         </div>
     @else
         <div class="row">

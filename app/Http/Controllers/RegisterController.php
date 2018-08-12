@@ -35,14 +35,14 @@ class RegisterController extends Controller
             'password_confirmation' => 'required|string|same:password',
             'agrees'                => 'accepted',
         ], [
-            'username.max'               => 'Độ dài quá mức cho phép!',
-            'username.regex'             => 'Không đúng định dạng cho phép!',
-            'username.min'               => 'Tài khoản quá ngắn!',
-            'username.unique'            => 'Tài khoản đã tồn tại.',
-            'email.unique'               => 'Email đã được dùng để đăng ký tài khoản.',
-            'password.min'               => 'Mật khẩu không an toàn.',
-            'password_confirmation.same' => 'Mật khẩu và mật khẩu nhập lại không khớp.',
-            'agrees.accepted'			         => 'Bạn phải đồng ý với điều khoản dịch vụ và chính sách người dùng.',
+            'username.max'               => 'The username is too long.',
+            'username.min'               => 'The username is too short.',
+            'username.regex'             => 'The username is using some unknown characters.',
+            'username.unique'            => 'This username has already been taken.',
+            'email.unique'               => 'This email has already been registered.',
+            'password.min'               => 'The password is too short.',
+            'password_confirmation.same' => 'The password confirmation does not match.',
+            'agrees.accepted'			         => 'You must agreed to the TERMS OF SERVICE and the USER AGREEMENT.',
         ]);
 
         if ($validator->fails()) {
@@ -59,7 +59,7 @@ class RegisterController extends Controller
                 'permissions' => 1,
             ]);
 
-            (Auth::guard())->login($user);
+            Auth::login($user);
 
             return redirect()->intended('/home');
         }

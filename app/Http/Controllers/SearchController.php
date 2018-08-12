@@ -35,8 +35,8 @@ class SearchController extends Controller
         ], [
             'keyword' => ['required', 'min:3'],
         ], [
-            'keyword.required' => 'Từ khóa không được bỏ trống',
-            'keyword.min'      => 'Từ khóa phải ít nhất 3 ký tự',
+            'keyword.required' => 'The keyword field is required.',
+            'keyword.min'      => 'The keyword\'s minimum length is 3 characters.',
         ]);
 
         if (!$validator->fails()) {
@@ -82,9 +82,9 @@ class SearchController extends Controller
             'keyword' => ['required', 'min:3'], // keyword for post to, so get rid of the fakkin regex.
             'action'  => ['required', 'regex:/^[A-Za-z]+$/'],
         ], [
-            'keyword.required' => 'Từ khóa không được bỏ trống.',
-            'keyword.min'      => 'Từ khóa phải ít nhất 3 ký tự.',
-            'action.regex'	    => 'Một lỗi không mong muốn vừa xảy ra.',
+            'keyword.required' => 'The keyword field is required.',
+            'keyword.min'      => 'The keyword\'s minimum length is 3 characters.',
+            'action.regex'	    => 'An error occurred. Please try again.',
         ]);
 
         if (!$validator->fails()) {

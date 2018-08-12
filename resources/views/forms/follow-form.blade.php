@@ -3,9 +3,9 @@
         <input type="hidden" name="uid" value="{{ $content['user_content']->id }}">
         @csrf
         @if (!App\UserFollowers::is_followed(Auth::id(), $content['user_content']->id))
-            <button type="submit" class="btn btn-primary">Đăng ký</button>
+            <button type="submit" class="btn btn-primary">Follow</button>
         @else
-            <button type="submit" class="btn btn-danger">Huỷ đăng ký</button>
+            <button type="submit" class="btn btn-danger">Unfollow</button>
         @endif
     </form>
 @endif

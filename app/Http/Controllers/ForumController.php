@@ -103,28 +103,29 @@ class ForumController extends Controller
         $validator = Validator::make($Request->all(), [
             'content' => 'required|min:50|max:255',
         ], [
-            'content.required' => 'Không được bỏ trống ô nội dung',
-            'content.max'      => 'nội dung vượt quá độ dài cho phép',
-            'content.min'	     => 'nội dung quá ngắn',
+            'content.required' => 'The post\'s content field is required.',
+            'content.max'      => 'The post\'s content is too long.',
+            'content.min'	     => 'The post\'s content is too short.',
         ]);
 
         if (!$validator->fails()) {
             $parent = $Request->get('parent');
-            if (!empty($parent) && empty(ForumPosts::post($parent)->parent_id)) { // parent phải là 1 thread, mà thread thì parent_id = 0
+            // parent is a thread and the thread's id = 0
+            if (!empty($parent) && empty(ForumPosts::post($parent)->parent_id)) {
                 $parent = ForumPosts::post($parent);
                 $post = ForumPosts::create([
                     'parent_id' => $parent->post_id,
                     'user_id'   => Auth::id(),
                     'content'   => $Request->get('content'),
                 ]);
-                // redirect tới trang cuối của thread
+                // redirect to the last page
                 return redirect()->route('thread', [
                     'thread_id' => $parent->post_id,
                     'page'      => ForumPosts::thread($parent->post_id)['posts']->lastPage(),
                 ]);
             }
 
-            return redirect()->back()->withErrors(['errors' => 'Không tìm thấy chủ đề!']);
+            return redirect()->back()->withErrors(['errors' => 'The parent thread cannot be found!']);
         }
 
         return redirect()->back()->withErrors($validator)->withInput();
@@ -143,15 +144,15 @@ class ForumController extends Controller
             'title'   => 'required|min:50|max:70',
             'content' => 'required|min:50|max:255',
         ], [
-            'title.required'   => 'không thể để trống tiêu đề',
-            'title.max'        => 'tiêu đề quá dài',
-            'title.min'		      => 'tiêu đề quá ngắn',
-            'content.required' => 'không thể để trống nội dung',
-            'content.max'      => 'nội dung quá dài',
-            'content.min'	     => 'nội dung quá ngắn',
+            'title.required'   => 'The thread\'s title is required.',
+            'title.max'        => 'The thread\'s title is too long.',
+            'title.min'		      => 'The thread\'s title is too short.',
+            'content.required' => 'The thread\'s content is required.',
+            'content.max'      => 'The thread\'s content is too long.',
+            'content.min'	     => 'The thread\'s content is too short.',
         ]);
 
-        if (!$validator->fails() && ForumCategories::CategoryExist($Request->get('category'))) { // subforum phải tồn tại
+        if (!$validator->fails() && ForumCategories::CategoryExist($Request->get('category'))) { // subforum must existed
             $thread = ForumPosts::create([
                 'category_id' => $Request->get('category'),
                 'user_id'     => Auth::id(),
@@ -163,11 +164,11 @@ class ForumController extends Controller
                     'user_id'        => $followers->user_id,
                     'participant_id' => $thread->id,
                     'route'          => 'thread',
-                    'content'        => User::username($followers->participant_id).' vừa tạo một chủ đề mới!',
+                    'content'        => User::username($followers->participant_id).' just created a new thread!',
                 ]);
             }
 
-            return redirect()->route('thread', [$thread->id]); // tương tự: id là primary key của table
+            return redirect()->route('thread', [$thread->id]); // id is the table's primary key
         }
 
         return redirect()->back()->withErrors($validator)->withInput();

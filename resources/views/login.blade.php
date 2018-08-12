@@ -1,13 +1,13 @@
 @extends('templates.app-template', ['meta' => [
-	'keyword' => [config('app.name'),'login', 'dang-nhap'],
-	'description' => 'Đăng nhập vào tài khoản ' . config('app.name'),
-	'og:description' => 'Đăng nhập vào tài khoản ' . config('app.name')
+	'keyword' => [config('app.name'),'login', 'sign-in'],
+	'description' => 'Log in to ' . config('app.name'),
+	'og:description' => 'Log in to ' . config('app.name')
 ]])
 
-@section('title', 'Đăng nhập')
+@section('title', 'Log into your account')
 
 @section('navbar_item')
-	<li><a href="{{ route('register') }}">Đăng ký</a></li>
+	<li><a href="{{ route('register') }}">Sign up</a></li>
 @endsection
 
 @section('content')

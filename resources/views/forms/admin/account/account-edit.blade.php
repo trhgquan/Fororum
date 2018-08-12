@@ -16,18 +16,18 @@
         <td>
             @if (!$permissions['admin'] && !$permissions['banned'])
                 <select name="permissions" class="form-control">
-                    <option value="1">Người dùng</option>
-                    <option value="2" {{ (!$permissions['confirmed']) ?: 'selected' }}>Tài khoản chính thức</option>
-                    <option value="3" {{ (!$permissions['mod']) ?: 'selected' }}>Người kiểm duyệt</option>
+                    <option value="1">Normal user</option>
+                    <option value="2" {{ (!$permissions['confirmed']) ?: 'selected' }}>Authenticated user</option>
+                    <option value="3" {{ (!$permissions['mod']) ?: 'selected' }}>Garde du corps</option>
                 </select>
             @else
-                <p class="text-danger">không thể chỉnh đặc quyền</p>
+                <p class="text-danger">Cannot take any action with this user.</p>
             @endif
         </td>
         <td>
             @csrf
             @if (!$permissions['admin'] && !$permissions['banned'])
-                <button type="submit" class="btn btn-primary">Lưu lại</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             @endif
         </td>
     </tr>

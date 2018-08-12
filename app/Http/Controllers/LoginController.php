@@ -35,8 +35,8 @@ class LoginController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
         ], [
-            'username.required' => 'Không được bỏ trống ô tên tài khoản!',
-            'password.required' => 'Không được bỏ trống ô mật khẩu!',
+            'username.required' => 'The username field is required.',
+            'password.required' => 'The password field is required.',
         ]);
 
         if ($validator->fails()) {
@@ -61,7 +61,7 @@ class LoginController extends Controller
             // prevent the cannot-log-in bug.
             $Request->session()->flush();
 
-            return redirect()->route('login')->withErrors(['title' => 'Thông báo', 'content' => 'Đã đăng xuất khỏi hệ thống thành công!', 'class' => 'info']);
+            return redirect()->route('login')->withErrors(['title' => 'Logged out', 'content' => 'You are now logged out.', 'class' => 'info']);
         }
 
         return redirect()->route('login');
@@ -83,7 +83,7 @@ class LoginController extends Controller
             // so admin goes to admin, and banned goes to banned
             return $this->checkUserPermissions(Auth::id());
         } else {
-            return redirect()->back()->withErrors(['username' => 'Tài khoản không chính xác', 'password' => 'Mật khẩu không chính xác'])->withInput();
+            return redirect()->back()->withErrors(['username' => 'Please check your username again.', 'password' => 'Please check your password again.'])->withInput();
         }
     }
 
@@ -137,7 +137,7 @@ class LoginController extends Controller
             // now we log him out
             Auth::logout();
 
-            return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Tài khoản của bạn đã bị khóa bởi '.User::username($reason->admin_id).' và sẽ được mở khóa vào lúc '.date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger'])->withInput();
+            return redirect()->back()->withErrors(['title' => 'Error', 'content' => 'Your account has been banned by  '.User::username($reason->admin_id).'. Date the ban will be lifted: '.date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'), 'class' => 'danger'])->withInput();
         }
         // his ban is expired. unban and redirect to home.
         UserBlacklists::unban($id);

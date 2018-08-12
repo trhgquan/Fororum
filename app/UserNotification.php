@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserNotification extends Model
 {
-    const max_display = 5; // phân trang cho result, y chang như bên ForumPosts.
+    const max_display = 5; // paginate
 
     protected $table = 'users_notification';
 

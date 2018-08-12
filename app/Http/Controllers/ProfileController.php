@@ -63,12 +63,12 @@ class ProfileController extends Controller
             'new_password'          => 'string|required|min:6|different:password',
             'password_confirmation' => 'string|required|same:new_password',
         ], [
-            'password.required'              => 'Không được để trống ô mật khẩu!',
-            'new_password.required'          => 'Không được để trống ô mật khẩu mới!',
-            'new_password.different'         => 'Mật khẩu mới không được trùng với mật khẩu cũ!',
-            'new_password.min'               => 'Mật khẩu không an toàn!',
-            'password_confirmation.required' => 'Không được để trống ô xác nhận mật khẩu!',
-            'password_confirmation.same'     => 'Mật khẩu mới và mật khẩu xác nhận không khớp với nhau!',
+            'password.required'              => 'Current password required.',
+            'new_password.required'          => 'The new password goes here.',
+            'new_password.different'         => 'The new password must be different from the current password.',
+            'new_password.min'               => 'The new password\'s length must be at least 6 characters.',
+            'password_confirmation.required' => 'The new password must be confirmed.',
+            'password_confirmation.same'     => 'The password confirmation does not match.',
         ]);
 
         if ($validator->fails()) {
@@ -76,13 +76,11 @@ class ProfileController extends Controller
         } else {
             $user_password = Auth::user()->password;
             if (Hash::check($Request->get('password'), $user_password)) {
-                $userObj = User::find(Auth::id());
-                $userObj->password = bcrypt($Request->get('new_password'));
-                $userObj->save();
+                $this->changeUserPassword(User::find(Auth::id()), $Request->get('new_password'));
 
-                return redirect()->route('user.edit')->withErrors(['title' => 'Thông báo', 'content' => 'Đã cập nhật mật khẩu mới thành công!', 'class' => 'success']);
+                return redirect()->route('user.edit')->withErrors(['class' => 'success', 'title' => 'Success!', 'content' => 'Your password has been updated!']);
             } else {
-                return redirect()->back()->withErrors(['password' => 'Mật khẩu hiện tại của bạn không chính xác!'])->withInput();
+                return redirect()->back()->withErrors(['password' => 'Your current password is incorrect.'])->withInput();
             }
         }
     }
@@ -143,5 +141,21 @@ class ProfileController extends Controller
     protected function followable(int $id)
     {
         return $id !== Auth::id() && User::exist($id) && !UserInformation::userPermissions($id)['banned'];
+    }
+
+    /**
+     * this method change user password.
+     * @param  App\User   $user
+     * @param  string $password
+     * @return mixed
+     */
+    protected function changeUserPassword (User $user, $password)
+    {
+        $user->password = bcrypt($password);
+        $user->save();
+
+        // now we log user in again to prevent user being logged out
+        // since we use the method AuthenticateSession.
+        return Auth::login($user);
     }
 }

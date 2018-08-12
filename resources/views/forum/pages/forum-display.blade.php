@@ -4,12 +4,12 @@
 @section('forum-content')
 	{{-- Display the thread with posts --}}
 	@if (isset($thread) && $thread)
-		@section('title', 'chủ đề: ' . $content['thread']->title)
+		@section('title', 'Thread: ' . $content['thread']->title)
 
 		@component('items.breadcrumb-items', ['breadcrumb' => App\ForumPosts::breadcrumbs($content['thread']->post_id)])
 		@endcomponent
 
-		<legend>Chủ đề: {{ $content['thread']->title }}</legend>
+		<legend>{{ $content['thread']->title }}</legend>
 
 		@component('forum.elements.post-template',[
 			'post' => $content['thread'],
@@ -18,7 +18,7 @@
 		@endcomponent
 
 		@if (App\ForumPosts::totalPosts($content['thread']->post_id) > 0)
-			<legend>{{ App\ForumPosts::totalPosts($content['thread']->post_id) }} bài viết trả lời:</legend>
+			<legend>Replies</legend>
 
 			@foreach ($content['posts'] as $post)
 				@component('forum.elements.post-template', [
@@ -30,7 +30,7 @@
 			@endforeach
 			{{ $content['posts']->links() }}
 		@else
-			<p>Trở thành người đầu tiên bình luận về {{ $content['thread']->title }}.</p>
+			<p>Be the first to post a reply to "{{ $content['thread']->title }}".</p>
 		@endif
 
 		@section('create-post')
@@ -40,16 +40,16 @@
 					'thread' => false
 				])
 			@else
-				<p>Đăng nhập để bình luận về chủ đề "{{ $content['thread']->title }}".</p>
+				<p>Log in to post a reply to "{{ $content['thread']->title }}".</p>
 			@endif
 		@endsection
 	@else
-@section('title', 'bài viết: ' . App\ForumPosts::postTitle($content->post_id))
+@section('title', 'Post: ' . App\ForumPosts::postTitle($content->post_id))
 
 		@component('items.breadcrumb-items', ['breadcrumb' => App\ForumPosts::breadcrumbs($content->post_id)])
 		@endcomponent
 
-		<legend>Bài viết:</legend>
+		<legend>Post:</legend>
 
 		@component('forum.elements.post-template', [
 			'post'   => $content,
