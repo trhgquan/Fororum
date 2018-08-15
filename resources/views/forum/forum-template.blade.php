@@ -1,14 +1,10 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'forum'])
 
 @section('title', 'Forum')
 
-@section('navbar_brand')
-	<a href="{{ route('forum') }}" class="navbar-brand">{{ config('app.name') }} <small>forum</small></a>
-@endsection
-
 @section('navbar_item')
 	@if (Auth::check())
-		@include('forms.search-navbar-form', ['action' => 'post'])
+		@include('forms.search.search-navbar-form', ['action' => 'post'])
 		@include('items.navbar-items')
 	@else
 		<li><a href="{{ route('login') }}">Login</a></li>

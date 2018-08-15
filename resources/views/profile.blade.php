@@ -1,4 +1,4 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'profile'])
 
 @if (!$edit)
 	@section('title', $content['user_content']->username)
@@ -7,7 +7,7 @@
 
 @section('navbar_item')
 	@if (!$edit)
-		@include('forms.search-navbar-form', ['action' => 'profile'])
+		@include('forms.search.search-navbar-form', ['action' => 'profile'])
 	@endif
 	@include('items.navbar-items')
 @endsection
@@ -50,7 +50,7 @@
 				<div class="col-md-4">
 					<p><b><span id="1strealtime"></span></b> profiles following.</p>
 					<p>following <b><span id="2ndrealtime"></span></b> profiles.</p>
-					@include('forms.follow-form')
+					@include('forms.profile.follow-form')
 				</div>
 
 				@section('extrajs')
@@ -67,6 +67,6 @@
 			@endif
 		</div>
 	@else
-		@include('forms.edit-profile-form')
+		@include('forms.profile.edit-profile-form')
 	@endif
 @endsection

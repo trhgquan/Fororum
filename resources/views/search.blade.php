@@ -1,10 +1,6 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'search'])
 
 @section('title', (isset($keyword)) ? 'Search results for ' . $keyword : 'Search')
-
-@section('navbar_brand')
-	<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }} <small>search</small></a>
-@endsection
 
 @section('navbar_item')
     @include('items.navbar-items')
@@ -49,7 +45,7 @@
                 @endif
             </div>
         @else
-            @include('forms.search-form')
+            @include('forms.search.search-form')
         @endif
     </div>
 @endsection

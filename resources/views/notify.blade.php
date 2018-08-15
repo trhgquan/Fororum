@@ -2,21 +2,30 @@
 @section('title', 'Notification')
 
 @section('content')
-    @if (!empty(App\UserNotification::count(Auth::id())))
-        <p>You have {{ App\UserNotification::count(Auth::id()) }} notification:</p>
-        @foreach (App\UserNotification::notify(Auth::id()) as $notify)
+    @if (!empty($user->notifications->count()))
+        <p>
+            You have {{ $user->unreadNotifications->count() }} unread notification:
+            @if (!empty($user->unreadNotifications->count()))
+                <a href="{{ route('notify.read.all') }}" class="pull-right">mark all as read</a>
+            @endif
+            <a href="{{ route('notify.delete.all') }}" class="pull-right">delete all</a>
+        </p>
+
+        @foreach ($user->notifications as $notify)
             <div class="media-box">
-                <b><a href="{{ route('user.profile.username', ['autobot']) }}">autobot</a></b>
+                <b><a href="{{ route('user.profile.username', [$notify['data']['from']]) }}">{{ $notify['data']['from'] }}</a></b>
                 <small>{{ date_format($notify->created_at, 'd-m-Y h:i:s A') }}</small>
-                <p>{{ $notify->content }}</p>
-                <a href="{{ route('notify.notifies', ['notify_id' => $notify->notify_id]) }}">find out more</a>
+                @if (empty($notify['read_at']))
+                    <span class="label label-danger">new</span>
+                @endif
+                <p>{{ $notify['data']['content'] }}</p>
+                <a href="{{ route($notify['data']['route'], [$notify['data']['param']]) }}">find out more</a>
             </div>
         @endforeach
-        {{ App\UserNotification::notify(Auth::id())->links() }}
     @else
         <div class="notify-title">
-            <h1>You don't have anything new!</h1>
-            <p>New notifications appears here.</p>
+            <h1>You don't have any notifications!</h1>
+            <p>Notifications appears here when someone doing something related to you.</p>
         </div>
     @endif
 @endsection

@@ -1,10 +1,6 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'for Webmaster'])
 
-@section('title', 'Quản trị')
-
-@section('navbar_brand')
-	<a href="{{ route('admin.home') }}" class="navbar-brand">{{ config('app.name') }} <small>for Supreme Leader</small></a>
-@endsection
+@section('title', 'Dashboard')
 
 @section('navbar_item')
 	<li><a href="{{ url('/') }}">Home</a></li>

@@ -1,10 +1,6 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'justice'])
 
 @section('title', 'Justice')
-
-@section('navbar_brand')
-    <a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }} <small>justice</small></a>
-@endsection
 
 @section('navbar_item')
     @include('items.navbar-items')

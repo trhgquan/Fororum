@@ -1,4 +1,4 @@
-<form action="{{ route('admin.manage.subforum.create') }}" method="POST">
+<form action="{{ route('admin.forum-manager.subforum.create') }}" method="POST">
     <div class="form-group">
         <label class="control-label">Subforum's name</label>
         <input type="text" name="subforum_title" class="form-control" placeholder="Annuntio vobis gaudium magnum" required>

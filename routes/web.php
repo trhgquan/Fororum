@@ -24,9 +24,9 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
     })->name('home');
 
     // Manage
-    Route::group(['prefix' => '/manage', 'as' => 'manage.'], function () {
+    Route::group(['prefix' => '/forum', 'as' => 'forum-manager.'], function () {
         Route::get('/', function () {
-            return redirect()->route('admin.home');
+            return redirect()->route('admin.forum-manager.subforum');
         });
 
         // subforums
@@ -39,7 +39,7 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
             Route::post('/create', 'AdminController@createSubforum')->name('.create');
         });
 
-        Route::get('report/post', function () {
+        Route::get('reports', function () {
             return view('admin.admin-template', ['action' => 'management', 'role' => 'post']);
         })->name('post');
     });
@@ -109,9 +109,21 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth', 'alive'], 'as' => 'u
  */
 Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth', 'alive']], function () {
     Route::get('/', function () {
-        return view('notify');
+        return view('notify', ['user' => Auth::user()]);
     })->name('home');
-    Route::get('/{notify_id}', 'NotifyController@notify')->where('notify_id', '^[0-9]+$')->name('notifies');
+    Route::group(['prefix' => '/read', 'as' => 'read.'], function(){
+        Route::get('/all', function(){
+            (App\User::find(Auth::id()))->unreadNotifications->markAsRead();
+            return redirect()->route('notify.home');
+        })->name('all');
+    });
+    Route::group(['prefix' => '/delete', 'as' => 'delete.'], function(){
+        Route::get('/all', function(){
+            (App\User::find(Auth::id()))->notifications()->delete();
+            return redirect()->route('notify.home');
+        })->name('all');
+    });
+    // Route::get('/{notify_id}', 'NotifyController@notify')->where('notify_id', '^[0-9]+$')->name('notifies');
 });
 
 /*
@@ -167,13 +179,32 @@ Route::get('/register', function () {
     return view('register');
 })->middleware('guest')->name('register');
 
-Route::post('/register', 'RegisterController@register');
+Route::post('/register', 'AuthController@register');
 
 // Login
 Route::get('/login', function () {
     return view('login');
 })->middleware('guest')->name('login');
 
-Route::post('/login', 'LoginController@login');
+Route::post('/login', 'AuthController@login');
 
-Route::post('/logout', 'LoginController@logout')->name('logout');
+// Log out
+Route::post('/logout', 'AuthController@logout')->name('logout');
+
+// confirm account
+Route::get('/activate/{username}/{token}', function($username, $token) {
+    return dd($username, $token);
+});
+
+// Recover account.
+Route::group(['prefix' => '/recover', 'middleware' => 'guest', 'as' => 'recover'], function(){
+    Route::get('/', function() {
+        return view('recover');
+    });
+
+    Route::get('/{username}/{token}', function($username, $token) {
+        return dd($username, $token);
+    })->name('.confirm');
+
+    Route::post('/', 'AuthController@recoverRequest')->name('.requestToken');
+});

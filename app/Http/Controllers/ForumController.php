@@ -6,10 +6,11 @@ use App\ForumCategories;
 use App\ForumPosts;
 use App\User;
 use App\UserFollowers;
-use App\UserNotification;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Auth;
+use Notification;
 use Validator;
 
 class ForumController extends Controller
@@ -159,13 +160,10 @@ class ForumController extends Controller
                 'title'       => $Request->get('title'),
                 'content'     => $Request->get('content'),
             ]);
-            foreach (UserFollowers::followers_list(Auth::id()) as $followers) {
-                UserNotification::create([
-                    'user_id'        => $followers->user_id,
-                    'participant_id' => $thread->id,
-                    'route'          => 'thread',
-                    'content'        => User::username($followers->participant_id).' just created a new thread!',
-                ]);
+
+            foreach (UserFollowers::followers_list(Auth::id()) as $follower)
+            {
+                $this->sendNotification(User::find($follower->user_id), $thread);
             }
 
             return redirect()->route('thread', [$thread->id]); // id is the table's primary key
@@ -185,5 +183,23 @@ class ForumController extends Controller
     protected function paginateCheck(Paginator $object)
     {
         return $object->currentPage() <= $object->lastPage();
+    }
+
+    /**
+     * send a notification to user.
+     *
+     * @param  App\User       $user
+     * @param  App\ForumPosts $thread
+     *
+     * @return mixed
+     */
+    protected function sendNotification(User $user, ForumPosts $thread)
+    {
+        return $user->notify(new UserNotification([
+            'from'    => Auth::user()->username,
+            'route'   => 'thread',
+            'param'   => $thread->id,
+            'content' => Auth::user()->username . ' just created a new thread!'
+        ]));
     }
 }

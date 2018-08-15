@@ -11,5 +11,5 @@
 @endsection
 
 @section('content')
-	@include('forms.register-form')
+	@include('forms.auth.register-form')
 @endsection

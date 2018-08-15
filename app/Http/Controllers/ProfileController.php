@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\UserFollowers;
 use App\UserInformation;
-use App\UserNotification;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -104,12 +104,7 @@ class ProfileController extends Controller
                 // if 2 user are not followed before, send a notification
                 // if not, unfollow in silence
                 if (UserFollowers::is_followed(Auth::id(), $id)) {
-                    UserNotification::create([
-                        'user_id'        => $id,
-                        'participant_id' => Auth::id(),
-                        'route'          => 'profile',
-                        'content'        => User::username(Auth::id()).' vừa đăng ký bạn!',
-                    ]);
+                    $this->sendNotification(User::find($id));
                 }
             }
         }
@@ -157,5 +152,21 @@ class ProfileController extends Controller
         // now we log user in again to prevent user being logged out
         // since we use the method AuthenticateSession.
         return Auth::login($user);
+    }
+
+    /**
+     * send a notification to user
+     *
+     * @param  App\User   $user
+     * @return mixed
+     */
+    protected function sendNotification (User $user)
+    {
+        return $user->notify(new UserNotification([
+            'route' => 'user.profile.username',
+            'param' => Auth::user()->username,
+            'content' => Auth::user()->username . ' is following you!',
+            'from'    => Auth::user()->username
+        ]));
     }
 }

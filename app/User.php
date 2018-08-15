@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const max_display = 5; // hiện max_display user lúc tìm kiếm
+    const max_display = 5; // max_display user for searching
 
     /**
      * The attributes that are mass assignable.
@@ -39,6 +39,18 @@ class User extends Authenticatable
     public static function exist($credentials)
     {
         return self::where('username', $credentials)->orWhere('id', $credentials)->exists();
+    }
+
+    /**
+     * static method recoverable
+     *
+     * @param  string $email
+     *
+     * @return mixed
+     */
+    public static function recoverable($email)
+    {
+        return self::where('email', $email)->exists();
     }
 
     /**

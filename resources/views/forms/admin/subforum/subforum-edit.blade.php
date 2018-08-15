@@ -1,4 +1,4 @@
-<form action="{{ route('admin.manage.subforum.edit') }}" method="POST">
+<form action="{{ route('admin.forum-manager.subforum.edit') }}" method="POST">
     <tr>
         <td><input type="hidden" name="id" value="{{ $forum->id }}"><a href="{{ route('category', ['forum_category' => $forum->keyword]) }}">{{ $forum->id }}</a></td>
         <td><input type="text" class="form-control" name="title" value="{{ $forum->title }}" required></td>

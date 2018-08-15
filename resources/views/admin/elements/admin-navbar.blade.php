@@ -28,7 +28,7 @@
             <li class="divider" role="seperator"></li>
             <li class="dropdown-header">Forum</li>
             <li class="{{ ($action === 'management' && $role === 'post') ? 'active' : '' }}">
-                <a href="{{ route('admin.manage.post') }}">
+                <a href="{{ route('admin.forum-manager.post') }}">
                     Forum reports
                     @if (App\UserReport::not_reviewed()['total'] > 0)
                         <span class="badge">{{ App\UserReport::not_reviewed()['post'] }}</span>
@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="{{ ($action === 'subforum') ? 'active' : '' }}">
-                <a href="{{ route('admin.manage.subforum') }}">
+                <a href="{{ route('admin.forum-manager.subforum') }}">
                     Subforums
                 </a>
             </li>

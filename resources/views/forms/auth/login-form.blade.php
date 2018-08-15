@@ -32,6 +32,8 @@
 					<button type="submit" class="btn btn-primary btn-centered">Login</button>
 					<hr>
 					<a href="{{ route('register') }}">Don't have an account yet? Get one now!</a>
+					<br>
+					<a href="{{ route('recover') }}">I have an account, but I forgot my password!</a>
 				</div>
 			</form>
 		</div>

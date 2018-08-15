@@ -16,7 +16,12 @@
 			<div class="container-fluid">
 				<div class="navbar-header">
 					@section('navbar_brand')
-						<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }}</a>
+						<a href="{{ url('/') }}" class="navbar-brand">
+							{{ config('app.name') }}
+							@isset ($navbar_brand)
+								<small>{{ $navbar_brand }}</small>
+							@endisset
+						</a>
 					@show
 				</div>
 
