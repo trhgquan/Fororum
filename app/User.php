@@ -42,9 +42,9 @@ class User extends Authenticatable
     }
 
     /**
-     * static method recoverable
+     * static method recoverable.
      *
-     * @param  string $email
+     * @param string $email
      *
      * @return mixed
      */
