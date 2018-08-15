@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\recoverPassword;
 use App\User;
 use App\UserBlacklists;
 use App\UserInformation;
-use App\Mail\recoverPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -116,13 +116,14 @@ class AuthController extends Controller
         }
     }
 
-    public function recoverRequest(Request $Request) {
+    public function recoverRequest(Request $Request)
+    {
         $validator = Validator::make($Request->only('email'), [
-            'email' => 'required|email|exists:users'
+            'email' => 'required|email|exists:users',
         ], [
             'email.required' => 'The email field is required',
             'email.email'    => 'The email field must contains a valid email address',
-            'email.exists'   => 'This email does not exists in our database.'
+            'email.exists'   => 'This email does not exists in our database.',
         ]);
 
         if ($validator->fails()) {
@@ -131,7 +132,7 @@ class AuthController extends Controller
 
         Mail::to($Request['email'])->send(new recoverPassword('You have requested a new password. Click here to reset your password. If you did not take this action, please do not click the link above.'));
 
-        return redirect()->back()->withErrors(['success' => 'An email has been sent to ' . $Request['email']]);
+        return redirect()->back()->withErrors(['success' => 'An email has been sent to '.$Request['email']]);
     }
 
     /**

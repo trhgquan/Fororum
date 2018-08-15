@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\UserNotification;
 use App\User;
 use App\UserFollowers;
 use App\UserInformation;
-use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -140,11 +140,13 @@ class ProfileController extends Controller
 
     /**
      * this method change user password.
-     * @param  App\User   $user
-     * @param  string $password
+     *
+     * @param App\User $user
+     * @param string   $password
+     *
      * @return mixed
      */
-    protected function changeUserPassword (User $user, $password)
+    protected function changeUserPassword(User $user, $password)
     {
         $user->password = bcrypt($password);
         $user->save();
@@ -155,18 +157,19 @@ class ProfileController extends Controller
     }
 
     /**
-     * send a notification to user
+     * send a notification to user.
      *
-     * @param  App\User   $user
+     * @param App\User $user
+     *
      * @return mixed
      */
-    protected function sendNotification (User $user)
+    protected function sendNotification(User $user)
     {
         return $user->notify(new UserNotification([
-            'route' => 'user.profile.username',
-            'param' => Auth::user()->username,
-            'content' => Auth::user()->username . ' is following you!',
-            'from'    => Auth::user()->username
+            'route'   => 'user.profile.username',
+            'param'   => Auth::user()->username,
+            'content' => Auth::user()->username.' is following you!',
+            'from'    => Auth::user()->username,
         ]));
     }
 }

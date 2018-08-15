@@ -6,7 +6,6 @@ use App\ForumCategories;
 use App\User;
 use App\UserBlacklists;
 use App\UserInformation;
-use App\Notifications\UserNotification;
 use App\UserReport;
 use Illuminate\Http\Request;
 use Validator;

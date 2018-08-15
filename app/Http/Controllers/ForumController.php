@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\ForumCategories;
 use App\ForumPosts;
+use App\Notifications\UserNotification;
 use App\User;
 use App\UserFollowers;
-use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -161,8 +161,7 @@ class ForumController extends Controller
                 'content'     => $Request->get('content'),
             ]);
 
-            foreach (UserFollowers::followers_list(Auth::id()) as $follower)
-            {
+            foreach (UserFollowers::followers_list(Auth::id()) as $follower) {
                 $this->sendNotification(User::find($follower->user_id), $thread);
             }
 
@@ -188,8 +187,8 @@ class ForumController extends Controller
     /**
      * send a notification to user.
      *
-     * @param  App\User       $user
-     * @param  App\ForumPosts $thread
+     * @param App\User       $user
+     * @param App\ForumPosts $thread
      *
      * @return mixed
      */
@@ -199,7 +198,7 @@ class ForumController extends Controller
             'from'    => Auth::user()->username,
             'route'   => 'thread',
             'param'   => $thread->id,
-            'content' => Auth::user()->username . ' just created a new thread!'
+            'content' => Auth::user()->username.' just created a new thread!',
         ]));
     }
 }

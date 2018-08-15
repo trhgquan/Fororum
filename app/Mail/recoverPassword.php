@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class recoverPassword extends Mailable
 {
@@ -29,7 +28,7 @@ class recoverPassword extends Mailable
     public function build()
     {
         return $this->view('templates.mail-template')->with([
-            'content' => $this->content
+            'content' => $this->content,
         ]);
     }
 }

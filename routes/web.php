@@ -111,15 +111,17 @@ Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth',
     Route::get('/', function () {
         return view('notify', ['user' => Auth::user()]);
     })->name('home');
-    Route::group(['prefix' => '/read', 'as' => 'read.'], function(){
-        Route::get('/all', function(){
+    Route::group(['prefix' => '/read', 'as' => 'read.'], function () {
+        Route::get('/all', function () {
             (App\User::find(Auth::id()))->unreadNotifications->markAsRead();
+
             return redirect()->route('notify.home');
         })->name('all');
     });
-    Route::group(['prefix' => '/delete', 'as' => 'delete.'], function(){
-        Route::get('/all', function(){
+    Route::group(['prefix' => '/delete', 'as' => 'delete.'], function () {
+        Route::get('/all', function () {
             (App\User::find(Auth::id()))->notifications()->delete();
+
             return redirect()->route('notify.home');
         })->name('all');
     });
@@ -192,17 +194,17 @@ Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout')->name('logout');
 
 // confirm account
-Route::get('/activate/{username}/{token}', function($username, $token) {
+Route::get('/activate/{username}/{token}', function ($username, $token) {
     return dd($username, $token);
 });
 
 // Recover account.
-Route::group(['prefix' => '/recover', 'middleware' => 'guest', 'as' => 'recover'], function(){
-    Route::get('/', function() {
+Route::group(['prefix' => '/recover', 'middleware' => 'guest', 'as' => 'recover'], function () {
+    Route::get('/', function () {
         return view('recover');
     });
 
-    Route::get('/{username}/{token}', function($username, $token) {
+    Route::get('/{username}/{token}', function ($username, $token) {
         return dd($username, $token);
     })->name('.confirm');
 
