@@ -168,13 +168,13 @@ Route::prefix('/forum')->group(function () {
     Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'fororum.confirmed')->name('createThread');
 });
 
-Route::name('auth.')->group(function(){
-    Route::group(['middleware' => 'guest'], function(){
-        Route::get('/login', function(){
+Route::name('auth.')->group(function () {
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('/login', function () {
             return view('auth.login');
         })->name('login');
 
-        Route::get('/register', function(){
+        Route::get('/register', function () {
             return view('auth.register');
         })->name('register');
 
@@ -187,12 +187,12 @@ Route::name('auth.')->group(function(){
 });
 
 // Home
-Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function(){
-    Route::get('/', function(){
+Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
+    Route::get('/', function () {
         return view('home');
     });
 
-    Route::get('/home', function(){
+    Route::get('/home', function () {
         return view('home');
     });
 });

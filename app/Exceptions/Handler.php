@@ -65,11 +65,13 @@ class Handler extends ExceptionHandler
     /**
      * redirect user to login page, if he is not authenticated
      * this allows me to use the intended method on redirects.
-     * @param  Illuminate\Http\Request                 $request
-     * @param  Illuminate\Auth\AuthenticationException $exception
+     *
+     * @param Illuminate\Http\Request                 $request
+     * @param Illuminate\Auth\AuthenticationException $exception
+     *
      * @return mixed
      */
-    protected function unauthenticated ($request, AuthenticationException $exception)
+    protected function unauthenticated($request, AuthenticationException $exception)
     {
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
