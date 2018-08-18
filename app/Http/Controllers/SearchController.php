@@ -11,14 +11,6 @@ use Validator;
 class SearchController extends Controller
 {
     /**
-     * user must logged in, and not a zombie.
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth', 'alive']);
-    }
-
-    /**
      * GET version, searching something.
      * there is a POST version below. But every search things
      * come back here.

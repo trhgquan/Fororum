@@ -1,4 +1,6 @@
-@extends('templates.app-template', ['navbar_brand' => 'for Webmaster'])
+@extends('templates.app-template', [
+	'navbar_brand' => 'for Webmaster',
+])
 
 @section('title', 'Dashboard')
 

@@ -48,9 +48,13 @@
 				<div class="container">
 					@section ('footer')
 						@isset($footer)
-							@foreach ($footer as $footer_item)
-								<p class="navbar-text">{!! $footer_item !!}</p>
-							@endforeach
+							@if (is_array($footer))
+								@foreach ($footer as $footer_item)
+									<p class="navbar-text">{!! $footer_item !!}</p>
+								@endforeach
+							@else
+								<p class="navbar-text">{!! $footer !!}</p>
+							@endif
 						@endisset
 					@show
 					<p class="navbar-text">

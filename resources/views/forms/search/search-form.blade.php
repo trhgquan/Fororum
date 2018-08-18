@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
     <div class="notify-title">
         <h1>{{ config('app.name') }} <small>search</small></h1>
-        <p>find a profile, or a post on {{ config('app.name') }}</p>
+        <p>find a profile or a post on {{ config('app.name') }}</p>
     </div>
 
     <form action="{{ route('search.keyword') }}" method="POST">

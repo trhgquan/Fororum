@@ -18,7 +18,7 @@
 /**
  * Admin route.
  */
-Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive'], 'as' => 'admin.'], function () {
+Route::group(['prefix' => '/dashboard', 'middleware' => ['fororum.admin'], 'as' => 'admin.'], function () {
     Route::get('/', function () {
         return view('admin.admin-template', ['action' => 'home']);
     })->name('home');
@@ -87,18 +87,16 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'admin', 'alive
 /*
  * User (Profile, Edit Profile) route
  */
-Route::group(['prefix' => '/user', 'middleware' => ['auth', 'alive'], 'as' => 'user.'], function () {
+Route::group(['prefix' => '/profile', 'middleware' => ['auth', 'fororum.alive'], 'as' => 'profile.'], function () {
     Route::get('/', function () {
-        return redirect()->route('user.edit');
+        return redirect()->route('profile.user', [Auth::user()->username]);
+    })->name('home');
+    Route::get('/edit', function () {
+        return redirect()->route('profile.edit');
     });
-    Route::group(['prefix' => '/profile', 'as' => 'profile.'], function () {
-        Route::get('/', function () {
-            return redirect()->route('user.profile.username', [Auth::user()->username]);
-        })->name('home');
-        Route::group(['prefix' => '/{username}', 'where' => ['username' => '^[A-Za-z0-9._]+$'], 'as' => 'username'], function () {
-            Route::get('/', 'ProfileController@profile');
-            Route::post('/follow', 'ProfileController@follow')->name('.follow');
-        });
+    Route::group(['prefix' => '/{username}', 'where' => ['username' => '^[A-Za-z0-9._]+$'], 'as' => 'user'], function () {
+        Route::get('/', 'ProfileController@profile');
+        Route::post('/follow', 'ProfileController@follow')->name('.follow');
     });
     Route::get('/edit', 'ProfileController@edit')->name('edit');
     Route::post('/edit/password', 'ProfileController@editPassword')->name('edit.password');
@@ -107,7 +105,7 @@ Route::group(['prefix' => '/user', 'middleware' => ['auth', 'alive'], 'as' => 'u
 /*
  * Notification route
  */
-Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth', 'alive']], function () {
+Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth', 'fororum.alive']], function () {
     Route::get('/', function () {
         return view('notify', ['user' => Auth::user()]);
     })->name('home');
@@ -125,7 +123,6 @@ Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth',
             return redirect()->route('notify.home');
         })->name('all');
     });
-    // Route::get('/{notify_id}', 'NotifyController@notify')->where('notify_id', '^[0-9]+$')->name('notifies');
 });
 
 /*
@@ -133,7 +130,7 @@ Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth',
  * Search for profile: http://example.com/search/profile/loremipsum
  * Search for post   : http://example.com/search/post/loremipsum
  */
-Route::group(['prefix' => '/search', 'middleware' => ['auth', 'alive'], 'as' => 'search'], function () {
+Route::group(['prefix' => '/search', 'middleware' => ['auth', 'fororum.alive'], 'as' => 'search'], function () {
     Route::get('/', function () {
         return view('search', ['have_results' => false]);
     })->name('.home');
@@ -146,7 +143,7 @@ Route::group(['prefix' => '/search', 'middleware' => ['auth', 'alive'], 'as' => 
  * Report a profile : http://example.com/report/profile/johndoe
  * Report a post    : http://example.com/report/post/1
  */
-Route::group(['prefix' => '/report', 'middleware' => ['auth', 'alive'], 'as' => 'report.'], function () {
+Route::group(['prefix' => '/report', 'middleware' => ['auth', 'fororum.alive'], 'as' => 'report.'], function () {
     Route::get('/profile/{username}', 'ReportController@profile')->where('username', '^[A-Za-z0-9._]+$')->name('profile');
     Route::get('/post/{post_id}', 'ReportController@post')->where('post_id', '^[0-9]+$')->name('post');
     Route::post('/', 'ReportController@handle')->name('handle');
@@ -167,31 +164,38 @@ Route::prefix('/forum')->group(function () {
     Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
     Route::get('/thread/thread-{thread_id}.html', 'ForumController@thread')->where('thread_id', '^[0-9]+$')->name('thread');
     Route::get('/post/post-{post_id}.html', 'ForumController@post')->where('post_id', '^[0-9]+$')->name('post');
-    Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'alive')->name('createPost');
-    Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'alive', 'confirmed')->name('createThread');
+    Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'fororum.alive')->name('createPost');
+    Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'fororum.confirmed')->name('createThread');
+});
+
+Route::name('auth.')->group(function(){
+    Route::group(['middleware' => 'guest'], function(){
+        Route::get('/login', function(){
+            return view('auth.login');
+        })->name('login');
+
+        Route::get('/register', function(){
+            return view('auth.register');
+        })->name('register');
+
+        Route::post('/login', 'AuthController@login');
+
+        Route::post('/register', 'AuthController@register');
+    });
+
+    Route::post('/logout', 'AuthController@logout')->middleware('auth')->name('logout');
 });
 
 // Home
-Route::get('/', 'HomeController@home');
+Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function(){
+    Route::get('/', function(){
+        return view('home');
+    });
 
-Route::get('/home', 'HomeController@home');
-
-// Register
-Route::get('/register', function () {
-    return view('register');
-})->middleware('guest')->name('register');
-
-Route::post('/register', 'AuthController@register');
-
-// Login
-Route::get('/login', function () {
-    return view('login');
-})->middleware('guest')->name('login');
-
-Route::post('/login', 'AuthController@login');
-
-// Log out
-Route::post('/logout', 'AuthController@logout')->name('logout');
+    Route::get('/home', function(){
+        return view('home');
+    });
+});
 
 // confirm account
 Route::get('/activate/{username}/{token}', function ($username, $token) {

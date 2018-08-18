@@ -26,12 +26,12 @@
         @csrf
         <p class="help-block" style="text-align: justify;">
             <b>Warning: You cannot reverse this action.</b><br/>
-            A subforum may contains itself many threads and posts. Delete it will also delete all of its reply posts. Be careful before take this action.
+            A subforum may contain itself many threads and posts. Delete it will also delete all of its reply posts. Be careful before taking this action.
         </p>
         <input type="checkbox" name="confirm" required> I have carefully read the warning and willing to create a subforum.
     </div>
     <button class="btn btn-success">Create a new subforum</button>
 </form>
 @section('extrajs')
-    <script src="{{ url('js/generate.js') }}"></script>
+    <script src="{{ url('js/fororum-keyword-generator.js') }}"></script>
 @endsection

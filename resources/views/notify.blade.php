@@ -13,7 +13,7 @@
 
         @foreach ($user->notifications as $notify)
             <div class="media-box">
-                <b><a href="{{ route('user.profile.username', [$notify['data']['from']]) }}">{{ $notify['data']['from'] }}</a></b>
+                <b><a href="{{ route('profile.user', [$notify['data']['from']]) }}">{{ $notify['data']['from'] }}</a></b>
                 <small>{{ date_format($notify->created_at, 'd-m-Y h:i:s A') }}</small>
                 @if (empty($notify['read_at']))
                     <span class="label label-danger">new</span>
@@ -25,7 +25,7 @@
     @else
         <div class="notify-title">
             <h1>You don't have any notifications!</h1>
-            <p>Notifications appears here when someone doing something related to you.</p>
+            <p>Notifications appear here when someone doing something related to you.</p>
         </div>
     @endif
 @endsection

@@ -1,7 +1,7 @@
 <form action="{{ route('admin.profiles-manager.edit') }}" method="POST">
     <tr>
         <td>
-            <a href="{{ route('user.profile.username', [$user->username]) }}">{{ $user->id }}</a>
+            <a href="{{ route('profile.user', [$user->username]) }}">{{ $user->id }}</a>
             <input type="hidden" name="id" value="{{ $user->id }}">
             @component('templates.badges-template', ['o' => $permissions])
             @endcomponent
@@ -16,12 +16,20 @@
         <td>
             @if (!$permissions['admin'] && !$permissions['banned'])
                 <select name="permissions" class="form-control">
-                    <option value="1">Normal user</option>
-                    <option value="2" {{ (!$permissions['confirmed']) ?: 'selected' }}>Authenticated user</option>
+                    <option value="1">Normal profile</option>
+                    <option value="2" {{ (!$permissions['confirmed']) ?: 'selected' }}>Official profile</option>
                     <option value="3" {{ (!$permissions['mod']) ?: 'selected' }}>Garde du corps</option>
                 </select>
             @else
-                <p class="text-danger">Cannot take any action with this user.</p>
+                <p class="text-danger">
+                    Cannot take any action with this user. <br>
+                    Reason:
+                    @if ($permissions['admin'])
+                        Administrator
+                    @else
+                        banned until {{ date_format(new DateTime(App\UserBlacklists::reason($user->id)['expire']), 'h:i:s A T, d-m-Y') }} by {{ App\User::username(App\UserBlacklists::reason($user->id)['admin_id']) }}
+                    @endif
+                </p>
             @endif
         </td>
         <td>

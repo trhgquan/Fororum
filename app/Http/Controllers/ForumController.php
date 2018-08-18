@@ -22,7 +22,7 @@ class ForumController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('alive');
+        $this->middleware('fororum.alive');
     }
 
     /**

@@ -4,7 +4,7 @@
 			Edit your password
 		</div>
 		<div class="panel-body">
-			<form action="{{ route('user.edit.password') }}" method="POST" role="form">
+			<form action="{{ route('profile.edit.password') }}" method="POST" role="form">
 				@if ($errors->has('content'))
 					@component('templates.alert-template', ['alert_class'=>$errors->first('class'),'alert_title' => $errors->first('title'), 'alert_content'=>$errors->first('content')])
 					@endcomponent

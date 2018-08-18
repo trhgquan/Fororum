@@ -37,7 +37,7 @@
 					<p>Email: <b>{{ $content['user_content']->email }}</b></p>
 					<p>Joined {{ config('app.name') }} on <b>{{ date_format($content['user_content']->created_at, 'd-m-Y') }}</b>, <b>{{ App\ForumPosts::ago($content['user_content']->created_at) }}</b> days ago.</p>
 					@if ($this_profile)
-						<a href="{{ route('user.edit') }}">Edit your profile</a>
+						<a href="{{ route('profile.edit') }}">Edit your profile</a>
 					@else
 						@if (!App\UserReport::is_reported(Auth::id(), $content['user_content']->id, 'profile'))
 							<a href="{{ route('report.profile', [$content['user_content']->username]) }}">Report {{ $content['user_content']->username }}</a>
@@ -54,7 +54,7 @@
 				</div>
 
 				@section('extrajs')
-					<script src="{{ url('js/counter.js') }}"></script>
+					<script src="{{ url('js/fororum-counter.js') }}"></script>
 					<script type="text/javascript">
 						counter({{ App\UserFollowers::followers($content['user_content']->id) }}, '1strealtime', 75)
 						counter({{ App\UserFollowers::following($content['user_content']->id) }}, '2ndrealtime', 75)

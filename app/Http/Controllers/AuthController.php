@@ -15,16 +15,6 @@ use Validator;
 class AuthController extends Controller
 {
     /**
-     * __construct, in here we use the "guest" middleware
-     * just for non-logged-in users. but in case uses
-     * wanted to logout.
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
-    /**
      * Log user in.
      *
      * @param Illuminate\Http\Request $Request
@@ -62,8 +52,8 @@ class AuthController extends Controller
             // this line support Auth::logoutOtherDevices()
             // prevent the cannot-log-in bug.
             $Request->session()->flush();
-
-            return redirect()->route('login')->withErrors(['title' => 'Logged out', 'content' => 'You are now logged out.', 'class' => 'info']);
+            // redirect him back to the logout page.
+            return redirect()->route('auth.login')->withErrors(['title' => 'Logged out', 'content' => 'You are now logged out.', 'class' => 'info']);
         }
 
         return redirect()->route('login');

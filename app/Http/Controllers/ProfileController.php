@@ -78,7 +78,7 @@ class ProfileController extends Controller
             if (Hash::check($Request->get('password'), $user_password)) {
                 $this->changeUserPassword(User::find(Auth::id()), $Request->get('new_password'));
 
-                return redirect()->route('user.edit')->withErrors(['class' => 'success', 'title' => 'Success!', 'content' => 'Your password has been updated!']);
+                return redirect()->route('profile.edit')->withErrors(['class' => 'success', 'title' => 'Success!', 'content' => 'Your password has been updated!']);
             } else {
                 return redirect()->back()->withErrors(['password' => 'Your current password is incorrect.'])->withInput();
             }
@@ -166,7 +166,7 @@ class ProfileController extends Controller
     protected function sendNotification(User $user)
     {
         return $user->notify(new UserNotification([
-            'route'   => 'user.profile.username',
+            'route'   => 'profile.user',
             'param'   => Auth::user()->username,
             'content' => Auth::user()->username.' is following you!',
             'from'    => Auth::user()->username,

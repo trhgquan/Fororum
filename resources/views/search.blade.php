@@ -25,7 +25,7 @@
                     @foreach ($results[$action] as $result)
                         @if ($action == 'profile')
                             <h3>
-								<a href="{{ route('user.profile.username', [$result->username]) }}">{{ $result->username }}</a>
+								<a href="{{ route('profile.user', [$result->username]) }}">{{ $result->username }}</a>
 								<small>
 									@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($result->id)])
 									@endcomponent

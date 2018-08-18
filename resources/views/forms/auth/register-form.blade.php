@@ -4,7 +4,7 @@
 			Register a new {{ config('app.name') }} account.
 		</div>
 		<div class="panel-body">
-			<form action="{{ route('register') }}" method="POST" role="form">
+			<form action="{{ route('auth.register') }}" method="POST" role="form">
 				<div class="form-group {{ ($errors->has('username')) ? 'has-error' : '' }}">
 					<label class="control-label" for="username">Pick a username:</label>
 					<input type="text" class="form-control" id="username" name="username" placeholder="Your username" value="{{ old('username') }}" required>
@@ -42,7 +42,7 @@
 						<div class="checkbox">
 							<input type="checkbox" id="agrees" name="agrees">
 						</div>
-						I HAVE READED CAREFULLY AND AGREED WITH THE <a href="#">TERMS OF SERVICE</a> AND THE <a href="#">USER AGREEMENT</a> OF {{ config('app.name') }}
+						I HAVE READ CAREFULLY AND AGREED WITH THE <a href="#">TERMS OF SERVICE</a> AND THE <a href="#">USER AGREEMENT</a> OF {{ config('app.name') }}
 					</label>
 				</div>
 
@@ -50,7 +50,7 @@
 
 				<button type="submit" class="btn btn-success">Sign up</button>
 				<hr/>
-				<a href="{{ route('login') }}">Already have an account? Log in!</a>
+				<a href="{{ route('auth.login') }}">Already have an account? Log in!</a>
 			</form>
 		</div>
 	</div>

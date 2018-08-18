@@ -1,6 +1,7 @@
 @extends('forum.forum-template', ['meta' => [
 	'description' => (isset($thread) && $thread) ? $content['thread']->title : App\ForumPosts::postTitle($content->post_id)
 ]])
+
 @section('forum-content')
 	{{-- Display the thread with posts --}}
 	@if (isset($thread) && $thread)
@@ -34,22 +35,22 @@
 		@endif
 
 		@section('create-post')
-			@if (Auth::check())
-				@include('forms.create-post-form', [
-					'parent' => (isset($thread) && !empty($thread)) ? $content['thread']->post_id : 0,
-					'thread' => false
-				])
-			@else
-				<p>Log in to post a reply to "{{ $content['thread']->title }}".</p>
-			@endif
+				@if (Auth::check())
+					@include('forms.create-post-form', [
+						'parent' => (isset($thread) && !empty($thread)) ? $content['thread']->post_id : 0,
+						'thread' => false
+					])
+				@else
+					<p>Log in to post a reply to "{{ $content['thread']->title }}".</p>
+				@endif
 		@endsection
 	@else
-@section('title', 'Post: ' . App\ForumPosts::postTitle($content->post_id))
+		@section('title', 'Post: ' . App\ForumPosts::postTitle($content->post_id))
 
 		@component('items.breadcrumb-items', ['breadcrumb' => App\ForumPosts::breadcrumbs($content->post_id)])
 		@endcomponent
 
-		<legend>Post:</legend>
+		<legend>{{ App\ForumPosts::postTitle($content->post_id) }}</legend>
 
 		@component('forum.elements.post-template', [
 			'post'   => $content,

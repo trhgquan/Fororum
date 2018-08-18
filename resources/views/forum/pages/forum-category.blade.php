@@ -7,7 +7,9 @@
 @section('forum-content')
 	@component('items.breadcrumb-items', ['breadcrumb' => App\ForumCategories::breadcrumbs($category_id)])
 	@endcomponent
+
 	<legend>{{ $category_name }}</legend>
+
 	@if ($category_threads->total() > 0)
 		@foreach ($category_threads as $post)
 			@component('forum.elements.thread-template', ['thread' => $post])

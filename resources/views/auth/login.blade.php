@@ -7,7 +7,7 @@
 @section('title', 'Log into your account')
 
 @section('navbar_item')
-	<li><a href="{{ route('register') }}">Sign up</a></li>
+	<li><a href="{{ route('auth.register') }}">Sign up</a></li>
 @endsection
 
 @section('content')

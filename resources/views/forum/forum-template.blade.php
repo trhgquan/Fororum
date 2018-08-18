@@ -7,8 +7,8 @@
 		@include('forms.search.search-navbar-form', ['action' => 'post'])
 		@include('items.navbar-items')
 	@else
-		<li><a href="{{ route('login') }}">Login</a></li>
-		<li><a href="{{ route('register') }}">Sign up</a></li>
+		<li><a href="{{ route('auth.login') }}">Login</a></li>
+		<li><a href="{{ route('auth.register') }}">Sign up</a></li>
 	@endif
 @endsection
 

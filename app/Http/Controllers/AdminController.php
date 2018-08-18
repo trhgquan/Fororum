@@ -114,7 +114,7 @@ class AdminController extends Controller
     {
         $accepted = $Request->get('action');
         if ($this->accepted($accepted)) {
-            UserBlacklists::ban(UserReport::report_information($Request->get('rpid'))->participant_id, $Request->get('expire')); // ban the user
+            UserBlacklists::ban(UserReport::report_information($Request->get('rpid'))->participant_id, $this->admin(), $Request->get('expire')); // ban the user
         }
 
         UserReport::review($Request->get('rpid'), $this->accepted($accepted, ['accepted', 'rejected'])); // review the reports;
@@ -193,5 +193,15 @@ class AdminController extends Controller
         }
 
         return $action === 'accept';
+    }
+
+    /**
+     * method admin, return the admin id.
+     *
+     * @return int
+     */
+    protected function admin()
+    {
+        return auth()->id();
     }
 }

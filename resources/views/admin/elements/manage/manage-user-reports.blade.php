@@ -12,7 +12,7 @@
                 <tr>
                     <td>{{ $report->participant_id }}</td>
                     <td>
-                        <a href="{{ route('user.profile.username', [App\User::username($report->participant_id)]) }}">{{ App\User::username($report->participant_id) }}</a>
+                        <a href="{{ route('profile.user', [App\User::username($report->participant_id)]) }}">{{ App\User::username($report->participant_id) }}</a>
                         @component('templates.badges-template', [
                             'o' => App\UserInformation::userPermissions($report->participant_id)
                         ])
@@ -22,7 +22,7 @@
                         <blockquote>
                             {{ $report->reason }}
                             <footer>
-                                <a href="{{ route('user.profile.username', [App\User::username($report->user_id)]) }}">{{ App\User::username($report->user_id) }}</a>
+                                <a href="{{ route('profile.user', [App\User::username($report->user_id)]) }}">{{ App\User::username($report->user_id) }}</a>
                             </footer>
                         </blockquote>
                     </td>
@@ -38,6 +38,6 @@
 @else
     <div class="notify-title">
         <h1>No reports could be found.</h1>
-        <p>If there are any reports, it will appears here.</p>
+        <p>If there are any reports, it will appear here.</p>
     </div>
 @endif

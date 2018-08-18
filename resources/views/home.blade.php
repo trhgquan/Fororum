@@ -7,8 +7,8 @@
 
 @if (!Auth::check())
 	@section('navbar_item')
-		<li><a href="{{ route('login') }}">Login</a></li>
-		<li><a href="{{ route('register') }}">Sign up</a></li>
+		<li><a href="{{ route('auth.login') }}">Login</a></li>
+		<li><a href="{{ route('auth.register') }}">Sign up</a></li>
 	@endsection
 @else
 	@section('navbar_item')
@@ -29,14 +29,14 @@
 		@else
 			<h1 class="page-title">{{ config('app.name') }}</h1>
 			<p>Forum creavit cum Laravel.</p>
-			<p><span id="realtime">0</span> user joined! <a href="{{ route('register') }}">Join us for free now.</a></p>
+			<p><span id="realtime">0</span> user joined! <a href="{{ route('auth.register') }}">Join us for free now.</a></p>
 		@endif
 	</div>
 @endsection
 
 @if (!Auth::check())
 	@section('extrajs')
-		<script src="{{ url('js/counter.js') }}"></script>
+		<script src="{{ url('js/fororum-counter.js') }}"></script>
 		<script type="text/javascript">counter({{ App\User::count() }}, 'realtime', 75)</script>
 	@endsection
 @endif
