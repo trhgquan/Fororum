@@ -86,6 +86,7 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['fororum.admin'], 'as' 
 
 /*
  * User (Profile, Edit Profile) route
+ * Basic cheatsheet for a profile: http://example.com/profile/johndoe
  */
 Route::group(['prefix' => '/profile', 'middleware' => ['auth', 'fororum.alive'], 'as' => 'profile.'], function () {
     Route::get('/', function () {
@@ -168,6 +169,13 @@ Route::prefix('/forum')->group(function () {
     Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'fororum.confirmed')->name('createThread');
 });
 
+/**
+ * Authentication route
+ * basic cheatsheet:
+ * Login page : http://example.com/login    GET
+ * Register   : http://example.com/register GET
+ * Logout     : http://example.com/logout   POST
+ */
 Route::name('auth.')->group(function () {
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/login', function () {
@@ -186,7 +194,7 @@ Route::name('auth.')->group(function () {
     Route::post('/logout', 'AuthController@logout')->middleware('auth')->name('logout');
 });
 
-// Home
+// Home: http://example.com/ or http://example.com/home
 Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
     Route::get('/', function () {
         return view('home');

@@ -32,7 +32,7 @@ class User extends Authenticatable
     /**
      * static method exist.
      *
-     * @param int or string $credentials (uid hoặc username đều được)
+     * @param int or string $credentials
      *
      * @return bool
      */
