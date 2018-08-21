@@ -25,22 +25,35 @@ class UserAlive
     {
         $response = $next($request);
 
-        if (auth()->check() && UserInformation::userPermissions(auth()->id())['banned']) {
-            // if the user is banned, and he is not expired yet.
-            if (!UserBlacklists::checkIfExpired(auth()->id())) {
-                // this is the reason why he get banned
-                $reason = UserBlacklists::reason(auth()->id());
-                // log him out
-                return $this->logout($request, [
-                    'title' => 'Error',
-                    'content' => 'Your account has been banned by '.User::username($reason->admin_id).'. Date the ban will be lifted: '.date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'),
-                    'class' => 'danger',
-                ]);
+        if (auth()->check()) {
+            $permissions = UserInformation::userPermissions($this->id());
+            if ($permissions['banned']) {
+                // if the user is banned, and he is not expired yet.
+                if (!UserBlacklists::checkIfExpired($this->id())) {
+                    // this is the reason why he get banned
+                    $reason = UserBlacklists::reason($this->id());
+                    // log him out
+                    return $this->logout($request, [
+                        'title' => 'Error',
+                        'content' => 'Your account has been banned by '.User::username($reason->admin_id).'. Date the ban will be lifted: '.date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'),
+                        'class' => 'danger',
+                    ]);
+                }
+                // if not, unban for him. poor guy.
+                UserBlacklists::unban($this->id());
             }
-            // if not, unban for him. poor guy.
-            UserBlacklists::unban(auth()->id());
         }
 
         return $response;
+    }
+
+    /**
+     * Return the authenticated user's id
+     *
+     * @return int
+     */
+    protected function id()
+    {
+        return auth()->id();
     }
 }

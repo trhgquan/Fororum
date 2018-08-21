@@ -62,7 +62,9 @@ trait ThrottlesLogins
         );
 
         throw ValidationException::withMessages([
-            'username' => [Lang::get('auth.throttle', ['seconds' => $seconds])],
+            'title'   => 'Authentication refused',
+            'content' => 'You are trying to log in too many times. Please try again in ' . $seconds . ' seconds',
+            'class'   => 'danger'
         ])->status(429);
     }
 
@@ -80,7 +82,7 @@ trait ThrottlesLogins
     /**
      * Get the throttle key for the given request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $Request
      * @return string
      */
     protected function throttleKey(Request $Request)

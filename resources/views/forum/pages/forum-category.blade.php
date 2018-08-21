@@ -17,7 +17,7 @@
 		@endforeach
 		{{ $category_threads->links() }}
 	@else
-		Be the first to post in "{{ $category_name }}"
+		<p>Be the first to post in "{{ $category_name }}"</p>
 	@endif
 @endsection
 
@@ -28,6 +28,6 @@
 			'thread' => true
 		])
 	@else
-		Log in to create a new thread in "{{ $category_name }}"
+		<p>Log in to create a new thread in "{{ $category_name }}"</p>
 	@endif
 @endsection

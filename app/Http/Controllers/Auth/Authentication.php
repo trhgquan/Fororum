@@ -10,6 +10,9 @@ use Illuminate\Validation\ValidationException;
 trait Authentication
 {
     use ThrottlesLogins, RedirectsUsers;
+
+    protected $redirectTo = '/forum';
+
     /**
      * Handle user login request
      *
@@ -108,8 +111,10 @@ trait Authentication
      */
     protected function authenticated (Request $Request, $user)
     {
+        $user = UserInformation::userPermissions($user->id);
+        
         // redirect the admins to the Admin Dashboard.
-        if (UserInformation::userPermissions($user->id)['admin']) {
+        if ($user['admin']) {
             return redirect()->route('admin.home');
         }
         return;

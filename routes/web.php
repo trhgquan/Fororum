@@ -92,13 +92,16 @@ Route::group(['prefix' => '/profile', 'middleware' => ['auth', 'fororum.alive'],
     Route::get('/', function () {
         return redirect()->route('profile.user', [Auth::user()->username]);
     })->name('home');
+
     Route::get('/edit', function () {
         return redirect()->route('profile.edit');
     });
+
     Route::group(['prefix' => '/{username}', 'where' => ['username' => '^[A-Za-z0-9._]+$'], 'as' => 'user'], function () {
         Route::get('/', 'ProfileController@profile');
         Route::post('/follow', 'ProfileController@follow')->name('.follow');
     });
+
     Route::get('/edit', 'ProfileController@edit')->name('edit');
     Route::post('/edit/password', 'ProfileController@editPassword')->name('edit.password');
 });
@@ -165,8 +168,8 @@ Route::prefix('/forum')->group(function () {
     Route::get('/{forum_category}', 'ForumController@category')->where('forum_category', '^[A-Za-z0-9.-]+$')->name('category');
     Route::get('/thread/thread-{thread_id}.html', 'ForumController@thread')->where('thread_id', '^[0-9]+$')->name('thread');
     Route::get('/post/post-{post_id}.html', 'ForumController@post')->where('post_id', '^[0-9]+$')->name('post');
-    Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'fororum.alive')->name('createPost');
-    Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'fororum.confirmed')->name('createThread');
+    Route::post('/create/post', 'ForumController@createPost')->middleware('auth', 'fororum.alive', 'verified')->name('createPost');
+    Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'verified')->name('createThread');
 });
 
 /**
@@ -186,12 +189,12 @@ Route::name('auth.')->group(function () {
             return view('auth.register');
         })->name('register');
 
-        Route::post('/login', 'AuthController@login');
+        Route::post('/login', 'LoginController@login');
 
-        Route::post('/register', 'AuthController@register');
+        Route::post('/register', 'RegisterController@register');
     });
 
-    Route::post('/logout', 'AuthController@logout')->middleware('auth')->name('logout');
+    Route::post('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
 });
 
 // Home: http://example.com/ or http://example.com/home
@@ -205,9 +208,17 @@ Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
     });
 });
 
-// confirm account
-Route::get('/activate/{username}/{token}', function ($username, $token) {
-    return dd($username, $token);
+// verify email address
+Route::group(['prefix' => '/email', 'as' => 'verification.'], function(){
+    Route::get('/', function(){
+        return redirect()->route('verification.notice');
+    });
+
+    Route::get('/verify', 'VerificationController@show')->name('notice');
+
+    Route::get('/verify/{id}', 'VerificationController@verify')->name('verify');
+
+    Route::get('/resend', 'VerificationController@resend')->name('resend');
 });
 
 // Recover account.
@@ -220,5 +231,5 @@ Route::group(['prefix' => '/recover', 'middleware' => 'guest', 'as' => 'recover'
         return dd($username, $token);
     })->name('.confirm');
 
-    Route::post('/', 'AuthController@recoverRequest')->name('.requestToken');
+    Route::post('/', 'LoginController@recoverRequest')->name('.requestToken');
 });
