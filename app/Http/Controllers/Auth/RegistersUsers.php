@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\UserInformation;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 
 trait RegistersUsers
 {
     /**
-     * Handle a registration request for the application
+     * Handle a registration request for the application.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return Illuminate\Http\Response
      */
     public function register(Request $Request)
@@ -39,8 +40,8 @@ trait RegistersUsers
     /**
      * Redirect the registered user to the homepage.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  mixed                   $user
+     * @param Illuminate\Http\Request $Request
+     * @param mixed                   $user
      *
      * @return Illuminate\Http\Response
      */
@@ -52,7 +53,8 @@ trait RegistersUsers
     /**
      * Validate the registration request.
      *
-     * @param  Illuminate\Http\Request $Request [description]
+     * @param Illuminate\Http\Request $Request [description]
+     *
      * @return void
      */
     protected function validateRegistrationRequest(Request $Request)
@@ -71,14 +73,15 @@ trait RegistersUsers
            'email.unique'               => 'This email has already been registered.',
            'password.min'               => 'The password is too short.',
            'password_confirmation.same' => 'The password confirmation does not match.',
-           'agrees.accepted'			=> 'You must agreed to the TERMS OF SERVICE and the USER AGREEMENT.',
+           'agrees.accepted'			         => 'You must agreed to the TERMS OF SERVICE and the USER AGREEMENT.',
         ]);
     }
 
     /**
      * Get the account credentials from the registration to insert into User.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return array
      */
     protected function accountCredentials(Request $Request)
@@ -90,6 +93,7 @@ trait RegistersUsers
      * Add a user record to database tables.
      *
      * @param Illuminate\Http\Request $Request
+     *
      * @return App\User
      */
     protected function addRecords(Request $Request)
@@ -107,10 +111,11 @@ trait RegistersUsers
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  Array  $data
+     * @param array $data
+     *
      * @return App\User
      */
-    protected function create(Array $data)
+    protected function create(array $data)
     {
         return User::create([
             'username' => $data['username'],
@@ -120,9 +125,10 @@ trait RegistersUsers
     }
 
     /**
-     * Update user information into a UserInformation instance
+     * Update user information into a UserInformation instance.
      *
-     * @param  App\User   $user
+     * @param App\User $user
+     *
      * @return App\UserInformation
      */
     protected function update(User $user)

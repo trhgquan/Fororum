@@ -14,9 +14,10 @@ trait Authentication
     protected $redirectTo = '/forum';
 
     /**
-     * Handle user login request
+     * Handle user login request.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return mixed
      */
     public function login(Request $Request)
@@ -44,9 +45,10 @@ trait Authentication
     }
 
     /**
-     * Validate user login request
+     * Validate user login request.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return void
      */
     protected function validateLogin(Request $Request)
@@ -61,9 +63,10 @@ trait Authentication
     }
 
     /**
-     * get user login credentials from the request
+     * get user login credentials from the request.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return array
      */
     protected function credentials(Request $Request)
@@ -72,9 +75,10 @@ trait Authentication
     }
 
     /**
-     * Attempt to log the user in the Fororum
+     * Attempt to log the user in the Fororum.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return bool
      */
     protected function attemptLogin(Request $Request)
@@ -85,7 +89,8 @@ trait Authentication
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return Illuminate\Http\Response
      */
     protected function sendLoginResponse(Request $Request)
@@ -104,40 +109,42 @@ trait Authentication
     }
 
     /**
-     * The user has been authenticated
-     * @param  Illuminate\Http\Request $Request
-     * @param  mixed  $user
+     * The user has been authenticated.
+     *
+     * @param Illuminate\Http\Request $Request
+     * @param mixed                   $user
+     *
      * @return mixed
      */
-    protected function authenticated (Request $Request, $user)
+    protected function authenticated(Request $Request, $user)
     {
         $user = UserInformation::userPermissions($user->id);
-        
+
         // redirect the admins to the Admin Dashboard.
         if ($user['admin']) {
             return redirect()->route('admin.home');
         }
-        return;
     }
 
     /**
      * Get the failed login response instance.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  Array $message
+     * @param Illuminate\Http\Request $Request
+     * @param array                   $message
      *
      * @return Illuminate\Http\Response
      */
-    protected function sendFailedLoginResponse(Request $Request, Array $message)
+    protected function sendFailedLoginResponse(Request $Request, array $message)
     {
         throw ValidationException::withMessages($message);
     }
 
     /**
-     * Log user out of Fororum
+     * Log user out of Fororum.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  Array $logoutMessage
+     * @param Illuminate\Http\Request $Request
+     * @param array                   $logoutMessage
+     *
      * @return Illuminate\Http\Response
      */
     public function logout(Request $Request, $logoutMessage = ['title' => 'Logged out', 'content' => 'You are now logged out.', 'class' => 'info'])

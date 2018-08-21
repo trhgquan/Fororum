@@ -11,7 +11,8 @@ trait VerifiesEmails
     /**
      * Show the email verification notice.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -24,7 +25,8 @@ trait VerifiesEmails
     /**
      * Mark the authenticated user's email address as verified.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function verify(Request $request)
@@ -39,7 +41,8 @@ trait VerifiesEmails
     /**
      * Resend the email verification notification.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function resend(Request $request)
