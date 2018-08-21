@@ -77,11 +77,11 @@ class ReportController extends Controller
             'section' => ['required'],
             'reason'  => ['required', 'min:20', 'max:100'],
         ], [
-            'ppid.required'    => 'Vui lòng thử lại.',
-            'section.required' => 'Vui lòng thử lại.',
-            'reason.required'  => 'Không thể bỏ trống ô lý do.',
-            'reason.min'       => 'Lý do quá ngắn.',
-            'reason.max'       => 'Lý do quá dài.',
+            'ppid.required'    => 'An error occured. Please try again.',
+            'section.required' => 'An error occured. Please try again.',
+            'reason.required'  => 'We need more details.',
+            'reason.min'       => 'We need more details.',
+            'reason.max'       => 'Now we need less details.',
         ]);
 
         $fillable = ['profile', 'post'];
@@ -99,13 +99,13 @@ class ReportController extends Controller
                         'reason'         => $reason,
                     ]);
 
-                    return redirect()->back()->withErrors(['reason' => 'Đã báo cáo tài khoản thành công']);
+                    return redirect()->back()->withErrors(['reason' => 'Report submitted successfully!']);
                 }
 
-                return redirect()->back()->withErrors(['reason' => 'Đã báo cáo tài khoản từ trước.']);
+                return redirect()->back()->withErrors(['reason' => 'Report submitted.']);
             }
 
-            return redirect()->back()->withErrors(['reason' => 'Không thể báo cáo tài khoản của chính mình']);
+            return redirect()->back()->withErrors(['reason' => 'Cannot report yourself.']);
         }
 
         return redirect()->back()->withErrors($validator);

@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li><a href="{{ route('forum') }}">Sảnh chính</a></li>
+    <li><a href="{{ route('forum') }}">General</a></li>
     @foreach ($breadcrumb as $item => $route)
         @if (array_search($route, array_values($breadcrumb)) !== count($breadcrumb) - 1)
             @if (count($breadcrumb) > 2 && !empty(array_search($route, array_values($breadcrumb))))

@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        Chỉnh sửa thông tin tài khoản người dùng
+        Edit user's information
     </div>
 
     <div class="panel-body">
@@ -8,9 +8,9 @@
         <table class="table table-bordered">
             <thead>
                 <th>ID</th>
-                <th>Tài khoản</th>
-                <th>Thẩm quyền</th>
-                <th>Hành động</th>
+                <th>Account</th>
+                <th>Permissions</th>
+                <th>Action</th>
             </thead>
             <tbody>
                 @foreach ($users_raw as $user)

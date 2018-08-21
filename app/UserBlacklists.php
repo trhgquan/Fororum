@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserBlacklists extends Model
 {
-    const admin_id = 1; // admin id default: 1
-
     protected $table = 'user_blacklists';
 
     protected $fillable = ['user_id', 'admin_id', 'expire'];
@@ -19,13 +17,13 @@ class UserBlacklists extends Model
      * @param int      $credential User id
      * @param datetime $until      expired
      */
-    public static function ban($credential, $until)
+    public static function ban($credential, $admin_credential, $until)
     {
         if (!UserInformation::userPermissions($credential)['banned']) {
             $expire = self::until($until);
             self::create([
                 'user_id'  => $credential,
-                'admin_id' => self::admin_id,
+                'admin_id' => $admin_credential,
                 'expire'   => $expire,
             ]);
             $user = UserInformation::find($credential);

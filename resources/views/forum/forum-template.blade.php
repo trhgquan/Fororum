@@ -1,18 +1,14 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'forum'])
 
-@section('title', 'Diễn đàn')
-
-@section('navbar_brand')
-	<a href="{{ route('forum') }}" class="navbar-brand">{{ config('app.name') }} <small>forum</small></a>
-@endsection
+@section('title', 'Forum')
 
 @section('navbar_item')
 	@if (Auth::check())
-		@include('forms.search-navbar-form', ['action' => 'post'])
+		@include('forms.search.search-navbar-form', ['action' => 'post'])
 		@include('items.navbar-items')
 	@else
-		<li><a href="{{ route('login') }}">Đăng nhập</a></li>
-		<li><a href="{{ route('register') }}">Đăng ký</a></li>
+		<li><a href="{{ route('auth.login') }}">Login</a></li>
+		<li><a href="{{ route('auth.register') }}">Sign up</a></li>
 	@endif
 @endsection
 
@@ -20,7 +16,7 @@
 	@if ($errors->has('errors'))
 		@component('templates.alert-template', [
 			'alert_class' => 'danger',
-			'alert_title' => 'Lỗi',
+			'alert_title' => 'Error',
 			'alert_content' => $errors->first('errors')
 		])
 		@endcomponent

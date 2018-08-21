@@ -1,23 +1,23 @@
-<form action="{{ route('admin.manage.subforum.create') }}" method="POST">
+<form action="{{ route('admin.forum-manager.subforum.create') }}" method="POST">
     <div class="form-group">
-        <label class="control-label">Tên diễn đàn con</label>
+        <label class="control-label">Subforum's name</label>
         <input type="text" name="subforum_title" class="form-control" placeholder="Annuntio vobis gaudium magnum" required>
     </div>
 
     <div class="form-group">
-        <label class="control-label">Giới thiệu diễn đàn con</label>
+        <label class="control-label">Subforum's description</label>
         <textarea name="subforum_description" class="form-control" placeholder="Lorem ipsum dolor sit amet orci aliquam." required></textarea>
     </div>
 
     <div class="form-group">
-        <label class="control-label">Từ khóa</label>
+        <label class="control-label">Slug</label>
         <div class="input-group">
             <div class="input-group-addon">
                 {{ route('forum') }}/
             </div>
             <input type="text" name="subforum_keyword" class="form-control" placeholder="annuntio-vobis-gaudium-magnum" required>
             <div class="input-group-btn">
-                <button type="button" class="btn btn-primary" name="randomize">Tạo</button>
+                <button type="button" class="btn btn-primary" name="randomize">Generate</button>
             </div>
         </div>
     </div>
@@ -25,13 +25,13 @@
     <div class="form-group has-error">
         @csrf
         <p class="help-block" style="text-align: justify;">
-            <b>Cảnh báo: Khi đã tạo subforum, bạn không thể thực hiện hành động ngược lại (xóa subforum).</b><br/>
-            Một subforum chứa trong đó rất nhiều chủ đề (topic) và các bài viết bình luận. Việc xóa một subforum sẽ ảnh hưởng <b>rất lớn</b> tới các chủ đề này. Do vậy, chúng tôi tạm thời không hỗ trợ tính năng xóa subforum.
+            <b>Warning: You cannot reverse this action.</b><br/>
+            A subforum may contain itself many threads and posts. Delete it will also delete all of its reply posts. Be careful before taking this action.
         </p>
-        <input type="checkbox" name="confirm" required> Tôi đã đọc kỹ và vẫn muốn tiếp tục
+        <input type="checkbox" name="confirm" required> I have carefully read the warning and willing to create a subforum.
     </div>
-    <button class="btn btn-success">Tạo diễn đàn con</button>
+    <button class="btn btn-success">Create a new subforum</button>
 </form>
 @section('extrajs')
-    <script src="{{ url('js/generate.js') }}"></script>
+    <script src="{{ url('js/fororum-keyword-generator.js') }}"></script>
 @endsection

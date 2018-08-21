@@ -1,22 +1,22 @@
 <form action="{{ (isset($thread) && !empty($thread)) ? route('createThread') : route('createPost') }}" method="POST" role="form">
 	@if ($thread)
-		<legend>Tạo chủ đề mới trong {{ $category_name }}</legend>
+		<legend>Create a new thread in {{ $category_name }}</legend>
 
 		<div class="form-group {{ ($errors->has('title')) ? 'has-error' : '' }}">
-			<label class="control-label" for="title">Tiêu đề bài viết</label>
-			<input type="text" class="form-control" id="title" name="title" placeholder="tiêu đề bài viết" value="{{ old('title') }}" required>
+			<label class="control-label" for="title">Title:</label>
+			<input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{ old('title') }}" required>
 
 			@if ($errors->has('title'))
 				<span class="help-block">{{ $errors->first('title') }}</span>
 			@endif
 		</div>
 	@else
-		<legend>đăng trả lời</legend>
+		<legend>Post a reply</legend>
 	@endif
 
 	<div class="form-group {{ ($errors->has('content')) ? 'has-error' : '' }}">
-		<label class="control-label" for="content">Nội dung bài viết</label>
-		<textarea id="content" name="content" class="form-control" placeholder="nội dung bài viết" required></textarea>
+		<label class="control-label" for="content">Content:</label>
+		<textarea id="content" name="content" class="form-control" placeholder="Content" required></textarea>
 
 		@if ($errors->has('content'))
 			<span class="help-block">{{ $errors->first('content') }}</span>
@@ -31,5 +31,5 @@
 
 	@csrf
 
-	<button type="submit" class="btn btn-primary pull-right">Đăng</button>
+	<button type="submit" class="btn btn-primary pull-right">Post</button>
 </form>

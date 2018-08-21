@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
@@ -59,5 +60,25 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * redirect user to login page, if he is not authenticated
+     * this allows me to use the intended method on redirects.
+     *
+     * @param Illuminate\Http\Request                 $request
+     * @param Illuminate\Auth\AuthenticationException $exception
+     *
+     * @return mixed
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $request->expectsJson()
+            ? response()->json(['message' => $exception->getMessage()], 401)
+            : redirect()->guest(route('auth.login'))->withErrors([
+                'title'    => 'Authentication requested',
+                'content'  => 'Please log in to view this page.',
+                'class'    => 'info',
+            ]);
     }
 }

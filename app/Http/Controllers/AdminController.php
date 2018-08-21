@@ -42,7 +42,7 @@ class AdminController extends Controller
             return redirect()->route('category', [$category->keyword]);
         }
 
-        return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'Đã có một lỗi xảy ra. Mã lỗi: '.$validator->errors()->first()]);
+        return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'An error occured. Code:  '.$validator->errors()->first()]);
     }
 
     /**
@@ -68,10 +68,10 @@ class AdminController extends Controller
             if (!$validator->fails()) {
                 ForumCategories::updateCategory($Request->id, $Request);
 
-                return redirect()->back()->withErrors(['class' => 'success', 'content' => 'Đã cập nhật thành công!']);
+                return redirect()->back()->withErrors(['class' => 'success', 'content' => 'Subforum edited successfully.']);
             }
 
-            return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'Đã có một lỗi xảy ra. Mã lỗi: '.$validator->errors()->first()]);
+            return redirect()->back()->withErrors(['class' => 'warning', 'content' => 'An error occurred. Code:  '.$validator->errors()->first()]);
         }
         // basicly there are delete method.
         // but we will not build it here.
@@ -97,10 +97,10 @@ class AdminController extends Controller
         if (!$validator->fails()) {
             $this->adminUpdateUser($Request->all());
 
-            return redirect()->back()->withErrors(['content' => 'Đã cập nhật tài khoản #'.$Request->get('id').' thành công!', 'class' => 'success']);
+            return redirect()->back()->withErrors(['content' => 'Account #'.$Request->get('id').' edited successfully', 'class' => 'success']);
         }
 
-        return redirect()->back()->withErrors(['title' => 'Lỗi', 'content' => 'Có lỗi đã xảy ra. Mã lồi: '.$validator->errors()->first(), 'class' => 'danger']);
+        return redirect()->back()->withErrors(['title' => 'Error', 'content' => 'An error occurred. Code:  '.$validator->errors()->first(), 'class' => 'danger']);
     }
 
     /**
@@ -114,16 +114,16 @@ class AdminController extends Controller
     {
         $accepted = $Request->get('action');
         if ($this->accepted($accepted)) {
-            UserBlacklists::ban(UserReport::report_information($Request->get('rpid'))->participant_id, $Request->get('expire')); // ban the user
+            UserBlacklists::ban(UserReport::report_information($Request->get('rpid'))->participant_id, $this->admin(), $Request->get('expire')); // ban the user
         }
 
-        UserReport::review($Request->get('rpid'), $this->accepted($accepted, ['phê chuẩn', 'bác bỏ'])); // review the reports;
+        UserReport::review($Request->get('rpid'), $this->accepted($accepted, ['accepted', 'rejected'])); // review the reports;
 
         return redirect()->back()->withErrors([
             'class'   => $this->accepted($accepted, ['danger', 'info']),
             'content' => $this->accepted($accepted, [
-                'Đã phê chuẩn báo cáo của người dùng thành công!',
-                'Đã bác bỏ báo cáo của người dùng thành công!',
+                'User reports accepted.',
+                'User reports rejected.',
             ]),
         ]);
     }
@@ -193,5 +193,15 @@ class AdminController extends Controller
         }
 
         return $action === 'accept';
+    }
+
+    /**
+     * method admin, return the admin id.
+     *
+     * @return int
+     */
+    protected function admin()
+    {
+        return auth()->id();
     }
 }

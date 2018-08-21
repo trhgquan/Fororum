@@ -2,14 +2,15 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
-    const max_display = 5; // hiện max_display user lúc tìm kiếm
+    const max_display = 5; // max_display user for searching
 
     /**
      * The attributes that are mass assignable.
@@ -32,13 +33,25 @@ class User extends Authenticatable
     /**
      * static method exist.
      *
-     * @param int or string $credentials (uid hoặc username đều được)
+     * @param int or string $credentials
      *
      * @return bool
      */
     public static function exist($credentials)
     {
         return self::where('username', $credentials)->orWhere('id', $credentials)->exists();
+    }
+
+    /**
+     * static method recoverable.
+     *
+     * @param string $email
+     *
+     * @return mixed
+     */
+    public static function recoverable($email)
+    {
+        return self::where('email', $email)->exists();
     }
 
     /**

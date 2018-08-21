@@ -59,9 +59,12 @@ class Kernel extends HttpKernel
         'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        // My middleware goes here
-        'admin'     => \App\Http\Middleware\UserAdmin::class,
-        'alive'     => \App\Http\Middleware\UserAlive::class,
-        'confirmed' => \App\Http\Middleware\UserConfirmed::class,
+        'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        // custom middleware for Fororum.
+        // i overwrited the custom auth, because the view is not in the `login`
+        // route anymore.
+        'fororum.admin'         => \App\Http\Middleware\UserAdmin::class,
+        'fororum.alive'         => \App\Http\Middleware\UserAlive::class,
+        'fororum.confirmed'     => \App\Http\Middleware\UserConfirmed::class,
     ];
 }

@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\UserInformation;
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class UserAdmin
 {
@@ -18,7 +17,7 @@ class UserAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && !UserInformation::userPermissions(Auth::id())['admin']) {
+        if (!auth()->check() || !UserInformation::userPermissions(auth()->id())['admin']) {
             return abort(404);
         }
 

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\ForumCategories;
 use App\ForumPosts;
+use App\Notifications\UserNotification;
 use App\User;
 use App\UserFollowers;
-use App\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Auth;
+use Notification;
 use Validator;
 
 class ForumController extends Controller
@@ -21,7 +22,7 @@ class ForumController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('alive');
+        $this->middleware('fororum.alive');
     }
 
     /**
@@ -103,28 +104,29 @@ class ForumController extends Controller
         $validator = Validator::make($Request->all(), [
             'content' => 'required|min:50|max:255',
         ], [
-            'content.required' => 'Không được bỏ trống ô nội dung',
-            'content.max'      => 'nội dung vượt quá độ dài cho phép',
-            'content.min'	     => 'nội dung quá ngắn',
+            'content.required' => 'The post\'s content field is required.',
+            'content.max'      => 'The post\'s content is too long.',
+            'content.min'	     => 'The post\'s content is too short.',
         ]);
 
         if (!$validator->fails()) {
             $parent = $Request->get('parent');
-            if (!empty($parent) && empty(ForumPosts::post($parent)->parent_id)) { // parent phải là 1 thread, mà thread thì parent_id = 0
+            // parent is a thread and the thread's id = 0
+            if (!empty($parent) && empty(ForumPosts::post($parent)->parent_id)) {
                 $parent = ForumPosts::post($parent);
                 $post = ForumPosts::create([
                     'parent_id' => $parent->post_id,
                     'user_id'   => Auth::id(),
                     'content'   => $Request->get('content'),
                 ]);
-                // redirect tới trang cuối của thread
+                // redirect to the last page
                 return redirect()->route('thread', [
                     'thread_id' => $parent->post_id,
                     'page'      => ForumPosts::thread($parent->post_id)['posts']->lastPage(),
                 ]);
             }
 
-            return redirect()->back()->withErrors(['errors' => 'Không tìm thấy chủ đề!']);
+            return redirect()->back()->withErrors(['errors' => 'The parent thread cannot be found!']);
         }
 
         return redirect()->back()->withErrors($validator)->withInput();
@@ -143,31 +145,27 @@ class ForumController extends Controller
             'title'   => 'required|min:50|max:70',
             'content' => 'required|min:50|max:255',
         ], [
-            'title.required'   => 'không thể để trống tiêu đề',
-            'title.max'        => 'tiêu đề quá dài',
-            'title.min'		      => 'tiêu đề quá ngắn',
-            'content.required' => 'không thể để trống nội dung',
-            'content.max'      => 'nội dung quá dài',
-            'content.min'	     => 'nội dung quá ngắn',
+            'title.required'   => 'The thread\'s title is required.',
+            'title.max'        => 'The thread\'s title is too long.',
+            'title.min'		      => 'The thread\'s title is too short.',
+            'content.required' => 'The thread\'s content is required.',
+            'content.max'      => 'The thread\'s content is too long.',
+            'content.min'	     => 'The thread\'s content is too short.',
         ]);
 
-        if (!$validator->fails() && ForumCategories::CategoryExist($Request->get('category'))) { // subforum phải tồn tại
+        if (!$validator->fails() && ForumCategories::CategoryExist($Request->get('category'))) { // subforum must existed
             $thread = ForumPosts::create([
                 'category_id' => $Request->get('category'),
                 'user_id'     => Auth::id(),
                 'title'       => $Request->get('title'),
                 'content'     => $Request->get('content'),
             ]);
-            foreach (UserFollowers::followers_list(Auth::id()) as $followers) {
-                UserNotification::create([
-                    'user_id'        => $followers->user_id,
-                    'participant_id' => $thread->id,
-                    'route'          => 'thread',
-                    'content'        => User::username($followers->participant_id).' vừa tạo một chủ đề mới!',
-                ]);
+
+            foreach (UserFollowers::followers_list(Auth::id()) as $follower) {
+                $this->sendNotification(User::find($follower->user_id), $thread);
             }
 
-            return redirect()->route('thread', [$thread->id]); // tương tự: id là primary key của table
+            return redirect()->route('thread', [$thread->id]); // id is the table's primary key
         }
 
         return redirect()->back()->withErrors($validator)->withInput();
@@ -184,5 +182,23 @@ class ForumController extends Controller
     protected function paginateCheck(Paginator $object)
     {
         return $object->currentPage() <= $object->lastPage();
+    }
+
+    /**
+     * send a notification to user.
+     *
+     * @param App\User       $user
+     * @param App\ForumPosts $thread
+     *
+     * @return mixed
+     */
+    protected function sendNotification(User $user, ForumPosts $thread)
+    {
+        return $user->notify(new UserNotification([
+            'from'    => Auth::user()->username,
+            'route'   => 'thread',
+            'param'   => $thread->id,
+            'content' => Auth::user()->username.' just created a new thread!',
+        ]));
     }
 }

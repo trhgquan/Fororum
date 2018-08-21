@@ -1,22 +1,31 @@
 @extends('home')
-@section('title', 'Thông báo')
+@section('title', 'Notification')
 
 @section('content')
-    @if (!empty(App\UserNotification::count(Auth::id())))
-        <p>Bạn có {{ App\UserNotification::count(Auth::id()) }} thông báo mới:</p>
-        @foreach (App\UserNotification::notify(Auth::id()) as $notify)
+    @if (!empty($user->notifications->count()))
+        <p>
+            You have {{ $user->unreadNotifications->count() }} unread notification:
+            @if (!empty($user->unreadNotifications->count()))
+                <a href="{{ route('notify.read.all') }}" class="pull-right">mark all as read</a>
+            @endif
+            <a href="{{ route('notify.delete.all') }}" class="pull-right">delete all</a>
+        </p>
+
+        @foreach ($user->notifications as $notify)
             <div class="media-box">
-                <b><a href="{{ route('user.profile.username', ['autobot']) }}">autobot</a></b>
+                <b><a href="{{ route('profile.user', [$notify['data']['from']]) }}">{{ $notify['data']['from'] }}</a></b>
                 <small>{{ date_format($notify->created_at, 'd-m-Y h:i:s A') }}</small>
-                <p>{{ $notify->content }}</p>
-                <a href="{{ route('notify.notifies', ['notify_id' => $notify->notify_id]) }}">xem thêm</a>
+                @if (empty($notify['read_at']))
+                    <span class="label label-danger">new</span>
+                @endif
+                <p>{{ $notify['data']['content'] }}</p>
+                <a href="{{ route($notify['data']['route'], [$notify['data']['param']]) }}">find out more</a>
             </div>
         @endforeach
-        {{ App\UserNotification::notify(Auth::id())->links() }}
     @else
         <div class="notify-title">
-            <h1>Bạn không có thông báo nào mới!</h1>
-            <p>Nếu có thông báo mới, chúng sẽ xuất hiện ở đây.</p>
+            <h1>You don't have any notifications!</h1>
+            <p>Notifications appear here when someone doing something related to you.</p>
         </div>
     @endif
 @endsection

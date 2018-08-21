@@ -1,10 +1,6 @@
-@extends('templates.app-template')
+@extends('templates.app-template', ['navbar_brand' => 'search'])
 
-@section('title', (isset($keyword)) ? 'Kết quả tìm kiếm cho ' . $keyword : 'Tìm kiếm')
-
-@section('navbar_brand')
-	<a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name') }} <small>search</small></a>
-@endsection
+@section('title', (isset($keyword)) ? 'Search results for ' . $keyword : 'Search')
 
 @section('navbar_item')
     @include('items.navbar-items')
@@ -21,15 +17,15 @@
                 @if ($results[$action]->total() > 0)
 					@component('templates.alert-template', [
 						'alert_class' => 'info',
-						'alert_title' => 'Mẹo',
-						'alert_content' => 'Hãy thay đổi từ khóa để có được kết quả đúng nhất hoặc có nhiều kết quả hơn.'
+						'alert_title' => 'Tips',
+						'alert_content' => 'Change the keyword to get the correct result or get more results.'
 					])
 					@endcomponent
 
                     @foreach ($results[$action] as $result)
                         @if ($action == 'profile')
                             <h3>
-								<a href="{{ route('user.profile.username', [$result->username]) }}">{{ $result->username }}</a>
+								<a href="{{ route('profile.user', [$result->username]) }}">{{ $result->username }}</a>
 								<small>
 									@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($result->id)])
 									@endcomponent
@@ -43,13 +39,13 @@
                     {{ $results[$action]->links() }}
                 @else
                     <div class="notify-title">
-                        <h1>không có kết quả cho từ khóa "{{ $keyword }}".</h1>
-						<p>hãy chắc chắn rằng từ khóa của bạn chính xác, sau đó hãy thử lại</p>
+                        <h1>No results for "{{ $keyword }}".</h1>
+						<p>Check the keyword again, make sure it's correct and then try again.</p>
                     </div>
                 @endif
             </div>
         @else
-            @include('forms.search-form')
+            @include('forms.search.search-form')
         @endif
     </div>
 @endsection

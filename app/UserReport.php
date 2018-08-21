@@ -22,8 +22,7 @@ class UserReport extends Model
     /**
      * procedure review
      * this action will loop through the Database
-     * looking for users reporting same account
-     * and notify them what happened.
+     * looking for users reporting same account.
      *
      * @param int    $report_id
      * @param string $action
@@ -44,13 +43,6 @@ class UserReport extends Model
             $report = self::report_information($one_report->id);
             $report->reviewed = 1;
             $report->save();
-
-            UserNotification::create([
-                'user_id'        => $report->user_id,
-                'participant_id' => $report->participant_id,
-                'route'          => $report->type,
-                'content'        => 'Hệ thống đã xem xét và đã '.$action.' báo cáo của bạn về '.(($report->type === 'profile') ? 'tài khoản ' : 'bài viết ').self::participant_title($report->participant_id, $report->type),
-            ]);
         }
     }
 
@@ -169,7 +161,7 @@ class UserReport extends Model
      *
      * @return bool
      */
-    private static function is_profile($type)
+    protected static function is_profile($type)
     {
         return ($type === 'profile') ? true : false;
     }

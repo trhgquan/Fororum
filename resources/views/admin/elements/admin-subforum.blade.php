@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Quản lý các diễn đàn con
+                Subforums management
             </div>
             <div class="panel-body">
                 @include('admin.elements.manage.manage-subforum')
@@ -12,7 +12,7 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Tạo 1 diễn đàn con
+                Create a new subforum
             </div>
 
             <div class="panel-body">
