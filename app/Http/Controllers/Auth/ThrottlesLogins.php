@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -14,8 +13,9 @@ trait ThrottlesLogins
     /**
      * Determine if the user has too many failed login attempts.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @return boolean
+     * @param Illuminate\Http\Request $Request
+     *
+     * @return bool
      */
     protected function hasTooManyLoginAttempts(Request $Request)
     {
@@ -27,7 +27,8 @@ trait ThrottlesLogins
     /**
      * Fire an event when a lockout occurs.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return void
      */
     protected function fireLockoutEvent(Request $Request)
@@ -38,7 +39,8 @@ trait ThrottlesLogins
     /**
      * Increment the login attempts for the user.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return void
      */
     protected function incrementLoginAttempts(Request $Request)
@@ -51,9 +53,11 @@ trait ThrottlesLogins
     /**
      * Redirect the user after determining they are locked out.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @return void
+     * @param Illuminate\Http\Request $Request
+     *
      * @throws Illuminate\Validation\ValidationException
+     *
+     * @return void
      */
     protected function sendLockoutResponse(Request $Request)
     {
@@ -63,15 +67,16 @@ trait ThrottlesLogins
 
         throw ValidationException::withMessages([
             'title'   => 'Authentication refused',
-            'content' => 'You are trying to log in too many times. Please try again in ' . $seconds . ' seconds',
-            'class'   => 'danger'
+            'content' => 'You are trying to log in too many times. Please try again in '.$seconds.' seconds',
+            'class'   => 'danger',
         ])->status(429);
     }
 
     /**
      * Clear the login locks for the given user credentials.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return void
      */
     protected function clearLoginAttempts(Request $Request)
@@ -82,7 +87,8 @@ trait ThrottlesLogins
     /**
      * Get the throttle key for the given request.
      *
-     * @param  \Illuminate\Http\Request  $Request
+     * @param \Illuminate\Http\Request $Request
+     *
      * @return string
      */
     protected function throttleKey(Request $Request)
@@ -91,7 +97,7 @@ trait ThrottlesLogins
     }
 
     /**
-     * Get the RateLimiter instance
+     * Get the RateLimiter instance.
      *
      * @return Illuminate\Cache\RateLimiter
      */

@@ -172,7 +172,7 @@ Route::prefix('/forum')->group(function () {
     Route::post('/create/thread', 'ForumController@createThread')->middleware('auth', 'fororum.alive', 'verified')->name('createThread');
 });
 
-/**
+/*
  * Authentication route
  * basic cheatsheet:
  * Login page : http://example.com/login    GET
@@ -209,8 +209,8 @@ Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
 });
 
 // verify email address
-Route::group(['prefix' => '/email', 'as' => 'verification.'], function(){
-    Route::get('/', function(){
+Route::group(['prefix' => '/email', 'as' => 'verification.'], function () {
+    Route::get('/', function () {
         return redirect()->route('verification.notice');
     });
 

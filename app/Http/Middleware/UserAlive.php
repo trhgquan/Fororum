@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Auth\Authentication;
 use App\User;
 use App\UserBlacklists;
 use App\UserInformation;
 use Carbon\Carbon;
 use Closure;
-use App\Http\Controllers\Auth\Authentication;
 
 class UserAlive
 {
@@ -34,9 +34,9 @@ class UserAlive
                     $reason = UserBlacklists::reason($this->id());
                     // log him out
                     return $this->logout($request, [
-                        'title' => 'Error',
+                        'title'   => 'Error',
                         'content' => 'Your account has been banned by '.User::username($reason->admin_id).'. Date the ban will be lifted: '.date_format((new Carbon($reason->expire)), 'h:i:s A T, d-m-Y'),
-                        'class' => 'danger',
+                        'class'   => 'danger',
                     ]);
                 }
                 // if not, unban for him. poor guy.
@@ -48,7 +48,7 @@ class UserAlive
     }
 
     /**
-     * Return the authenticated user's id
+     * Return the authenticated user's id.
      *
      * @return int
      */
