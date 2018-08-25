@@ -16,7 +16,11 @@
 
 			<div class="media-content">
 				<!-- the post content -->
-				<p>{{ $post->content }}</p>
+				{{-- Right here we use plain PHP to mark those paragraphs --}}
+				@php $paragraphs = explode(PHP_EOL, $post->content) @endphp
+				@foreach ($paragraphs as $paragraph)
+					<p>{{ $paragraph }}</p>
+				@endforeach
 
 				@if (Auth::check())
 					@if (App\UserReport::reportable(Auth::id(), $post->post_id, 'post'))

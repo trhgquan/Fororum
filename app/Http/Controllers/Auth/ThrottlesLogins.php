@@ -66,9 +66,7 @@ trait ThrottlesLogins
         );
 
         throw ValidationException::withMessages([
-            'title'   => 'Authentication refused',
-            'content' => 'You are trying to log in too many times. Please try again in '.$seconds.' seconds',
-            'class'   => 'danger',
+            'username' => 'Too many login attempts. Please try again in '.$seconds.' seconds',
         ])->status(429);
     }
 
