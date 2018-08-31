@@ -3,21 +3,20 @@
 namespace App\Http\Controllers\Forum;
 
 use App\ForumPosts;
-use App\Notifications\UserNotification;
 use App\Http\Controllers\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 trait CreatingPosts
 {
     use RedirectsUsers;
 
     /**
-     * Handle a create-post Request
+     * Handle a create-post Request.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
      * @return void
      */
@@ -37,14 +36,15 @@ trait CreatingPosts
 
         // Redirect the user back with errors.
         return $this->createPostFailed($Request, [
-            'content' => 'The parent thread could not be found.'
+            'content' => 'The parent thread could not be found.',
         ]);
     }
 
     /**
      * Validate post inputs.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return void
      */
     protected function postRequestValidate(Request $Request)
@@ -61,14 +61,15 @@ trait CreatingPosts
     /**
      * Get the new post's data.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
+     *
      * @return array
      */
     protected function postRequestContent(Request $Request)
     {
         return [
-            'content'   => $Request->get('content'),
-            'parent_id' => $Request->get('parent'),
+            'content'     => $Request->get('content'),
+            'parent_id'   => $Request->get('parent'),
             'user_id'     => $this->id(),
         ];
     }
@@ -76,8 +77,9 @@ trait CreatingPosts
     /**
      * Check if user is replying to a valid thread, not a comment.
      *
-     * @param  Illuminate\Http\Request $ParentThread
-     * @return boolean
+     * @param Illuminate\Http\Request $ParentThread
+     *
+     * @return bool
      */
     protected function threadIsValid(Request $ParentThread)
     {
@@ -87,10 +89,10 @@ trait CreatingPosts
     }
 
     /**
-     * Store the post to the database
+     * Store the post to the database.
      *
-     * @param  Illuminate\Http\Request $Request
-     * 
+     * @param Illuminate\Http\Request $Request
+     *
      * @return App\ForumPosts
      */
     protected function storePost(Request $Request)
@@ -102,8 +104,8 @@ trait CreatingPosts
      * Redirect user to the last page of the thread
      * if a post was successfully created.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  App\ForumPosts $post
+     * @param Illuminate\Http\Request $Request
+     * @param App\ForumPosts          $post
      *
      * @return Illuminate\Http\Response
      */
@@ -118,12 +120,12 @@ trait CreatingPosts
     /**
      * Send a failed to create a post message.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  Array  $message
+     * @param Illuminate\Http\Request $Request
+     * @param array                   $message
      *
      * @return Illuminate\Validation\ValidationException
      */
-    protected function createPostFailed(Request $Request, Array $message)
+    protected function createPostFailed(Request $Request, array $message)
     {
         throw ValidationException::withMessages($message);
     }
@@ -131,7 +133,7 @@ trait CreatingPosts
     /**
      * Get the last page of a thread.
      *
-     * @param  int $thread
+     * @param int $thread
      *
      * @return void
      */
@@ -143,7 +145,7 @@ trait CreatingPosts
     /**
      * Return the parent thread of a post.
      *
-     * @param  int $post
+     * @param int $post
      *
      * @return App\ForumPosts
      */
@@ -157,7 +159,7 @@ trait CreatingPosts
      *
      * @param Illuminate\Pagination\LengthAwarePaginator $object
      *
-     * @return boolean
+     * @return bool
      */
     protected function paginateCheck(Paginator $object)
     {
@@ -165,7 +167,7 @@ trait CreatingPosts
     }
 
     /**
-     * Return authenticated user's username
+     * Return authenticated user's username.
      *
      * @return void
      */
@@ -175,7 +177,7 @@ trait CreatingPosts
     }
 
     /**
-     * Return authenticated user's identity
+     * Return authenticated user's identity.
      *
      * @return void
      */

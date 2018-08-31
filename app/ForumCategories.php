@@ -40,7 +40,7 @@ class ForumCategories extends Model
      *
      * @param string $category
      *
-     * @return boolean
+     * @return bool
      */
     public static function CategoryExist($category)
     {
