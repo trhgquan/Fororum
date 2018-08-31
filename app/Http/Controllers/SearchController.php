@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\ForumPosts;
 use App\User;
+use App\Http\Controllers\Forum\CreatingPosts;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator;
 
 class SearchController extends Controller
 {
+    use CreatingPosts;
     /**
      * GET version, searching something.
      * there is a POST version below. But every search things
@@ -109,18 +111,5 @@ class SearchController extends Controller
         }
 
         return redirect()->back()->withErrors($validator);
-    }
-
-    /**
-     * method paginateCheck
-     * check if this page is not the infinitive non-exist page.
-     *
-     * @param Illuminate\Pagination\LengthAwarePaginator $object
-     *
-     * @return bool
-     */
-    protected function paginateCheck(Paginator $object)
-    {
-        return $object->currentPage() <= $object->lastPage();
     }
 }
