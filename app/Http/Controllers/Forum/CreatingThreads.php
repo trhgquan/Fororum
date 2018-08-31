@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Forum;
 
-use App\User;
-use App\UserFollowers;
 use App\ForumCategories;
 use App\ForumPosts;
 use App\Notifications\UserNotification;
+use App\User;
+use App\UserFollowers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Notification;
 
@@ -17,7 +16,7 @@ trait CreatingThreads
     /**
      * Handle a thread create request.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
      * @return void
      */
@@ -47,10 +46,10 @@ trait CreatingThreads
     }
 
     /**
-     * Redirect user to the thread
+     * Redirect user to the thread.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  App\ForumPosts $thread
+     * @param Illuminate\Http\Request $Request
+     * @param App\ForumPosts          $thread
      *
      * @return Illuminate\Http\Response
      */
@@ -62,8 +61,8 @@ trait CreatingThreads
     /**
      * Send a failed to create a thread message.
      *
-     * @param  Illuminate\Http\Request $Request
-     * @param  Array  $message
+     * @param Illuminate\Http\Request $Request
+     * @param array                   $message
      *
      * @return Illuminate\Validation\ValidationException
      */
@@ -75,7 +74,7 @@ trait CreatingThreads
     /**
      * Validate thread inputs.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
      * @return void
      */
@@ -95,9 +94,9 @@ trait CreatingThreads
     }
 
     /**
-     * Get the creating thread request content
+     * Get the creating thread request content.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
      * @return array
      */
@@ -107,14 +106,14 @@ trait CreatingThreads
             'category_id' => $Request->get('category'),
             'title'       => $Request->get('title'),
             'content'     => $Request->get('content'),
-            'user_id'     => $this->id()
+            'user_id'     => $this->id(),
         ];
     }
 
     /**
      * Store the thread to the database.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
      * @return App\ForumPosts
      */
@@ -145,9 +144,9 @@ trait CreatingThreads
     /**
      * Check if the category is exist.
      *
-     * @param  Illuminate\Http\Request $Request
+     * @param Illuminate\Http\Request $Request
      *
-     * @return boolean
+     * @return bool
      */
     protected function categoryIsValid(Request $Request)
     {
