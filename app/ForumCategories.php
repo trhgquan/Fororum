@@ -38,7 +38,7 @@ class ForumCategories extends Model
     /**
      * method CategoryExist.
      *
-     * @param $category
+     * @param string $category
      *
      * @return bool
      */
@@ -50,9 +50,9 @@ class ForumCategories extends Model
     /**
      * method Category.
      *
-     * @param $category
+     * @param string $category
      *
-     * @return object
+     * @return mixed
      */
     public static function Category($category)
     {
