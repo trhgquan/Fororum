@@ -9,8 +9,8 @@ use Illuminate\Validation\ValidationException;
 
 trait Authentication
 {
-    use ThrottlesLogins, RedirectsUsers;
-
+    use ThrottlesLogins;
+    use RedirectsUsers;
     protected $redirectTo = '/forum';
 
     /**
