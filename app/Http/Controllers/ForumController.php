@@ -9,8 +9,8 @@ use App\Http\Controllers\Forum\CreatingThreads;
 
 class ForumController extends Controller
 {
-    use CreatingPosts, CreatingThreads;
-
+    use CreatingPosts;
+    use CreatingThreads;
     /**
      * users is not dead, duh.
      *

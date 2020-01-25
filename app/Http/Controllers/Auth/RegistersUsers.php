@@ -60,20 +60,20 @@ trait RegistersUsers
     protected function validateRegistrationRequest(Request $Request)
     {
         return $this->validate($Request, [
-           'username'              => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:10', 'max:20', 'unique:users'], // Laravel tolds me to do this so...
-           'email'                 => 'required|string|email|unique:users',
-           'password'              => 'required|string|min:6',
-           'password_confirmation' => 'required|string|same:password',
-           'agrees'                => 'accepted',
+            'username'              => ['required', 'regex:/^[A-Za-z0-9._]+$/', 'min:10', 'max:20', 'unique:users'], // Laravel tolds me to do this so...
+            'email'                 => 'required|string|email|unique:users',
+            'password'              => 'required|string|min:6',
+            'password_confirmation' => 'required|string|same:password',
+            'agrees'                => 'accepted',
         ], [
-           'username.max'               => 'The username is too long.',
-           'username.min'               => 'The username is too short.',
-           'username.regex'             => 'The username is using some unknown characters.',
-           'username.unique'            => 'This username has already been taken.',
-           'email.unique'               => 'This email has already been registered.',
-           'password.min'               => 'The password is too short.',
-           'password_confirmation.same' => 'The password confirmation does not match.',
-           'agrees.accepted'			         => 'You must agreed to the TERMS OF SERVICE and the USER AGREEMENT.',
+            'username.max'               => 'The username is too long.',
+            'username.min'               => 'The username is too short.',
+            'username.regex'             => 'The username is using some unknown characters.',
+            'username.unique'            => 'This username has already been taken.',
+            'email.unique'               => 'This email has already been registered.',
+            'password.min'               => 'The password is too short.',
+            'password_confirmation.same' => 'The password confirmation does not match.',
+            'agrees.accepted'			         => 'You must agreed to the TERMS OF SERVICE and the USER AGREEMENT.',
         ]);
     }
 

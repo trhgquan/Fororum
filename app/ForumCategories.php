@@ -68,9 +68,9 @@ class ForumCategories extends Model
     public static function updateCategory($credential, $new_data)
     {
         $category = self::find($credential);
-        if ($new_data->keyword !== $category->keyword && !self::CategoryExist($new_data->keyword)):
+        if ($new_data->keyword !== $category->keyword && !self::CategoryExist($new_data->keyword)) {
             $category->keyword = $new_data->keyword;
-        endif;
+        }
         $category->title = $new_data->title;
         $category->description = $new_data->description;
         $category->save();
