@@ -26,7 +26,8 @@ class ProfileController extends Controller
         $user = User::profile($username);
         $userInformation = UserInformation::userPermissions($user->id);
 
-        return view('profile',
+        return view(
+            'profile',
             [
                 'edit'         => false,
                 'this_profile' => $this->thisProfile($user->id),

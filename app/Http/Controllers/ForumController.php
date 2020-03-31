@@ -11,6 +11,7 @@ class ForumController extends Controller
 {
     use CreatingPosts;
     use CreatingThreads;
+
     /**
      * users is not dead, duh.
      *
