@@ -22,11 +22,11 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 - Composer (for installing support packages).
 
 # Authors
-|Author              |GitHub                                   |
-|--------------------|-----------------------------------------|
-|**Quan, Tran Hoang**|[@trhgquan](https://github.com/trhgquan) |
-|**me_a_doge**       |[@meadoge](https://github.com/meadoge)   |
-|**Hwang S. Wan**    |[@hwanswan](https://github.com/hwangswan)|
+|Author              |GitHub                                    |
+|--------------------|------------------------------------------|
+|**Quan, Tran Hoang**|[@trhgquan](https://github.com/trhgquan)  |
+|**me_a_doge**       |[@meadoge](https://github.com/meadoge)    |
+|**Hwang S. Wan**    |[@hwangswan](https://github.com/hwangswan)|
 
 # LICENSE
 __Fororum is licensed under the MIT License__. [view LICENSE](https://github.com/trhgquan/Fororum/blob/master/LICENSE).
