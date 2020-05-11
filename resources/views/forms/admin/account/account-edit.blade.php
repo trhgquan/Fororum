@@ -3,7 +3,7 @@
         <td>
             <a href="{{ route('profile.user', [$user->username]) }}">{{ $user->id }}</a>
             <input type="hidden" name="id" value="{{ $user->id }}">
-            @component('templates.badges-template', ['o' => $permissions])
+            @component('templates.badges-template', ['userPermission' => $permissions])
             @endcomponent
         </td>
         <td>
