@@ -17,6 +17,7 @@
 
 /**
  * Admin route.
+ * There are many routes in here. Be careful before edit anything.
  */
 Route::group(['prefix' => '/dashboard', 'middleware' => ['fororum.admin'], 'as' => 'admin.'], function () {
     Route::get('/', function () {
@@ -108,6 +109,7 @@ Route::group(['prefix' => '/profile', 'middleware' => ['auth', 'fororum.alive'],
 
 /*
  * Notification route
+ * Notice that there are many methods in here, be careful.
  */
 Route::group(['prefix' => '/notify', 'as' => 'notify.', 'middleware' => ['auth', 'fororum.alive']], function () {
     Route::get('/', function () {
@@ -197,7 +199,10 @@ Route::name('auth.')->group(function () {
     Route::post('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
 });
 
-// Home: http://example.com/ or http://example.com/home
+/**
+ * Home Route
+ * Example: http://example.com/ or http://example.com/home
+ */
 Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
     Route::get('/', function () {
         return view('home');
@@ -208,7 +213,10 @@ Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
     });
 });
 
-// verify email address
+/**
+ * Verify Email Address route
+ * This is for both GET and POST request.
+ */
 Route::group(['prefix' => '/email', 'as' => 'verification.'], function () {
     Route::get('/', function () {
         return redirect()->route('verification.notice');
@@ -221,7 +229,10 @@ Route::group(['prefix' => '/email', 'as' => 'verification.'], function () {
     Route::get('/resend', 'VerificationController@resend')->name('resend');
 });
 
-// Recover account.
+/**
+ * Recover account route
+ * This is for both GET and POST request.
+ */
 Route::group(['prefix' => '/recover', 'middleware' => 'guest', 'as' => 'recover'], function () {
     Route::get('/', function () {
         return view('recover');
