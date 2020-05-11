@@ -1,12 +1,11 @@
 # Fororum
+
+[![StyleCI](https://github.styleci.io/repos/134251696/shield?style=square)](https://github.styleci.io/repos/134251696)
+[![MITLicense](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/trhgquan/Fororum/blob/master/LICENSE)
+
 _Forum creavit cum Laravel_
 
 [What is Fororum](#what-is-fororum-anyway) | [Installation](#installation) | [Authors](#authors) | [License](#license)
-
-<p align="center">
-  <a href="https://github.styleci.io/repos/134251696"><img src="https://github.styleci.io/repos/134251696/shield?style=square" alt="StyleCI"></a>
-  <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license"></a>
-</p>
 
 # What is Fororum, anyway?
 An open-source Forum project made with Laravel. _Fororum_ in Latin means _Forums_.
