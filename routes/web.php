@@ -201,7 +201,7 @@ Route::name('auth.')->group(function () {
 
 /**
  * Home Route
- * Example: http://example.com/ or http://example.com/home
+ * Example: http://example.com/ or http://example.com/home.
  */
 Route::group(['prefix' => '/', 'middleware' => 'fororum.alive'], function () {
     Route::get('/', function () {
