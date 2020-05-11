@@ -1,11 +1,11 @@
-{{-- $o = App\UserInformation::userPermissions(App\User->id) --}}
-@if ($o['banned'])
+{{-- $userPermission = App\UserInformation::userPermissions(App\User->id) --}}
+@if ($userPermission['banned'])
     <span class="label label-danger">lock</span>
-@elseif ($o['admin'])
+@elseif ($userPermission['admin'])
     <span class="label label-success">root</span>
-@elseif ($o['mod'])
+@elseif ($userPermission['mod'])
     <span class="label label-primary">cops</span>
-@elseif ($o['confirmed'])
+@elseif ($userPermission['confirmed'])
     <span class="label label-primary">auth</span>
 @else
     <span class="label label-default">user</span>
