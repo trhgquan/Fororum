@@ -17,9 +17,26 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 - SEO Friendly
 - Fully-support admin in managing users and forum posts.
 
-# Requirements:
-- PHP >= 7.0
+# Installation
+## Requirements:
+- PHP >= 7.3
 - Composer (for installing support packages).
+
+## How-to:
+1. Execute a `git-clone` this project: `git clone https://github.com/trhgquan/Fororum.git`.
+
+2. Run `composer install` to install components.
+
+3. Rename `.env.example` to `.env`. This is the enviromental configuration for your Fororum install.
+  - Update `DB_HOST` with your databse host (usually `localhost`).
+  - Update `DB_USERNAME` with your database username.
+  - Update `DB_PASSWORD` with your database password.
+
+4. Generate `APP_KEY`: `php artisan key:generate`.
+
+5. Migrate database tables: `php artisan migrate`.
+
+6. Install default administrator account: `php artisan db:seed`.  
 
 # Authors
 |Author              |GitHub                                    |
