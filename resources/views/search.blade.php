@@ -27,7 +27,7 @@
                             <h3>
 								<a href="{{ route('profile.user', [$result->username]) }}">{{ $result->username }}</a>
 								<small>
-									@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($result->id)])
+									@component('templates.badges-template', ['userPermission' => App\UserInformation::userPermissions($result->id)])
 									@endcomponent
 								</small>
 							</h3>

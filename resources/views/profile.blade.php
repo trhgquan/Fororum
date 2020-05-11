@@ -20,13 +20,13 @@
 					<h1>
 						{{ $content['user_content']->username }}
 						<small>
-							@component('templates.badges-template', ['o' => App\UserInformation::userPermissions($content['user_content']->id)])
+							@component('templates.badges-template', ['userPermission' => App\UserInformation::userPermissions($content['user_content']->id)])
 							@endcomponent
 						</small>
 					</h1>
 				</legend>
 			</div>
-			<!-- 3 cột, cột đầu là forum statistics, cột sau là user information, cột cuối cùng là user action -->
+			<!-- User profile page has 3 columns: first is forum statistics, second is user information, last is user action. -->
 			@if (!App\UserInformation::userPermissions($content['user_content']->id)['banned'])
 				<div class="col-md-4">
 					<p>Total threads created: <b>{{ $content['history']['threads']->count() }}</b></p>
