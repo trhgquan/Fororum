@@ -1,18 +1,18 @@
-<h1 align="center">Fororum</h1>
-<p align="center">
-  <i>Forum creavit cum Laravel</i>
-</p>
-<p align="center">
-  <a href="https://github.styleci.io/repos/134251696"><img src="https://github.styleci.io/repos/134251696/shield?style=square" alt="StyleCI"></a>
-  <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license"></a>
-</p>
+# Fororum
+
+[![StyleCI](https://github.styleci.io/repos/134251696/shield?style=square)](https://github.styleci.io/repos/134251696)
+[![MITLicense](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/trhgquan/Fororum/blob/master/LICENSE)
+
+_Forum creavit cum Laravel_
+
+[What is Fororum](#what-is-fororum-anyway) | [Installation](#installation) | [Authors](#authors) | [License](#license)
 
 # What is Fororum, anyway?
 An open-source Forum project made with Laravel. _Fororum_ in Latin means _Forums_.
 
 This project also had a very-long-time-ago-and-simplest-as-i-could-thought name: _MyApp_.
 
-# Why Fororum?
+## Why Fororum?
 - Easy to install (which is not correct when you do not know what is Composer).
 - SEO Friendly
 - Fully-support admin in managing users and forum posts.
@@ -23,14 +23,17 @@ This project also had a very-long-time-ago-and-simplest-as-i-could-thought name:
 - Composer (for installing support packages).
 
 ## How-to:
+
+Follow these guides to install Fororum on your server:
+
 1. Execute a `git-clone` this project: `git clone https://github.com/trhgquan/Fororum.git`.
 
 2. Run `composer install` to install components.
 
 3. Rename `.env.example` to `.env`. This is the enviromental configuration for your Fororum install.
-  - Update `DB_HOST` with your databse host (usually `localhost`).
-  - Update `DB_USERNAME` with your database username.
-  - Update `DB_PASSWORD` with your database password.
+    - Update `DB_HOST` with your databse host (usually `localhost`).
+    - Update `DB_USERNAME` with your database username.
+    - Update `DB_PASSWORD` with your database password.
 
 4. Generate `APP_KEY`: `php artisan key:generate`.
 

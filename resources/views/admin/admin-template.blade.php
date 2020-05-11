@@ -43,4 +43,11 @@
 			@include('admin.elements.admin-quick')
 			@break
 	@endswitch
+
+	<legend>System information</legend>
+	<p>
+		Laravel version: {{ app()::VERSION }}<br/>
+		PHP version: {{ phpversion() }}<br/>
+		Database version: {{ (DB::connection()->getPdo())->query('select version()')->fetchColumn() }}
+	</p>
 @endsection
