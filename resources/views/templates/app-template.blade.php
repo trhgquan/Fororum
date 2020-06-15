@@ -37,11 +37,6 @@
 			@yield('content')
 		</div>
 
-		<!-- PLACE THE JAVASCRIPT BEFORE ENDING THE BODY, WILL MAKE THE PAGE LOAD FASTER -->
-		<script src="{{ url('js/jquery.js') }}"></script>
-		<script src="{{ url('js/bootstrap.min.js') }}"></script>
-		@yield('extrajs')
-
 		<!-- FOOTER -->
 		<footer class="footer">
 			<div class="navbar navbar-default">
@@ -59,10 +54,16 @@
 					@show
 					<p class="navbar-text">
 						{{ config('app.name') }} is powered by <b><a href="https://github.com/trhgquan/Fororum">Fororum</a></b>.
-						Copyright &copy; 2018 <a href="https://github.com/trhgquan">Quan, Tran Hoang</a> under <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE">the MIT License</a>.
+						Copyright &copy; <span id="currentYear"></span> <a href="https://github.com/trhgquan">Quan, Tran Hoang</a> under <a href="https://github.com/trhgquan/Fororum/blob/master/LICENSE">the MIT License</a>.
 					</p>
 				</div>
 			</div>
 		</footer>
+
+		<!-- PLACE THE JAVASCRIPT BEFORE ENDING THE BODY, WILL MAKE THE PAGE LOAD FASTER -->
+		<script src="{{ url('js/jquery.js') }}"></script>
+		<script src="{{ url('js/bootstrap.min.js') }}"></script>
+		<script src="{{ url('js/fororum-year.js') }}"></script>
+		@yield('extrajs')
 	</body>
 </html>
