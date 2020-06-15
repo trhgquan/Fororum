@@ -60,10 +60,10 @@
 			</div>
 		</footer>
 
-		<!-- PLACE THE JAVASCRIPT BEFORE ENDING THE BODY, WILL MAKE THE PAGE LOAD FASTER -->
-		<script src="{{ url('js/jquery.js') }}"></script>
+    <!-- PLACE THE JAVASCRIPT BEFORE ENDING THE BODY, WILL MAKE THE PAGE LOAD FASTER -->
+    <script src="{{ url('js/jquery.js') }}"></script>
     <script src="{{ url('js/bootstrap.min.js') }}"></script>
     <script src="{{ url('js/fororum-year.js') }}"></script>
-		@yield('extrajs')
+    @yield('extrajs')
 	</body>
 </html>
